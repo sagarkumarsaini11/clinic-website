@@ -1,0 +1,222 @@
+.facilities {
+  width: 90%;
+  margin: 100px auto;
+  text-align: center;
+}
+
+.title p {
+  color: #212ea0;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.title h2 {
+  font-size: 42px;
+  color: #000f38;
+  margin-bottom: 50px;
+}
+
+/* Slider */
+
+.slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.8s ease-in-out;
+}
+
+.slide {
+  min-width: calc(100% / 3);
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+
+  transform: scale(0.9);
+  opacity: 0.6;
+
+  transition: all 0.5s ease;
+}
+
+.slide.active {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.caption {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.caption h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* Clickable Image */
+
+.facility-image {
+  cursor: pointer;
+}
+
+/* Full Screen Modal */
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.9);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.image-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.image-modal-content img {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 15px;
+}
+
+.image-modal-content h2 {
+  color: white;
+  margin-top: 15px;
+}
+
+.close-modal {
+  position: absolute;
+  top: -40px;
+  right: 0;
+
+  background: transparent;
+  border: none;
+
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Arrow Buttons */
+
+.slider-wrapper {
+  position: relative;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 50px;
+  height: 50px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(33, 46, 160, 0.9);
+  color: white;
+
+  font-size: 24px;
+  cursor: pointer;
+
+  z-index: 100;
+  transition: 0.3s;
+}
+
+.slider-btn:hover {
+  background: #212ea0;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.left-btn {
+  left: 10px;
+}
+
+.right-btn {
+  right: 10px;
+}
+
+@media (max-width: 768px) {
+
+  .facilities {
+    width: 95%;
+  }
+
+  .slide {
+    min-width: 100%;
+    padding: 5px;
+
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .slide.active {
+    transform: scale(1);
+  }
+
+  .slide img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .caption h3 {
+    font-size: 16px;
+  }
+
+  .title h2 {
+    font-size: 28px;
+  }
+
+  .slider-track {
+    transition: transform 0.6s ease;
+  }
+
+  /* Modal Mobile */
+
+  .image-modal-content {
+    width: 95%;
+  }
+
+  .image-modal-content img {
+    max-height: 70vh;
+  }
+
+  .image-modal-content h2 {
+    font-size: 18px;
+  }
+
+  .close-modal {
+    font-size: 26px;
+    top: -35px;
+  }
+}

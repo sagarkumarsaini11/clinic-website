@@ -1,0 +1,273 @@
+
+
+.appointment-btn {
+  background: #212ea0;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 500px;
+  margin-left: 430px;
+}
+
+.appointment-btn:hover {
+  background: #18248a;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.appointment-form {
+  width: 450px;
+  max-width: 95%;
+
+  background: white;
+  padding: 25px;
+
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  max-height: 95vh;   /* Fixed maximum height */
+  overflow-y: auto;   /* Enable vertical scroll */
+
+  scrollbar-width: thin;
+}
+
+.appointment-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.appointment-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.appointment-form::-webkit-scrollbar-thumb {
+  background: #212ea0;
+  border-radius: 10px;
+}
+
+.appointment-form::-webkit-scrollbar-thumb:hover {
+  background: #18248a;
+}
+
+.appointment-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #212ea0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  outline: none;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #212ea0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #c82333;
+}
+
+.submit-btn:hover {
+  background: #218838;
+}
+
+
+.appointment-form {
+  position: relative;   /* Important */
+
+  width: 450px;
+  max-width: 95%;
+  background: white;
+  padding: 25px;
+
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+
+  top: 12px;
+  right: 15px;
+
+  background: transparent;
+  border: none;
+
+  font-size: 24px;
+  font-weight: bold;
+
+  color: #666;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #dc3545;
+  transform: scale(1.2);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+/* Mobile View */
+
+@media screen and (max-width: 768px) {
+
+  .appointment-container {
+    margin-top: 20px;
+    padding: 0 15px;
+  }
+
+  .appointment-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  .appointment-form {
+    width: 95%;
+    padding: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .appointment-form h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+/* Small Mobile Devices */
+
+@media screen and (max-width: 480px) {
+
+  .appointment-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .appointment-form {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .appointment-form h2 {
+    font-size: 20px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .close-btn {
+    top: 10px;
+    right: 12px;
+    font-size: 22px;
+  }
+}

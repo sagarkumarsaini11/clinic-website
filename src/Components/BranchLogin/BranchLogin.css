@@ -1,0 +1,142 @@
+.branch-btn {
+  background: white;
+  color: #222;
+
+  border: none;
+  border-radius: 40px;
+
+  padding: 12px 28px;
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.branch-btn:hover {
+  background: #f2f2f2;
+}
+
+/* Overlay */
+
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+/* Login Box */
+
+.login-box {
+  position: relative;
+
+  width: 400px;
+  max-width: 95%;
+
+  background: #fff;
+  padding: 30px;
+
+  border-radius: 15px;
+
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
+.login-box h2 {
+  text-align: center;
+  color: #212ea0;
+  margin-bottom: 25px;
+}
+
+/* Close Button */
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 28px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+/* Inputs */
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  outline: none;
+  font-size: 15px;
+}
+
+.input-group input:focus {
+  border-color: #212ea0;
+}
+
+/* Sign In Button */
+
+.signin-btn {
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #212ea0;
+  color: white;
+
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signin-btn:hover {
+  background: #18248a;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .login-box {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .login-box h2 {
+    font-size: 22px;
+  }
+
+  .signin-btn {
+    font-size: 15px;
+  }
+}
