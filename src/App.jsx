@@ -26,7 +26,6 @@ function Website() {
       <Appointment/>
       <Facilities/>
       <Gallery/>
-      
       <About/>
       <Contact/>
       <Footer/>
