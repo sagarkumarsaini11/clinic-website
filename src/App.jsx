@@ -23,9 +23,10 @@ function Website() {
     <div>
       <Navbar />
       <Hero/>
+      <Appointment/>
       <Facilities/>
       <Gallery/>
-      <Appointment/>
+      
       <About/>
       <Contact/>
       <Footer/>

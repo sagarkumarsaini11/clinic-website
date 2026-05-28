@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-
 import logo from "../../assets/logo.png";
 import menu_icon from "../../assets/menu-icon.png";
-
 import { Link } from "react-scroll";
-
 import BranchLogin from "../BranchLogin/BranchLogin";
 
 const Navbar = () => {
@@ -70,7 +67,7 @@ const Navbar = () => {
         </li>   
           
         <li>
-          <Link  to="appointment"  smooth={true}  offset={-200} duration={500}
+          <Link  to="appointment"  smooth={true}  offset={-40} duration={500}
             className="btn" onClick={closeMenu} > Add Appointment </Link>
         </li>  
 

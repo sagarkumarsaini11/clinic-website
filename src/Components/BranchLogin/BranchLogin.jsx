@@ -33,7 +33,7 @@ const handleLogin = (e) => {
     loginData.email === validEmail &&
     loginData.password === validPassword
   ) {
-    alert("Login Successfully!");
+   
 
     setLoginData({
       email: "",
@@ -55,12 +55,10 @@ const handleLogin = (e) => {
 
       <button
         className="branch-btn"
-        onClick={() => setShowLogin(true)}
-      >
-        Branch Login
-      </button>
-
-      {/* Login Modal */}
+        onClick={() => setShowLogin(true)}> Branch Login </button>
+      
+      
+                     {/* Login Modal */}
 
       {showLogin && (
         <div className="login-overlay">
@@ -77,7 +75,7 @@ const handleLogin = (e) => {
 
             <form onSubmit={handleLogin}>
 
-              <div className="input-group">
+              <div className="input-group-login">
                 <label>Email</label>
 
                 <input
@@ -89,7 +87,7 @@ const handleLogin = (e) => {
                 />
               </div>
 
-              <div className="input-group">
+              <div className="input-group-login">
                 <label>Password</label>
 
                 <input

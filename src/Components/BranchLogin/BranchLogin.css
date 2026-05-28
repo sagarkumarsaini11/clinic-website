@@ -78,17 +78,17 @@
 
 /* Inputs */
 
-.input-group {
+.input-group-login {
   margin-bottom: 18px;
 }
 
-.input-group label {
+.input-group-login label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
 }
 
-.input-group input {
+.input-group-login input {
   width: 100%;
   padding: 12px;
 
@@ -99,7 +99,7 @@
   font-size: 15px;
 }
 
-.input-group input:focus {
+.input-group-login input:focus {
   border-color: #212ea0;
 }
 
