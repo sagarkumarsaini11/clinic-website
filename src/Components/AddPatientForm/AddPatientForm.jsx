@@ -29,6 +29,8 @@ export default function AddPatientForm() {
       problem: "",
     });
 
+
+     const [loading, setLoading] = useState(false);
   // Error State
 
   const [errors, setErrors] =
@@ -103,26 +105,45 @@ export default function AddPatientForm() {
 
   // Submit
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validateForm()) {
+  if (!validateForm()) {
+    return;
+  }
+
+  try {
+
+    setLoading(true);
+
+    console.log("Sending Data:", formData);
+
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/appointment/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Status:", response.status);
+    console.log("Response:", data);
+
+    if (!response.ok) {
+      alert(
+        data.message ||
+        "Failed to save patient"
+      );
       return;
     }
 
-    console.log(
-      "===== PATIENT DATA ====="
-    );
-
-    console.table(formData);
-
-    console.log(formData);
-
-    //Success Alert
-    alert("Your Data Successfully Sent!");
-
-    // Reset Form
+    alert("Patient Added Successfully!");
 
     setFormData({
       name: "",
@@ -134,7 +155,20 @@ export default function AddPatientForm() {
     });
 
     setErrors({});
-  };
+
+  } catch (error) {
+
+    console.error("API Error:", error);
+
+    alert(
+      "Something went wrong. Please try again."
+    );
+
+  } finally {
+
+    setLoading(false);
+  }
+};
 
   return (
 
@@ -220,7 +254,7 @@ export default function AddPatientForm() {
 
             </div>
 
-            {/* GENDER */}
+                                {/* GENDER */}
 
             <div className="form-group">
 
@@ -293,7 +327,7 @@ export default function AddPatientForm() {
 
             </div>
 
-            {/* PROBLEM */}
+                      {/* PROBLEM */}
 
             <div className="form-group full-width">
 
@@ -301,14 +335,9 @@ export default function AddPatientForm() {
                 Problem <span>*</span>
               </label>
 
-              <textarea
-                name="problem"
-                rows="4"
-                placeholder="Describe Patient Problem"
-                value={formData.problem}
-                onChange={handleChange}
-              />
-
+              <textarea  name="problem" rows="4"
+                placeholder="Describe Patient Problem"  value={formData.problem}
+                onChange={handleChange}/>
               {errors.problem && (
                 <p className="error-text">
                   {errors.problem}
@@ -317,15 +346,11 @@ export default function AddPatientForm() {
 
             </div>
 
-            {/* BUTTON */}
+                    {/* BUTTON */}
 
-            <button
-              type="submit"
-              className="submit-btn"
-            >
-              Save Patient
-            </button>
-
+           <button type="submit" className="submit-btn"  disabled={loading}>
+           {loading ? "Saving..." : "Save Patient"}   
+           </button>
           </form>
 
         </div>

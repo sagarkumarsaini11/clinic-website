@@ -14,6 +14,7 @@ const Appointment = () => {
 
   const [errors, setErrors] = useState({});
 
+  const [loading, setLoading] = useState(false);
   // Handle Input Change
 
   const handleChange = (e) => {
@@ -73,32 +74,68 @@ const Appointment = () => {
 
   // Submit
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validateForm()) {
-      return;
+  if (!validateForm()) {
+    return;
+  }
+
+  try {
+
+    setLoading(true);
+    console.log("Sending data:", formData)
+
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/appointment/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+
+      console.log("Appointment Created:", data);
+
+      alert("Appointment Submitted Successfully!");
+
+      setFormData({
+        name: "",
+        age: "",
+        gender: "",
+        mobile: "",
+        address: "",
+        problem: "",
+      });
+
+    } else {
+
+      alert(
+        data.message ||
+        "Failed to create appointment"
+      );
     }
 
-    console.log(
-      "Appointment Data:",
-      formData
-    );
+  } catch (error) {
+
+    console.error("API Error:", error);
 
     alert(
-      "Appointment Submitted Successfully!"
+      "Something went wrong. Please try again."
     );
 
-    setFormData({
-      name: "",
-      age: "",
-      gender: "",
-      mobile: "",
-      address: "",
-      problem: "",
-    });
-  };
+  } finally {
+
+    setLoading(false);
+  }
+};
 
   // Cancel
 
@@ -214,7 +251,7 @@ const Appointment = () => {
 
           </div>
 
-          {/* Problem */}
+                  {/* Problem */}
 
           <div className="input-group textarea-group">
 
@@ -233,8 +270,10 @@ const Appointment = () => {
           <div className="button-group">
 
             <button  type="button"  className="cancel-btn"   onClick={handleCancel}> Cancel </button>
-          <button  type="submit"  className="submit-btn-appointment">
-            Add Appointment</button>
+    
+      <button  type="submit"  className="submit-btn-appointment"  disabled=       {loading}>
+         {loading ? "Submitting...": "Add Appointment"}
+       </button>
 
           </div>
 

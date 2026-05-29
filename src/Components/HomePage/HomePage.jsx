@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,} from "react";
 import "./HomePage.css";
 
 import {
@@ -38,6 +38,73 @@ const [attendanceDate, setAttendanceDate] =
 
 const [updatedFileNumber, setUpdatedFileNumber] =
   useState("00000");
+
+       //data list add appoi. add patient
+       const [loading, setLoading]= useState(true);
+
+  const [patientList, setPatientList] =
+  useState([]);
+
+const [appointmentList, setAppointmentList] =
+  useState([]);
+
+
+useEffect(() => {
+
+  const fetchAppointments = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const response = await fetch(
+        "https://clinic-backend-5ucx.onrender.com/api/appointment/list"
+      );
+
+      const data = await response.json();
+
+      console.log("API Data:", data);
+
+      if (response.ok) {
+
+        if (Array.isArray(data)) {
+
+          setAppointmentList(data);
+
+        } else if (data.appointments) {
+
+          setAppointmentList(
+            data.appointments
+          );
+
+        } else if (data.data) {
+
+          setAppointmentList(
+            data.data
+          );
+
+        }
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Fetch Error:",
+        error
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+  fetchAppointments();
+
+}, []);
 
   // SEARCH BUTTON CLICK
 
@@ -92,13 +159,13 @@ const [updatedFileNumber, setUpdatedFileNumber] =
       <div className="header">
 
         <button
-          className="menu-btn"
-          onClick={() =>
-            setShowSidebar(true)
-          }
-        >
-          ☰
-        </button>
+          className="menu-btn"  onClick={() =>  setShowSidebar(true)}>
+         ☰
+         </button> 
+          
+        
+         
+        
 
         <h2>Homepage</h2>
 
@@ -106,154 +173,178 @@ const [updatedFileNumber, setUpdatedFileNumber] =
 
           <FaBell size={24} />
 
-          <span className="badge">
-            3
-          </span>
+          <span className="badge">3 </span>
+        </div>    
+       </div>   
 
-        </div>
+        
 
-      </div>
+     
 
-      {/* Sidebar */}
+                        {/* Sidebar */}
 
       {showSidebar && (
 
-        <div
-          className="sidebar-overlay"
-          onClick={() =>
-            setShowSidebar(false)
-          }
-        >
+        <div  className="sidebar-overlay" onClick={() =>setShowSidebar(false) } >
 
-          <div
-            className="sidebar"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
-          >
-
-            <h2>MENU</h2>
-
-            <button
-              onClick={() => {
-                navigate("/");
-                setShowSidebar(false);
-              }}
-            >
-              Web-Homepage
-            </button>
-
-            <button
-              onClick={() => {
-                navigate("/addpatient");
-
-                setShowSidebar(false);
-              }}
-            >
-              Add New Patient
-            </button>
-
-            <button>
-              Time Table
-            </button>
-
-            <button>
-              Download Report
-            </button>
-
-            <button>
-              New Query
-            </button>
-
+          <div className="sidebar"  onClick={(e) => e.stopPropagation()}>
+           <h2>MENU</h2>
+            <button onClick={() => {  navigate("/");  setShowSidebar(false);   }}>
+              Web-Homepage 
+            </button>  
+            <button  onClick={() => { navigate("/addpatient");   setShowSidebar(false);
+              }}>  Add New Patient
+             </button>
+            <button>Time Table</button>
+            <button>  Download Report</button>
+             <button> New Query</button>
+   
           </div>
 
         </div>
       )}
 
-      {/* SEARCH BOX */}
+                         {/* SEARCH BOX */}
 
       <div className="search-box">
+        <input  type="number"  placeholder="Enter File Number"  value={fileNumber}
+          onChange={(e) =>  setFileNumber(e.target.value) }/>
 
-        <input
-          type="number"
-          placeholder="Enter File Number"
-          value={fileNumber}
-          onChange={(e) =>
-            setFileNumber(e.target.value)
-          }
-        />
-
-        {/* CAMERA OR SEARCH */}
+                     {/* CAMERA OR SEARCH */}
 
         {fileNumber.length > 0 ? (
 
-          <button
-            className="search-icon-btn"
-            onClick={handleSubmit}
-          >
+          <button  className="search-icon-btn"  onClick={handleSubmit}>
             <FaSearch size={20} />
           </button>
 
         ) : (
 
-          <button
-            className="search-icon-btn"
-            onClick={handleCameraClick}
-          >
-            <FaCamera size={20} />
+          <button  className="search-icon-btn"  onClick={handleCameraClick}  >
+          <FaCamera size={20} />
           </button>
-
         )}
+      </div>      
 
-      </div>
 
-      {/* Patient Modal */}
+
+                {/* Reacord -Section-list */}
+
+{/* Reacord -Section-list */}
+
+{loading ? (
+
+  <h3 className="loading-text">
+    Loading Records...
+  </h3>
+
+) : (
+
+  <div className="records-section">
+
+    {/* Patient Records */}
+
+    <h2>Patient Records</h2>
+
+    {patientList.length === 0 ? (
+
+      <p>No Patient Added</p>
+
+    ) : (
+
+      patientList.map((item, index) => (
+
+        <div
+          className="record-card"
+          key={index}
+        >
+          <h3>{item.name}</h3>
+
+          <p>Age: {item.age}</p>
+
+          <p>Gender: {item.gender}</p>
+
+          <p>Mobile: {item.mobile}</p>
+
+          <p>Address: {item.address}</p>
+
+          <p>Problem: {item.problem}</p>
+
+        </div>
+
+      ))
+    )}
+
+    {/* Appointment Records */}
+
+    <h2>Appointment Records</h2>
+
+    {appointmentList.length === 0 ? (
+
+      <p>No Appointment Added</p>
+
+    ) : (
+
+      appointmentList.map((item, index) => (
+
+        <div
+          className="record-card"
+          key={index}
+        >
+          <h3>{item.name}</h3>
+
+          <p>Age: {item.age}</p>
+
+          <p>Gender: {item.gender}</p>
+
+          <p>Mobile: {item.mobile}</p>
+
+          <p>Address: {item.address}</p>
+
+          <p>Problem: {item.problem}</p>
+
+        </div>
+
+      ))
+    )}
+
+  </div>
+
+)}
+
+
+
+
+
+
+
+                        {/* Patient Modal */}
 
       {showPatientCard && (
 
         <div className="modal-overlay">
-
           <div className="patient-card">
 
-            <FaTimes
-              className="close-icon"
-              onClick={() =>
-                setShowPatientCard(false)
-              }
-            />
+            <FaTimes  className="close-icon" onClick={() =>  setShowPatientCard(false) }/>
 
-            {/* patient-header */}
+                           {/* patient-header */}
 
             <div className="patient-header">
 
-              <h2>
-                Rajan (27 / Male)
-              </h2>
-
-           <p>  Last Attendance Date:
-           {attendanceDate}</p>
- 
-
-
+              <h2> Rajan (27 / Male) </h2>
+           <p>  Last Attendance Date:  {attendanceDate}</p>
            <p> File Number:{updatedFileNumber}</p>
- 
-  
-
-
-              <p>
-                Appointment Number:
-                23423
-              </p>
+              <p>   Appointment Number: 23423</p>
+             
+               
+              
                    {/* balance */}
 
             <div className="balance-box">
-
               <h3> Balance Sessions</h3>
                 <h1>12</h1>
-
               <h4>Advance Physiotherapy </h4>
           </div>
-
             </div>
  
             {/* attendance */}
