@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./OpenPatientFile.css";
+import './OpenPatientFile.css'
 
 export default function OpenPatientFile() {
   const [formData, setFormData] = useState({

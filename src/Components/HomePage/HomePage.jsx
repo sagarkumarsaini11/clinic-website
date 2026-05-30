@@ -226,19 +226,13 @@ useEffect(() => {
 
                 {/* Reacord -Section-list */}
 
-{/* Reacord -Section-list */}
+          {loading ? (
 
-{loading ? (
+            <h3 className="loading-text">  Loading Records...</h3>
+          ) : (
+          <div className="records-section">
 
-  <h3 className="loading-text">
-    Loading Records...
-  </h3>
-
-) : (
-
-  <div className="records-section">
-
-    {/* Patient Records */}
+                       {/* Patient Records */}
 
     <h2>Patient Records</h2>
 
@@ -250,28 +244,19 @@ useEffect(() => {
 
       patientList.map((item, index) => (
 
-        <div
-          className="record-card"
-          key={index}
-        >
-          <h3>{item.name}</h3>
-
-          <p>Age: {item.age}</p>
-
-          <p>Gender: {item.gender}</p>
-
+        <div  className="record-card"   key={index}>
+        <h3>{item.name}</h3>
+        <p>Age: {item.age}</p>
+        <p>Gender: {item.gender}</p>
           <p>Mobile: {item.mobile}</p>
-
           <p>Address: {item.address}</p>
-
-          <p>Problem: {item.problem}</p>
-
+         <p>Problem: {item.problem}</p>
         </div>
+           ))
+    )}  
 
-      ))
-    )}
 
-    {/* Appointment Records */}
+            {/* Appointment Records */}
 
     <h2>Appointment Records</h2>
 
@@ -283,31 +268,21 @@ useEffect(() => {
 
       appointmentList.map((item, index) => (
 
-        <div
-          className="record-card"
-          key={index}
-        >
-          <h3>{item.name}</h3>
+        <div className="record-card" key={index} >
+         <h3>{item.name}</h3>
+           <p>Age: {item.age}</p>
+         <p>Gender: {item.gender}</p>
+            <p>Mobile: {item.mobile}</p>
+              <p>Address: {item.address}</p>
+           <p>Problem: {item.problem}</p>
 
-          <p>Age: {item.age}</p>
+         </div>
 
-          <p>Gender: {item.gender}</p>
-
-          <p>Mobile: {item.mobile}</p>
-
-          <p>Address: {item.address}</p>
-
-          <p>Problem: {item.problem}</p>
-
-        </div>
-
-      ))
-    )}
-
-  </div>
-
+        ))
+      )}
+   </div>      
 )}
-
+        
 
                         {/* Patient Modal */}
 
