@@ -243,18 +243,14 @@ cursor: pointer;
   box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.balance-box{
+.balance-box-session{
   text-align:center;
   margin-top:25px;
+  font-size: 30px;
+  
 }
 
-.balance-box h1{
-  font-size:20px;
-}
-.balance-box h3{
-  font-size: 18px;
 
-}
 
 .stats-row{
   display:flex;

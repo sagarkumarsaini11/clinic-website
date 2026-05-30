@@ -309,11 +309,6 @@ useEffect(() => {
 )}
 
 
-
-
-
-
-
                         {/* Patient Modal */}
 
       {showPatientCard && (
@@ -337,9 +332,9 @@ useEffect(() => {
                    {/* balance */}
 
             <div className="balance-box">
-              <h3> Balance Sessions</h3>
-                <h1>12</h1>
-              <h4>Advance Physiotherapy </h4>
+              <p> Balance Sessions</p>
+                <p>12</p>
+              <p>Advance Physiotherapy </p>
           </div>
             </div>
  
