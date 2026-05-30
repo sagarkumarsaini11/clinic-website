@@ -13,6 +13,10 @@ import HomePage from './Components/HomePage/HomePage'
 
 import AddPatientForm from './Components/AddPatientForm/AddPatientForm'
 import PrescriptionForm from './Components/PrescriptionForm/PrescriptionForm'
+import Recharge from './Components/Recharge/Recharge'
+import OpenPatientFile from './Components/OpenpatientFile/OpenPatientFile'
+
+
 
 
 
@@ -29,7 +33,7 @@ function Website() {
       <About/>
       <Contact/>
       <Footer/>
-      
+    
      
     </div>
    )    
@@ -53,6 +57,12 @@ function App () {
 
                  {/*prescription form*/}
                <Route path="/addpatient" element={<AddPatientForm/>}/>
+
+                     {/*Recharge form*/}
+               <Route path="/recharge" element={<Recharge/>}/>
+
+                       {/*Open Patientn File */}
+               <Route path="/openpatientfile" element={<OpenPatientFile/>}/>
    </Routes>
   
   )

@@ -162,10 +162,6 @@ useEffect(() => {
           className="menu-btn"  onClick={() =>  setShowSidebar(true)}>
          ☰
          </button> 
-          
-        
-         
-        
 
         <h2>Homepage</h2>
 
@@ -371,12 +367,12 @@ useEffect(() => {
 
             <div className="feature-row">
 
-              <div className="feature-card">
+              <div className="feature-card" onClick={() =>navigate("/recharge")}>
                 <FaWallet size={35} />
                 <p>Recharge</p>
               </div>
 
-              <div className="feature-card">
+              <div className="feature-card" onClick={() =>navigate("/openpatientfile")}>
                 <FaFolder size={35} />
                 <p>Open Patient File</p>
               </div>

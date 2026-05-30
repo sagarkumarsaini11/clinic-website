@@ -1,0 +1,114 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.patient-file-container{
+  min-height:100vh;
+  background:#f4f7ff;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:30px;
+}
+
+.patient-file-card{
+  width:100%;
+  max-width:650px;
+
+  background:#fff;
+
+  padding:35px;
+
+  border-radius:15px;
+
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
+}
+
+.patient-file-card h2{
+  text-align:center;
+  color:#212ea0;
+
+  margin-bottom:30px;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+
+  margin-bottom:8px;
+
+  font-weight:600;
+  color:#333;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+
+  padding:14px;
+
+  border:1px solid #ccc;
+
+  border-radius:8px;
+
+  font-size:15px;
+
+  outline:none;
+
+  transition:0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+  border-color:#212ea0;
+}
+
+.error-text{
+  color:red;
+
+  font-size:13px;
+
+  margin-top:5px;
+}
+
+.submit-btn-file{
+  width:100%;
+
+  background:#212ea0;
+
+  color:white;
+
+  border:none;
+
+  padding:15px;
+
+  border-radius:8px;
+
+  font-size:16px;
+
+  cursor:pointer;
+
+  margin-top:10px;
+}
+
+.submit-btn-file:hover{
+  background:#18248a;
+}
+
+@media(max-width:768px){
+
+  .patient-file-card{
+    padding:25px;
+  }
+
+  .patient-file-card h2{
+    font-size:24px;
+  }
+}
