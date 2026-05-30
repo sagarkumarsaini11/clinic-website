@@ -36,6 +36,36 @@ const handleChange = (e) => {
   }));
 };
 
+const calculateTotal = () => {
+  let total = 0;
+
+  // Package amount
+  if (rechargeData.package) {
+    const match = rechargeData.package.match(/₹(\d+)/);
+
+    if (match) {
+      total += Number(match[1]);
+    }
+  }
+
+  // Home Physiotherapy
+  if (rechargeData.homePhysio) {
+    total += 600;
+  }
+
+  // Exercise Plan
+  if (rechargeData.exercisePlan) {
+    total += 4500;
+  }
+
+  // Additional Sessions
+  if (rechargeData.additionalSessions) {
+    total += Number(rechargeData.additionalSessions) * 250;
+  }
+
+  return total;
+};
+
 const handleSubmit = (e) => {
   e.preventDefault();
 
@@ -54,8 +84,16 @@ const handleSubmit = (e) => {
   }
 
   console.log("===== RECHARGE DATA =====");
-  console.table(rechargeData);
-  console.log(JSON.stringify(rechargeData, null, 2));
+const finalData = {
+  ...rechargeData,
+  totalAmount: calculateTotal(),
+};
+
+console.table(finalData);
+
+console.log(
+  JSON.stringify(finalData, null, 2)
+);
 
   alert("Recharge Submitted Successfully!");
 
@@ -168,7 +206,16 @@ const handleSubmit = (e) => {
         additionalSessions: e.target.value, })}  placeholder="Enter No. of Sessions"/>
           <p>₹250 Per Session</p>
         </div>
-     
+
+                 {/* Total Amount */}
+
+        <div className="total-section">
+
+          <label>Total Amount</label>
+
+        <input  type="text"  value={`₹${calculateTotal()}`}  readOnly
+         className="total-input"/>
+        </div>
 
                {/* Amount Paid */}
 

@@ -38,7 +38,7 @@
   font-size: 28px;
 }
 
-/* Package Sections */
+                           /* Package Sections */
 
 .package-section{
   border: 1px solid #e5e7eb;
@@ -91,7 +91,7 @@
   color: #1f2937;
 }
 
-/* Single Package */
+                         /* Single Package */
 
 .single-package{
   border: 1px solid #e5e7eb;
@@ -127,7 +127,7 @@
   background: #fffdf1;
 }
 
-/* Radio */
+                      /* Radio */
 
 input[type="radio"]{
   width: 20px;
@@ -136,7 +136,7 @@ input[type="radio"]{
   cursor: pointer;
 }
 
-/* Additional Session */
+                          /* Additional Session */
 
 .additional-section{
   border: 1px solid #e5e7eb;
@@ -178,7 +178,7 @@ input[type="radio"]{
   color: #555;
 }
 
-/* Amount */
+                          /* Amount */
 
 .amount-section{
   margin-bottom: 25px;
@@ -210,7 +210,7 @@ input[type="radio"]{
   border-color: #2563eb;
 }
 
-/* Submit Button */
+                    /* Submit Button */
 
 .submit-recharge-btn{
   width: 100%;
@@ -237,7 +237,37 @@ input[type="radio"]{
   background: #0046d5;
 }
 
-/* Mobile */
+              /*Total section*/
+
+.total-section{
+  margin-top:20px;
+  margin-bottom: 10px;
+}
+
+.total-section label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+.total-input{
+  width:100%;
+  padding:14px;
+
+  
+
+  border-radius:8px;
+
+  background:#f8fff9;
+
+  color:#212EA0;
+
+  font-size:20px;
+  font-weight:bold;
+
+  
+}
+             /* Mobile */
 
 @media (max-width:768px){
 
