@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./OpenPatientList.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
+import Sidebar from "../Sidebar/Sidebar";
+
 
 export default function OpenPatientList() {
-  const navigate = useNavigate();
+
+ const navigate = useNavigate();
+const location = useLocation();
 
   const [showIdCard, setShowIdCard] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -106,16 +111,23 @@ export default function OpenPatientList() {
   }
 
   return (
+    <>
+    <Sidebar/>
     <div className="patient-file-page">
 
-      <button
-        className="back-btn"
-        onClick={() => navigate(-1)}
-      >
-        ←
-      </button>
-
       <div className="patient-file-card">
+
+        
+          <FaTimes
+          className="close-icon-patientlist"
+          onClick={() =>
+            navigate("/homepage", {
+              state: {
+                openPatientPopup: true,
+              },
+            })
+          }
+        />
 
         <h2>Patient File</h2>
 
@@ -293,5 +305,6 @@ export default function OpenPatientList() {
 
       )}
     </div>
+    </>
   );
 }

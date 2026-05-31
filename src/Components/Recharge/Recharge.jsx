@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "./Recharge.css";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import Sidebar from "../Sidebar/Sidebar";
+import { FaTimes } from "react-icons/fa";
 const Recharge = () => {
+
+const navigate = useNavigate();
+const location = useLocation();
 
 const [rechargeData, setRechargeData] = useState({
   package: "",
@@ -11,7 +15,9 @@ const [rechargeData, setRechargeData] = useState({
   additionalSessions: "",
   amountPaid: "",
 });
-const navigate = useNavigate();
+
+
+
 const handlePackageSelect = (e) => {
   setRechargeData((prev) => ({
     ...prev,
@@ -119,16 +125,23 @@ console.log(
 };
 
   return (
-
+<>
+     <Sidebar/>
+     
     <div className="recharge-container">
-         <button type="button" className="back-btn-recharge"onClick={() =>navigate("/homepage", {
+  
+      <div className="recharge-card">
+
+  <FaTimes
+  className="close-icon-recharge"
+  onClick={() =>
+    navigate("/homepage", {
       state: {
         openPatientPopup: true,
       },
     })
- }> ←</button>
-
-      <div className="recharge-card">
+  }
+/>
 
         <h2> Select Services / Packages</h2>
          
@@ -302,6 +315,7 @@ console.log(
       </div>
 
     </div>
+    </>
   );
 };
 

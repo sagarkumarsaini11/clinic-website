@@ -10,21 +10,6 @@
   padding:30px;
 }
 
-.back-btn{
-  width:45px;
-  height:45px;
-
-  border:none;
-  border-radius:50%;
-
-  background:#212ea0;
-  color:#fff;
-
-  font-size:22px;
-  cursor:pointer;
-
-  margin-bottom:20px;
-}
 
 .patient-file-card{
   max-width:800px;
@@ -142,7 +127,27 @@
 .close-btn{
   background:#dc3545 !important;
 }
+/* BACK BUTTON  */
 
+.close-icon-patientlist{
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  font-size: 22px;
+
+  color: #555;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.close-icon-patientlist:hover{
+  color: #ff3b30;
+  transform: scale(1.1);
+}
 @media(max-width:768px){
 
   .patient-file-card{
@@ -151,5 +156,13 @@
 
   .link-grid{
     grid-template-columns:1fr;
+  }
+}
+@media (max-width:480px){
+
+  .close-icon-patientlist{
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
   }
 }

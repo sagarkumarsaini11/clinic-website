@@ -38,30 +38,27 @@ position: relative;
   font-size: 28px;
 }
 
-/* BACK BUTTON TOP LEFT */
+/* BACK BUTTON  */
 
-.back-btn-recharge{
+.close-icon-recharge{
   position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: 50%;
-  background: #212ea0;
-  color: white;
- align-items: center;
-  justify-content: center;
+
+  top: 20px;
+  right: 20px;
+
+  font-size: 22px;
+
+  color: #555;
 
   cursor: pointer;
 
   transition: 0.3s;
 }
 
-.back-btn:hover{
-  background: #16227c;
+.close-icon-recharge:hover{
+  color: #ff3b30;
+  transform: scale(1.1);
 }
-
 
                            /* Package Sections */
 
@@ -346,5 +343,14 @@ input[type="radio"]{
   .single-package label{
     flex-wrap: wrap;
     gap: 8px;
+  }
+}
+
+@media (max-width:480px){
+
+  .close-icon-recharge{
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
   }
 }
