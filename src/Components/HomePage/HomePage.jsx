@@ -15,11 +15,12 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const HomePage = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [fileNumber, setFileNumber] =
     useState("");
@@ -47,6 +48,13 @@ const [updatedFileNumber, setUpdatedFileNumber] =
 
 const [appointmentList, setAppointmentList] =
   useState([]);
+
+
+  useEffect(() => {
+  if (location.state?.openPatientPopup) {
+    setShowPatientCard(true);
+  }
+}, [location]);
 
 
 useEffect(() => {
@@ -307,8 +315,7 @@ useEffect(() => {
                    {/* balance */}
 
             <div className="balance-box">
-              <p> Balance Sessions</p>
-                <p>12</p>
+              <p> Balance Sessions: 12</p>
               <p>Advance Physiotherapy </p>
           </div>
             </div>
@@ -337,12 +344,30 @@ useEffect(() => {
 
             <div className="feature-row">
 
-              <div className="feature-card" onClick={() =>navigate("/recharge")}>
+           <div
+  className="feature-card"
+  onClick={() =>
+    navigate("/recharge", {
+      state: {
+        returnToPopup: true,
+      },
+    })
+  }
+>
                 <FaWallet size={35} />
                 <p>Recharge</p>
               </div>
 
-              <div className="feature-card" onClick={() =>navigate("/openpatientfile")}>
+             <div
+  className="feature-card"
+  onClick={() =>
+    navigate("/openpatientlist", {
+      state: {
+        returnToPopup: true,
+      },
+    })
+  }
+>
                 <FaFolder size={35} />
                 <p>Open Patient File</p>
               </div>

@@ -14,7 +14,8 @@ import HomePage from './Components/HomePage/HomePage'
 import AddPatientForm from './Components/AddPatientForm/AddPatientForm'
 import PrescriptionForm from './Components/PrescriptionForm/PrescriptionForm'
 import Recharge from './Components/Recharge/Recharge'
-import OpenPatientFile from './Components/OpenpatientFile/OpenPatientFile'
+import OpenPatientList from './Components/OpenPatientList/OpenPatientList'
+
 
 
 
@@ -62,7 +63,7 @@ function App () {
                <Route path="/recharge" element={<Recharge/>}/>
 
                        {/*Open Patientn File */}
-               <Route path="/openpatientfile" element={<OpenPatientFile/>}/>
+               <Route path="/openpatientlist" element={<OpenPatientList/>}/>
    </Routes>
   
   )

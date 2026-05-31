@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import './OpenpatientFile.css'
 
-export default function OpenPatientFile() {
+import './OpenPatientList.css'
+import { useNavigate } from "react-router-dom";
+
+export default function OpenPatientList() {
+const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fileNo: "",
     name: "",
@@ -88,6 +92,7 @@ export default function OpenPatientFile() {
 
   return (
     <div className="patient-file-container">
+ 
       <div className="patient-file-card">
 
         <h2>Open Patient File</h2>

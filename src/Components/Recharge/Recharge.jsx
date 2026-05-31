@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Recharge.css";
-
+import { useNavigate } from "react-router-dom";
 const Recharge = () => {
-
+const navigate = useNavigate();
 const [rechargeData, setRechargeData] = useState({
   package: "",
-  homePhysio: false,
+  homePhysioPackage: "",
   exercisePlan: false,
   additionalSessions: "",
   amountPaid: "",
@@ -48,10 +48,21 @@ const calculateTotal = () => {
     }
   }
 
-  // Home Physiotherapy
-  if (rechargeData.homePhysio) {
-    total += 600;
+
+// Home Physiotherapy Package
+
+if (rechargeData.homePhysioPackage) {
+
+  const match =
+    rechargeData.homePhysioPackage.match(
+      /₹(\d+)/
+    );
+
+  if (match) {
+    total += Number(match[1]);
   }
+
+}
 
   // Exercise Plan
   if (rechargeData.exercisePlan) {
@@ -71,7 +82,7 @@ const handleSubmit = (e) => {
 
   if (
     !rechargeData.package &&
-    !rechargeData.homePhysio &&
+!rechargeData.homePhysioPackage &&
     !rechargeData.exercisePlan
   ) {
     alert("Please select at least one service");
@@ -109,6 +120,7 @@ console.log(
   return (
 
     <div className="recharge-container">
+ 
 
       <div className="recharge-card">
 
@@ -175,15 +187,64 @@ console.log(
 
                       {/* Home Physiotherapy */}
 
-         <div className="single-package home-package">
-    <label>
-    <input type="checkbox"  name="homePhysio" checked={rechargeData.homePhysio}
-       onChange={handleCheckboxChange} />
-    <span>Home Physiotherapy Fee</span>
-      <b>₹600</b>
-    </label>
-    </div>
 
+
+<div className="package-section home-package">
+
+  <h3>Home Physiotherapy</h3>
+
+  <label>
+    <input
+      type="radio"
+      name="homePhysioPackage"
+      value="1 Session - ₹600"
+      checked={
+        rechargeData.homePhysioPackage ===
+        "1 Session - ₹600"
+      }
+      onChange={handleChange}
+    />
+
+    <span>1 Session</span>
+
+    <b>₹600</b>
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      name="homePhysioPackage"
+      value="5 Sessions - ₹3000"
+      checked={
+        rechargeData.homePhysioPackage ===
+        "5 Sessions - ₹3000"
+      }
+      onChange={handleChange}
+    />
+
+    <span>5 Sessions</span>
+
+    <b>₹3000</b>
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      name="homePhysioPackage"
+      value="20 Sessions - ₹12000"
+      checked={
+        rechargeData.homePhysioPackage ===
+        "20 Sessions - ₹12000"
+      }
+      onChange={handleChange}
+    />
+
+    <span>20 Sessions</span>
+
+    <b>₹12000</b>
+  </label>
+
+</div>
 
           {/* Exercise Plan */}
 
