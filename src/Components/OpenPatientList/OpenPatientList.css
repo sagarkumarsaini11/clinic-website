@@ -8,7 +8,7 @@
 .patient-file-container{
   min-height:100vh;
   background:#f4f7ff;
-margin-top: 50px;
+
   display:flex;
   justify-content:center;
   align-items:center;
@@ -40,38 +40,7 @@ margin-top: 50px;
   padding-top:10px;
 }
 
-/* BACK BUTTON TOP LEFT */
 
-.back-btn{
-  position: absolute;
-
-  top: 15px;
-  left: 15px;
-
-  width: 32px;
-  height: 32px;
-
-  border: none;
-  border-radius: 50%;
-
-  background: #212ea0;
-  color: white;
-
-  font-size: 22px;
-  font-weight: bold;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.back-btn:hover{
-  background: #16227c;
-}
 
 .form-group{
   margin-bottom:18px;
