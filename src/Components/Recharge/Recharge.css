@@ -7,7 +7,7 @@
 .recharge-container{
   width: 100%;
   min-height: 100vh;
-
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +20,7 @@
 .recharge-card{
   width: 800px;
   max-width: 100%;
-
+position: relative;
   background: #fff;
 
   padding: 25px;
@@ -37,6 +37,9 @@
 
   font-size: 28px;
 }
+
+
+
 
                            /* Package Sections */
 

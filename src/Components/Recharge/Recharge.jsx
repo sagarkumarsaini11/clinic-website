@@ -125,8 +125,8 @@ console.log(
       state: {
         openPatientPopup: true,
       },
-     })
-      }>  Back</button>
+    })
+ }> ←</button>
 
       <div className="recharge-card">
 

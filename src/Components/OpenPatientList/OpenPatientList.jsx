@@ -97,7 +97,7 @@ const navigate = useNavigate();
 navigate("/homepage", { state: { openPatientPopup: true,
   },
     })
-  } >Back</button>
+  } >←</button>
  
   
 
