@@ -93,7 +93,11 @@ const navigate = useNavigate();
   return (
     <div className="patient-file-container">
  
-
+ <button  type="button"  className="back-btn"onClick={() =>
+navigate("/homepage", { state: { openPatientPopup: true,
+  },
+    })
+  } >←</button>
  
   
 
