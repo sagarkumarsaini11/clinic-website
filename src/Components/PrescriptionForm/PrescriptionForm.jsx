@@ -124,6 +124,7 @@ personalizedHomeTreatment: false,
 
   return (
     <div className="prescription-container">
+      
 
       <h1>PHYSICAL THERAPY PRESCRIPTION</h1>
         

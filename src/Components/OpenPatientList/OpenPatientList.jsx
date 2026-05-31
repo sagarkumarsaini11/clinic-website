@@ -93,6 +93,14 @@ const navigate = useNavigate();
   return (
     <div className="patient-file-container">
  
+ <button  type="button"  className="back-btn"onClick={() =>
+navigate("/homepage", { state: { openPatientPopup: true,
+  },
+    })
+  } >Back</button>
+ 
+  
+
       <div className="patient-file-card">
 
         <h2>Open Patient File</h2>

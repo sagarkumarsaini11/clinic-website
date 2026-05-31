@@ -1,6 +1,6 @@
 import React, { useState, useEffect,} from "react";
 import "./HomePage.css";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   FaBell,
   FaCamera,
@@ -15,12 +15,12 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
-import { useNavigate, useLocation } from "react-router-dom";
+
 
 const HomePage = () => {
 
-  const navigate = useNavigate();
-  const location = useLocation();
+const navigate = useNavigate();
+const location = useLocation();
 
   const [fileNumber, setFileNumber] =
     useState("");
@@ -50,7 +50,7 @@ const [appointmentList, setAppointmentList] =
   useState([]);
 
 
-  useEffect(() => {
+useEffect(() => {
   if (location.state?.openPatientPopup) {
     setShowPatientCard(true);
   }
@@ -344,7 +344,7 @@ useEffect(() => {
 
             <div className="feature-row">
 
-           <div
+<div
   className="feature-card"
   onClick={() =>
     navigate("/recharge", {

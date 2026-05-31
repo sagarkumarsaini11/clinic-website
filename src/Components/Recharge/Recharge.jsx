@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Recharge.css";
 import { useNavigate } from "react-router-dom";
+
 const Recharge = () => {
-const navigate = useNavigate();
+
 const [rechargeData, setRechargeData] = useState({
   package: "",
   homePhysioPackage: "",
@@ -10,7 +11,7 @@ const [rechargeData, setRechargeData] = useState({
   additionalSessions: "",
   amountPaid: "",
 });
-
+const navigate = useNavigate();
 const handlePackageSelect = (e) => {
   setRechargeData((prev) => ({
     ...prev,
@@ -120,7 +121,12 @@ console.log(
   return (
 
     <div className="recharge-container">
- 
+         <button type="button" className="back-btn"onClick={() =>navigate("/homepage", {
+      state: {
+        openPatientPopup: true,
+      },
+     })
+      }>  Back</button>
 
       <div className="recharge-card">
 

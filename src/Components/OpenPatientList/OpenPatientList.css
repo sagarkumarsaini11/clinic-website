@@ -26,6 +26,8 @@
   border-radius:15px;
 
   box-shadow:0 4px 20px rgba(0,0,0,0.15);
+
+  position:relative; /* Important */
 }
 
 .patient-file-card h2{
@@ -33,6 +35,36 @@
   color:#212ea0;
 
   margin-bottom:30px;
+
+  padding-top:10px;
+}
+
+/* BACK BUTTON TOP LEFT */
+
+.back-btn{
+  position:absolute;
+
+  top:20px;
+  left:20px;
+
+  background:#212ea0;
+  color:white;
+
+  border:none;
+  border-radius:8px;
+
+  padding:10px 18px;
+
+  font-size:15px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.3s;
+}
+
+.back-btn:hover{
+  background:#16227c;
 }
 
 .form-group{
@@ -110,5 +142,30 @@
 
   .patient-file-card h2{
     font-size:24px;
+    margin-top:20px;
+  }
+
+  .back-btn{
+    top:15px;
+    left:15px;
+
+    padding:8px 14px;
+    font-size:14px;
+  }
+}
+
+@media(max-width:480px){
+
+  .patient-file-container{
+    padding:15px;
+  }
+
+  .patient-file-card{
+    padding:20px;
+  }
+
+  .back-btn{
+    top:12px;
+    left:12px;
   }
 }
