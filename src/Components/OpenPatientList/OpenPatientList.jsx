@@ -1,255 +1,297 @@
-import React, { useState } from "react";
-
-import './OpenPatientList.css'
+import React, { useState, useEffect } from "react";
+import "./OpenPatientList.css";
 import { useNavigate } from "react-router-dom";
 
 export default function OpenPatientList() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [showIdCard, setShowIdCard] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const [patient, setPatient] = useState({
     fileNo: "",
     name: "",
     age: "",
     sex: "",
     whatsapp: "",
-    balanceSessions: "",
+    address: "",
+    problem: "",
+    balanceSessions: 12,
+    attendance: 72,
+    punctuality: 85,
   });
 
-  const [errors, setErrors] = useState({});
+  useEffect(() => {
+    fetchPatient();
+  }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const fetchPatient = async () => {
+    try {
+      setLoading(true);
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+      const response = await fetch(
+        "https://clinic-backend-5ucx.onrender.com/api/appointment/list"
+      );
 
-    setErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
+      const data = await response.json();
+
+      console.log("API DATA", data);
+
+      const patientData = Array.isArray(data)
+        ? data[0]
+        : data.data?.[0] || data.appointments?.[0];
+
+      if (patientData) {
+        setPatient({
+          fileNo:
+            patientData.fileNo ||
+            patientData.fileNumber ||
+            "12345",
+
+          name: patientData.name || "",
+
+          age: patientData.age || "",
+
+          sex:
+            patientData.gender ||
+            patientData.sex ||
+            "",
+
+          whatsapp:
+            patientData.mobile ||
+            patientData.whatsapp ||
+            "",
+
+          address:
+            patientData.address || "",
+
+          problem:
+            patientData.problem || "",
+
+          balanceSessions: 12,
+
+          attendance: 72,
+
+          punctuality: 85,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const validateForm = () => {
-    let newErrors = {};
+  const shareWhatsApp = () => {
+    const text =
+      `Patient ID Card\n\n` +
+      `File No: ${patient.fileNo}\n` +
+      `Name: ${patient.name}\n` +
+      `Age/Sex: ${patient.age}/${patient.sex}\n` +
+      `Mobile: ${patient.whatsapp}`;
 
-    if (!formData.fileNo.trim()) {
-      newErrors.fileNo = "File Number is required";
-    } else if (formData.fileNo.length < 5) {
-      newErrors.fileNo = "File Number must be minimum 5 digits";
-    }
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
-
-    if (!formData.age.trim()) {
-      newErrors.age = "Age is required";
-    }
-
-    if (!formData.sex) {
-      newErrors.sex = "Please select gender";
-    }
-
-    if (!formData.whatsapp.trim()) {
-      newErrors.whatsapp = "WhatsApp Number is required";
-    } else if (formData.whatsapp.length !== 10) {
-      newErrors.whatsapp =
-        "WhatsApp Number must be 10 digits";
-    }
-
-    if (!formData.balanceSessions.trim()) {
-      newErrors.balanceSessions =
-        "Balance Sessions is required";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(text)}`
+    );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    console.log("===== OPEN PATIENT FILE =====");
-    console.table(formData);
-    console.log(formData);
-
-    alert("Patient File Opened Successfully!");
-
-    setFormData({
-      fileNo: "",
-      name: "",
-      age: "",
-      sex: "",
-      whatsapp: "",
-      balanceSessions: "",
-    });
-  };
+  if (loading) {
+    return (
+      <div className="patient-file-page">
+        <h2 style={{ textAlign: "center" }}>
+          Loading Patient...
+        </h2>
+      </div>
+    );
+  }
 
   return (
-    <div className="patient-file-container">
- 
- <button  type="button"  className="back-btn"onClick={() =>
-navigate("/homepage", { state: { openPatientPopup: true,
-  },
-    })
-  } >←</button>
- 
-  
+    <div className="patient-file-page">
+
+      <button
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ←
+      </button>
 
       <div className="patient-file-card">
 
-        <h2>Open Patient File</h2>
+        <h2>Patient File</h2>
 
-        <form onSubmit={handleSubmit}>
+        <div className="patient-info">
 
-          {/* File Number */}
+          <p>
+            <strong>File No:</strong>{" "}
+            {patient.fileNo}
+          </p>
 
-          <div className="form-group">
-            <label>File Number *</label>
+          <p>
+            <strong>Name:</strong>{" "}
+            {patient.name}
+          </p>
 
-            <input
-              type="text"
-              name="fileNo"
-              value={formData.fileNo}
-              onChange={handleChange}
-              placeholder="Enter File Number"
-            />
+          <p>
+            <strong>Age/Sex:</strong>{" "}
+            {patient.age} / {patient.sex}
+          </p>
 
-            {errors.fileNo && (
-              <p className="error-text">
-                {errors.fileNo}
-              </p>
-            )}
-          </div>
+          <p>
+            <strong>Mobile:</strong>{" "}
+            {patient.whatsapp}
+          </p>
 
-          {/* Name */}
+          <p>
+            <strong>Address:</strong>{" "}
+            {patient.address}
+          </p>
 
-          <div className="form-group">
-            <label>Name *</label>
+          <p>
+            <strong>Problem:</strong>{" "}
+            {patient.problem}
+          </p>
 
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter Name"
-            />
+          <p>
+            <strong>Balance Sessions:</strong>{" "}
+            {patient.balanceSessions}
+          </p>
 
-            {errors.name && (
-              <p className="error-text">
-                {errors.name}
-              </p>
-            )}
-          </div>
+        </div>
 
-          {/* Age */}
-
-          <div className="form-group">
-            <label>Age *</label>
-
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              placeholder="Enter Age"
-            />
-
-            {errors.age && (
-              <p className="error-text">
-                {errors.age}
-              </p>
-            )}
-          </div>
-
-          {/* Sex */}
-
-          <div className="form-group">
-            <label>Sex *</label>
-
-            <select
-              name="sex"
-              value={formData.sex}
-              onChange={handleChange}
-            >
-              <option value="">
-                Select Gender
-              </option>
-
-              <option value="Male">
-                Male
-              </option>
-
-              <option value="Female">
-                Female
-              </option>
-
-              <option value="Other">
-                Other
-              </option>
-            </select>
-
-            {errors.sex && (
-              <p className="error-text">
-                {errors.sex}
-              </p>
-            )}
-          </div>
-
-          {/* WhatsApp */}
-
-          <div className="form-group">
-            <label>WhatsApp Number *</label>
-
-            <input
-              type="text"
-              name="whatsapp"
-              value={formData.whatsapp}
-              onChange={handleChange}
-              placeholder="Enter WhatsApp Number"
-            />
-
-            {errors.whatsapp && (
-              <p className="error-text">
-                {errors.whatsapp}
-              </p>
-            )}
-          </div>
-
-          {/* Balance Sessions */}
-
-          <div className="form-group">
-            <label>Balance Sessions *</label>
-
-            <input
-              type="number"
-              name="balanceSessions"
-              value={formData.balanceSessions}
-              onChange={handleChange}
-              placeholder="Enter Balance Sessions"
-            />
-
-            {errors.balanceSessions && (
-              <p className="error-text">
-                {errors.balanceSessions}
-              </p>
-            )}
-          </div>
+        <div className="link-grid">
 
           <button
-            type="submit"
-            className="submit-btn-file"
+            onClick={() =>
+              navigate("/prescription")
+            }
           >
-            Open Patient File
+            Patient Prescription
           </button>
 
-        </form>
+          <button
+            onClick={() =>
+              setShowIdCard(true)
+            }
+          >
+            Show ID Card
+          </button>
+
+          <button
+            onClick={() =>
+              navigate("/treatmentprotocol")
+            }
+          >
+            Treatment Protocol
+          </button>
+
+          <button
+            onClick={() =>
+              navigate("/attendancesheet")
+            }
+          >
+            Attendance Sheet
+          </button>
+
+          <button
+            onClick={() =>
+              navigate("/recharge")
+            }
+          >
+            Recharge
+          </button>
+
+        </div>
+
+        <div className="meter-section">
+
+          <h3>Attendance %</h3>
+
+          <div className="meter">
+            <div
+              className="meter-fill"
+              style={{
+                width: `${patient.attendance}%`,
+              }}
+            >
+              {patient.attendance}%
+            </div>
+          </div>
+
+          <p>Good</p>
+
+          <h3>Punctuality %</h3>
+
+          <div className="meter">
+            <div
+              className="meter-fill"
+              style={{
+                width: `${patient.punctuality}%`,
+              }}
+            >
+              {patient.punctuality}%
+            </div>
+          </div>
+
+          <p>Excellent</p>
+
+        </div>
+
+        <div className="bill-section">
+
+          <h3>Patient Bills</h3>
+
+          <ul>
+            <li>Bill #1001 - ₹250</li>
+            <li>Bill #1002 - ₹1125</li>
+            <li>Bill #1003 - ₹600</li>
+          </ul>
+
+        </div>
+
       </div>
+
+      {showIdCard && (
+
+        <div className="modal-overlay">
+
+          <div className="id-card">
+
+            <h3>Patient ID Card</h3>
+
+            <p>File No: {patient.fileNo}</p>
+
+            <p>Name: {patient.name}</p>
+
+            <p>
+              Age/Sex:
+              {patient.age}/{patient.sex}
+            </p>
+
+            <p>
+              Mobile:
+              {patient.whatsapp}
+            </p>
+
+            <button
+              onClick={shareWhatsApp}
+            >
+              Share ID on WhatsApp
+            </button>
+
+            <button
+              className="close-btn"
+              onClick={() =>
+                setShowIdCard(false)
+              }
+            >
+              Close
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
     </div>
   );
 }

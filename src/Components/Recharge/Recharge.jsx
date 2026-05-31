@@ -121,7 +121,7 @@ console.log(
   return (
 
     <div className="recharge-container">
-         <button type="button" className="back-btn"onClick={() =>navigate("/homepage", {
+         <button type="button" className="back-btn-recharge"onClick={() =>navigate("/homepage", {
       state: {
         openPatientPopup: true,
       },
