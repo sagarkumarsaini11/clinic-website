@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./PrescriptionForm.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
+
 
 export default function PrescriptionForm() {
+ const navigate = useNavigate();
+const location = useLocation();
+
 const [formData, setFormData] = useState({
   // Patient Details
   name: "",
@@ -125,7 +131,16 @@ personalizedHomeTreatment: false,
   return (
     <div className="prescription-container">
       
-
+<FaTimes
+  className="close-icon-prescription"
+  onClick={() =>
+    navigate("/homepage", {
+      state: {
+        openPatientPopup: true,
+      },
+    })
+  }
+/>
       <h1>PHYSICAL THERAPY PRESCRIPTION</h1>
         
        <form onSubmit={handleSubmit}>

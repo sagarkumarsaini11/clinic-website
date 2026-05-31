@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./OpenPatientList.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
-
+import { FaTimes } from "react-icons/fa";
 
 export default function OpenPatientList() {
 
@@ -114,20 +113,18 @@ const location = useLocation();
     <>
     <Sidebar/>
     <div className="patient-file-page">
-
       <div className="patient-file-card">
 
-        
-          <FaTimes
-          className="close-icon-patientlist"
-          onClick={() =>
-            navigate("/homepage", {
-              state: {
-                openPatientPopup: true,
-              },
-            })
-          }
-        />
+         <FaTimes
+  className="close-icon-patient-file"
+  onClick={() =>
+    navigate("/homepage", {
+      state: {
+        openPatientPopup: true,
+      },
+    })
+  }
+/>
 
         <h2>Patient File</h2>
 

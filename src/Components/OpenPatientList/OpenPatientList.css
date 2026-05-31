@@ -12,6 +12,7 @@
 
 
 .patient-file-card{
+  position: relative;
   max-width:800px;
   margin:auto;
 
@@ -128,26 +129,27 @@
   background:#dc3545 !important;
 }
 /* BACK BUTTON  */
+.close-icon-patient-file{
+  position:absolute;
 
-.close-icon-patientlist{
-  position: absolute;
+  top:20px;
+  right:20px;
 
-  top: 20px;
-  right: 20px;
+  font-size:22px;
 
-  font-size: 22px;
+  color:#212ea0;
 
-  color: #555;
+  cursor:pointer;
 
-  cursor: pointer;
-
-  transition: 0.3s;
+  transition:0.3s;
 }
 
-.close-icon-patientlist:hover{
-  color: #ff3b30;
-  transform: scale(1.1);
+.close-icon-patient-file:hover{
+  color:#dc3545;
+
+  transform:scale(1.1);
 }
+
 @media(max-width:768px){
 
   .patient-file-card{
@@ -158,11 +160,5 @@
     grid-template-columns:1fr;
   }
 }
-@media (max-width:480px){
 
-  .close-icon-patientlist{
-    top: 15px;
-    right: 15px;
-    font-size: 20px;
-  }
-}
+
