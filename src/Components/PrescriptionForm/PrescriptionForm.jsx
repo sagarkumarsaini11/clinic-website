@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./PrescriptionForm.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
-
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function PrescriptionForm() {
  const navigate = useNavigate();
@@ -129,6 +129,8 @@ personalizedHomeTreatment: false,
 
 
   return (
+    <>
+    <Sidebar/>
     <div className="prescription-container">
       
 <FaTimes
@@ -645,5 +647,6 @@ personalizedHomeTreatment: false,
            </div>
        </form>
     </div>
+    </>
   );
 }
