@@ -14,15 +14,12 @@ export default function Sidebar() {
 
       <div className="navbar">
 
-        <button
-          className="menu-btn"
-          onClick={() => setShowSidebar(true)}
-        >
-          ☰
-        </button>
-
-        <h2>Homepage</h2>
-
+        <button     className="menu-btn"    onClick={() => setShowSidebar(true)}>
+         ☰ </button>
+      
+        
+           <h2>Homepage</h2>
+      
         <div className="notification">
           <FaBell size={22} />
           <span className="badge">3</span>
@@ -30,63 +27,52 @@ export default function Sidebar() {
 
       </div>
 
-      {/* SIDEBAR */}
+                 {/* SIDEBAR */}
 
       {showSidebar && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setShowSidebar(false)}
-        >
-          <div
-            className="sidebar"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div  className="sidebar-overlay"
+           onClick={() => setShowSidebar(false)}>
+       
+        
+          <div className="sidebar"
+              onClick={(e) => e.stopPropagation()} >
+         
+         
             <h2>MENU</h2>
                  <button
               onClick={() => {
                 navigate("/");
                 setShowSidebar(false);
-              }}
-            >
-           Web-Homepage
-            </button>
-
+              }} >Web-Homepage</button>
+           
+  
             <button
               onClick={() => {
                 navigate("/homepage");
                 setShowSidebar(false);
-              }}
-            >
-             Homepage
-            </button>
-
+              }} >Homepage</button>
+           
             <button
               onClick={() => {
                 navigate("/addpatient");
                 setShowSidebar(false);
-              }}
-            >
-              Add New Patient
-            </button>
-
+              }} > Add New Patient</button>
+           
+  
             <button
               onClick={() => {
                 navigate("/openpatientlist");
                 setShowSidebar(false);
-              }}
-            >
-              Open Patient File
-            </button>
-
+              }} > Open Patient File </button>
+           
+          
             <button
               onClick={() => {
                 navigate("/recharge");
                 setShowSidebar(false);
-              }}
-            >
-              Recharge
-            </button>
-
+              }}> Recharge</button>
+            
+        
             <button>Time Table</button>
 
             <button>Download Report</button>

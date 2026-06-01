@@ -37,22 +37,15 @@ const location = useLocation();
     <div className="attendance-container">
 
       <div className="attendance-card">
-
-        
-     <button
-  className="close-attendance-btn"
-  onClick={() =>
-    navigate("/homepage", {
-      state: {
+    
+     <button  className="close-attendance-btn" onClick={() =>
+        navigate("/homepage", {   state: {
         openPatientPopup: true,
-      },
-    })
-  }
->
-  ✕
-</button>
+       },
+   })
+   } > ✕</button>
 
-        <h2>Patient Attendance Sheet</h2>
+         <h2>Patient Attendance Sheet</h2>
 
         <div className="table-wrapper">
 

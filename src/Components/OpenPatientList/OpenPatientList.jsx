@@ -116,100 +116,50 @@ const location = useLocation();
       <div className="patient-file-card">
 
          <FaTimes
-  className="close-icon-patient-file"
-  onClick={() =>
-    navigate("/homepage", {
+  className="close-icon-patient-file"  onClick={() =>
+     navigate("/homepage", {
       state: {
         openPatientPopup: true,
       },
     })
-  }
-/>
-
+  }/>  
+                   {/* Patient Details */}
+                     
         <h2>Patient File</h2>
-
         <div className="patient-info">
 
-          <p>
-            <strong>File No:</strong>{" "}
-            {patient.fileNo}
-          </p>
-
-          <p>
-            <strong>Name:</strong>{" "}
-            {patient.name}
-          </p>
-
-          <p>
-            <strong>Age/Sex:</strong>{" "}
-            {patient.age} / {patient.sex}
-          </p>
-
-          <p>
-            <strong>Mobile:</strong>{" "}
-            {patient.whatsapp}
-          </p>
-
-          <p>
-            <strong>Address:</strong>{" "}
-            {patient.address}
-          </p>
-
-          <p>
-            <strong>Problem:</strong>{" "}
-            {patient.problem}
-          </p>
-
-          <p>
-            <strong>Balance Sessions:</strong>{" "}
-            {patient.balanceSessions}
-          </p>
-
+          <p>  <strong>File No:</strong>{" "} {patient.fileNo} </p>
+          <p> <strong>Name:</strong>{" "} {patient.name}</p>
+          <p> <strong>Age/Sex:</strong>{" "}    {patient.age} / {patient.sex}</p>
+          <p><strong>Mobile:</strong>{" "}   {patient.whatsapp}</p>
+          <p> <strong>Address:</strong>{" "} {patient.address}</p>
+          <p> <strong>Problem:</strong>{" "}  {patient.problem} </p>
+          <p> <strong>Balance Sessions:</strong>{" "}
+           {patient.balanceSessions}  </p>
+          
         </div>
+                    {/* Hyperlinks */}
 
         <div className="link-grid">
 
-          <button
-            onClick={() =>
-              navigate("/prescription")
-            }
-          >
-            Patient Prescription
-          </button>
+          <button  onClick={() =>  navigate("/prescription")} >
+           Patient Prescription
+           </button>  
 
-          <button
-            onClick={() =>
-              setShowIdCard(true)
-            }
-          >
-            Show ID Card
-          </button>
+          <button   onClick={() => setShowIdCard(true)} > Show ID Card</button>
 
-          <button
-            onClick={() =>
-              navigate("/treatmentprotocol")
-            }
-          >
-            Treatment Protocol
-          </button>
+          <button  onClick={() => navigate("/treatmentprotocol")} >
+           Treatment Protocol
+           </button>   
 
-          <button
-            onClick={() =>
-              navigate("/attendancesheet")
-            }
-          >
-            Attendance Sheet
-          </button>
+          <button   onClick={() => navigate("/attendancesheet") } >
+           Attendance Sheet
+           </button>   
 
-          <button
-            onClick={() =>
-              navigate("/recharge")
-            }
-          >
-            Recharge
-          </button>
-
+          <button   onClick={() =>  navigate("/recharge") }>  Recharge</button>
         </div>
+
+                    {/* Attendance meters */}
 
         <div className="meter-section">
 
@@ -219,27 +169,20 @@ const location = useLocation();
             <div
               className="meter-fill"
               style={{
-                width: `${patient.attendance}%`,
-              }}
-            >
-              {patient.attendance}%
+                width: `${patient.attendance}%`,  }}>
+            {patient.attendance}%
             </div>
-          </div>
-
+         </div>     
+          
           <p>Good</p>
 
           <h3>Punctuality %</h3>
 
           <div className="meter">
-            <div
-              className="meter-fill"
-              style={{
-                width: `${patient.punctuality}%`,
-              }}
-            >
+            <div className="meter-fill"  style={{  width: `${patient.punctuality}%`,  }} >
               {patient.punctuality}%
             </div>
-          </div>
+          </div>    
 
           <p>Excellent</p>
 
@@ -271,31 +214,17 @@ const location = useLocation();
 
             <p>Name: {patient.name}</p>
 
-            <p>
-              Age/Sex:
-              {patient.age}/{patient.sex}
-            </p>
-
-            <p>
-              Mobile:
-              {patient.whatsapp}
-            </p>
-
-            <button
-              onClick={shareWhatsApp}
-            >
-              Share ID on WhatsApp
+            <p> Age/Sex:  {patient.age}/{patient.sex} </p>
+          
+            <p> Mobile:  {patient.whatsapp}</p>
+             
+            <button   onClick={shareWhatsApp}>
+            Share ID on WhatsApp
             </button>
-
-            <button
-              className="close-btn"
-              onClick={() =>
-                setShowIdCard(false)
-              }
-            >
-              Close
-            </button>
-
+            
+            <button className="close-btn" onClick={() =>   setShowIdCard(false)} >
+             Close</button>
+          
           </div>
 
         </div>
