@@ -16,6 +16,8 @@ import PrescriptionForm from './Components/PrescriptionForm/PrescriptionForm'
 import Recharge from './Components/Recharge/Recharge'
 import OpenPatientList from './Components/OpenPatientList/OpenPatientList'
 import Sidebar from './Components/Sidebar/Sidebar'
+import PatientAttendance from './Components/PatientAttendance/PatientAttendance'
+
 
 
 
@@ -65,6 +67,9 @@ function App () {
 
                        {/*Open Patientn File */}
                <Route path="/openpatientlist" element={<OpenPatientList/>}/>
+
+                           {/* Patientn Attendance*/}
+               <Route path="/attendance" element={<PatientAttendance/>}/>
    </Routes>
   
   )

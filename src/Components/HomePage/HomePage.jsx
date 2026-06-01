@@ -388,7 +388,7 @@ useEffect(() => {
                 <p>  Treatment Protocol</p>
              </div>   
               
-              <div className="feature-card">
+              <div className="feature-card"  onClick={() =>  navigate("/attendance")}>
                 <FaCalendarCheck size={35} />
                 <p> Attendance Sheet</p>
                </div>   

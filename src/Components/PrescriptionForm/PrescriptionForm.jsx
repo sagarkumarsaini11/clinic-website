@@ -131,6 +131,7 @@ personalizedHomeTreatment: false,
   return (
     <>
     <Sidebar/>
+    
     <div className="prescription-container">
       
 <FaTimes
