@@ -152,7 +152,7 @@ const location = useLocation();
            Treatment Protocol
            </button>   
 
-          <button   onClick={() => navigate("/attendancesheet") } >
+          <button   onClick={() => navigate("/attendance") } >
            Attendance Sheet
            </button>   
 
