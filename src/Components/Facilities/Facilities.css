@@ -1,222 +1,298 @@
-.facilities {
-  width: 90%;
-  margin: 100px auto;
-  text-align: center;
+.facilities{
+  width:95%;
+  margin:100px auto;
+  text-align:center;
 }
 
-.title p {
-  color: #212ea0;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 10px;
+.title p{
+  color:#212ea0;
+  font-weight:600;
 }
 
-.title h2 {
-  font-size: 42px;
-  color: #000f38;
-  margin-bottom: 50px;
+.title h2{
+  font-size:40px;
+  margin-bottom:50px;
 }
 
-/* Slider */
-
-.slider-wrapper {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+.slider-wrapper{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.slider-track {
-  display: flex;
-  transition: transform 0.8s ease-in-out;
+.slider-track{
+  display:flex;
+  width:100%;
+  justify-content:center;
+  gap:25px;
 }
 
-.slide {
-  min-width: calc(100% / 3);
-  padding: 10px;
-  box-sizing: border-box;
-  position: relative;
+.slide{
+  flex:1;
+  max-width:380px;
 
-  transform: scale(0.9);
-  opacity: 0.6;
+  position:relative;
 
-  transition: all 0.5s ease;
+  opacity:.7;
+  transform:scale(.92);
+
+  transition:.5s;
 }
 
-.slide.active {
-  transform: scale(1.08);
-  opacity: 1;
+.slide.active{
+  opacity:1;
+  transform:scale(1.05);
 }
 
-.slide img {
-  width: 100%;
-  height: 380px;
-  object-fit: cover;
-  border-radius: 15px;
+.slide img{
+  width:100%;
+  height:320px;
+
+  object-fit:cover;
+
+  border-radius:20px;
+
+  cursor:pointer;
+
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
-.caption {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
+.caption{
+  position:absolute;
 
-  background: rgba(0, 0, 0, 0.55);
-  color: white;
+  bottom:15px;
+  left:15px;
+  right:15px;
 
-  padding: 12px;
-  border-radius: 10px;
+  background:rgba(0,0,0,.55);
+
+  color:white;
+
+  padding:12px;
+
+  border-radius:10px;
 }
 
-.caption h3 {
-  margin: 0;
-  font-size: 18px;
+.caption h3{
+  font-size:18px;
 }
 
-/* Clickable Image */
+.slider-btn{
+  width:50px;
+  height:50px;
 
-.facility-image {
-  cursor: pointer;
+  border:none;
+  border-radius:50%;
+
+  background:#212ea0;
+  color:white;
+
+  font-size:22px;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+  z-index:10;
 }
 
-/* Full Screen Modal */
-
-.image-modal {
-  position: fixed;
-  inset: 0;
-
-  background: rgba(0,0,0,0.9);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 9999;
+.slider-btn:hover{
+  background:#16227c;
 }
 
-.image-modal-content {
-  position: relative;
-  width: 90%;
-  max-width: 1000px;
-  text-align: center;
+.left-btn{
+  margin-right:20px;
 }
 
-.image-modal-content img {
-  width: 100%;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: 15px;
+.right-btn{
+  margin-left:20px;
 }
 
-.image-modal-content h2 {
-  color: white;
-  margin-top: 15px;
+/* Modal */
+
+.image-modal{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.9);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
 }
 
-.close-modal {
-  position: absolute;
-  top: -40px;
-  right: 0;
-
-  background: transparent;
-  border: none;
-
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
+.image-modal-content{
+  position:relative;
+  width:90%;
+  max-width:1000px;
 }
 
-/* Arrow Buttons */
+.image-modal-content img{
+  width:100%;
+  max-height:80vh;
 
-.slider-wrapper {
-  position: relative;
+  object-fit:contain;
+
+  border-radius:15px;
 }
 
-.slider-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-
-  width: 50px;
-  height: 50px;
-
-  border: none;
-  border-radius: 50%;
-
-  background: rgba(33, 46, 160, 0.9);
-  color: white;
-
-  font-size: 24px;
-  cursor: pointer;
-
-  z-index: 100;
-  transition: 0.3s;
+.image-modal-content h2{
+  color:white;
+  margin-top:15px;
 }
 
-.slider-btn:hover {
-  background: #212ea0;
-  transform: translateY(-50%) scale(1.1);
+.close-modal{
+  position:absolute;
+  top:-45px;
+  right:0;
+
+  background:none;
+  border:none;
+
+  color:white;
+
+  font-size:35px;
+
+  cursor:pointer;
 }
 
-.left-btn {
-  left: 10px;
-}
+@media (max-width:768px){
 
-.right-btn {
-  right: 10px;
-}
-
-@media (max-width: 768px) {
-
-  .facilities {
-    width: 95%;
+  .slider-wrapper{
+    width:100%;
   }
 
-  .slide {
-    min-width: 100%;
-    padding: 5px;
-
-    transform: scale(1);
-    opacity: 1;
+  .slider-track{
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
 
-  .slide.active {
-    transform: scale(1);
+  .slide{
+    min-width:100%;
+    max-width:100%;
+
+    opacity:1;
+    transform:none;
+
+    padding:0;
   }
 
-  .slide img {
-    height: 300px;
-    width: 100%;
-    object-fit: cover;
+  .slide:not(.active){
+    display:none;
   }
 
-  .caption h3 {
-    font-size: 16px;
+  .slide.active{
+    display:block;
+    transform:none;
   }
 
-  .title h2 {
-    font-size: 28px;
+  .slide img{
+    width:100%;
+    height:250px;
+
+    object-fit:cover;
+
+    border-radius:15px;
   }
 
-  .slider-track {
-    transition: transform 0.6s ease;
+  .slider-btn{
+    width:40px;
+    height:40px;
+
+    font-size:18px;
   }
 
-  /* Modal Mobile */
-
-  .image-modal-content {
-    width: 95%;
+  .left-btn{
+    position:absolute;
+    left:5px;
+    z-index:10;
   }
 
-  .image-modal-content img {
-    max-height: 70vh;
+  .right-btn{
+    position:absolute;
+    right:5px;
+    z-index:10;
   }
 
-  .image-modal-content h2 {
-    font-size: 18px;
+  .caption h3{
+    font-size:16px;
   }
 
-  .close-modal {
-    font-size: 26px;
-    top: -35px;
+  .title h2{
+    font-size:28px;
+  }
+}
+
+
+
+@media (max-width:768px){
+
+  .slider-wrapper{
+    width:100%;
+  }
+
+  .slider-track{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .slide{
+    min-width:100%;
+    max-width:100%;
+
+    opacity:1;
+    transform:none;
+
+    padding:0;
+  }
+
+  .slide:not(.active){
+    display:none;
+  }
+
+  .slide.active{
+    display:block;
+    transform:none;
+  }
+
+  .slide img{
+    width:100%;
+    height:250px;
+
+    object-fit:cover;
+
+    border-radius:15px;
+  }
+
+  .slider-btn{
+    width:40px;
+    height:40px;
+
+    font-size:18px;
+  }
+
+  .left-btn{
+    position:absolute;
+    left:5px;
+    z-index:10;
+  }
+
+  .right-btn{
+    position:absolute;
+    right:5px;
+    z-index:10;
+  }
+
+  .caption h3{
+    font-size:16px;
+  }
+
+  .title h2{
+    font-size:28px;
   }
 }

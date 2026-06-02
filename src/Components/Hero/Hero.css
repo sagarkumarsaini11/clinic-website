@@ -13,6 +13,20 @@
 .hero-text{
     text-align: center;
     max-width: 800px;
+      animation: slideFromLeft 1.8s ease-out forwards;
+}
+
+@keyframes slideFromLeft {
+
+    0%{
+        opacity: 0;
+        transform: translateX(-300px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 .hero-text h1{
     font-size: 60px;

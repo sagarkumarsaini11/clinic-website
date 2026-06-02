@@ -94,27 +94,21 @@ const Facilities = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [forward, setForward] = useState(true);
 
-  useEffect(() => {
-    const slider = setInterval(() => {
-      if (forward) {
-        if (currentIndex >= facilitiesData.length - 3) {
-          setForward(false);
-          setCurrentIndex((prev) => prev - 1);
-        } else {
-          setCurrentIndex((prev) => prev + 1);
-        }
-      } else {
-        if (currentIndex <= 0) {
-          setForward(true);
-          setCurrentIndex((prev) => prev + 1);
-        } else {
-          setCurrentIndex((prev) => prev - 1);
-        }
-      }
-    }, 3000);
+useEffect(() => {
 
-    return () => clearInterval(slider);
-  }, [currentIndex, forward]);
+  const interval = setInterval(() => {
+
+    setCurrentIndex((prev) =>
+      prev >= facilitiesData.length - 3
+        ? 0
+        : prev + 1
+    );
+
+  }, 5000);
+
+  return () => clearInterval(interval);
+
+}, [facilitiesData.length]);
 
   return (
     <section className="facilities">
@@ -123,65 +117,68 @@ const Facilities = () => {
         <h2>World Class Facilities</h2>
       </div>
 
-      <div className="slider-wrapper">
+<div className="slider-wrapper">
+
+  <button
+    className="slider-btn left-btn"
+    onClick={() =>  setCurrentIndex((prev) => prev === 0
+      ? facilitiesData.length - 3
+        : prev - 1
+      )  
+    }>   ❮   </button>
+      
+
+  <div className="slider-track">
+
+    {facilitiesData
+      .slice(currentIndex, currentIndex + 3)
+      .map((item, index) => (
         <div
-          className="slider-track"
-          style={{
-            transform: `translateX(-${currentIndex * 33.333}%)`,
-          }}
-        >
-          {facilitiesData.map((item, index) => {
-            const centerIndex = currentIndex + 1;
+          key={index}
+          className={`slide ${
+            index === 1 ? "active" : ""
+          }`}>
+        
+          <img  src={item.image}  alt={item.title}
+             className="facility-image" onClick={() =>
+             setSelectedImage(item)  } />
+        
 
-            return (
-              <div
-                key={index}
-                className={`slide ${
-                  index === centerIndex ? "active" : ""
-                }`}
-              >
-              <img
-  src={item.image}
-  alt={item.title}
-  onClick={() => setSelectedImage(item)}
-  className="facility-image"
-/>
-
-                <div className="caption">
-                  <h3>{item.title}</h3>
-                </div>
-              </div>
-            );
-          })}
+          <div className="caption">
+            <h3>{item.title}</h3>
+          </div>
         </div>
-      </div>
-      {selectedImage && (
-  <div
-    className="image-modal"
-    onClick={() => setSelectedImage(null)}
-  >
-    <div
-      className="image-modal-content"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        className="close-modal"
-        onClick={() => setSelectedImage(null)}
-      >
-        ✖
-      </button>
+      ))}
 
-      <img
-        src={selectedImage.image}
-        alt={selectedImage.title}
-      />
-
-      <h2>{selectedImage.title}</h2>
-    </div>
   </div>
-)}
-    </section>
-  );
-};
 
+  <button  className="slider-btn right-btn"  onClick={() =>
+   setCurrentIndex((prev) => prev >= facilitiesData.length - 3
+   ? 0 : prev + 1)} > ❯ </button>
+    
+      {selectedImage && (
+       <div   className="image-modal"
+        onClick={() => setSelectedImage(null)}  >
+    
+
+    <div   className="image-modal-content"
+     onClick={(e) => e.stopPropagation()}>
+    
+      <button  className="close-modal"  onClick={() => setSelectedImage(null)} >
+       ✕ </button>
+    
+      <img src={selectedImage.image}  alt={selectedImage.title}/>
+        <h2>{selectedImage.title}</h2>
+      </div>
+      </div>  )}
+</div>
+  </section>     
+  );
+};    
 export default Facilities;
+
+
+
+  
+
+

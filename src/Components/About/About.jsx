@@ -1,11 +1,42 @@
-import React from "react";
+import React, {  useEffect,  useRef, useState,} from "react";
 import "./About.css";
 
 import aboutImg from "../../assets/about-clinic.jpeg"
 
 const About = () => {
+
+  const aboutRef = useRef(null);
+
+  const [showAnimation, setShowAnimation] =
+    useState(false);
+
+  useEffect(() => {
+
+    const observer =
+      new IntersectionObserver(
+        ([entry]) => {
+
+          if (entry.isIntersecting) {
+            setShowAnimation(true);
+          }
+
+        },
+        {
+          threshold: 0.3,
+        }
+      );
+
+    if (aboutRef.current) {
+      observer.observe(aboutRef.current);
+    }
+
+    return () => observer.disconnect();
+
+  }, []);
+
   return (
-    <section className="about">
+    <section  ref={aboutRef} 
+     className={`about ${ showAnimation ? "show" : "" }`}>
 
       <div className="about-left">
         <img src={aboutImg} alt="Krishna Advance Physio Clinic"  className="about-img"/>
