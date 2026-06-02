@@ -298,7 +298,45 @@ textarea{
     margin-top: 5px;
     font-weight: 500;
 }
+  /* appoiment type*/
+ .radio-group{
+  display:flex;
+  gap:25px;
+  margin-top:10px;
+}
 
+.radio-group label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:500;
+}
+
+   /*Payment Section*/
+.payment-section{
+  margin-top:25px;
+  padding:20px;
+  background:#f8faff;
+  border:1px solid #dbe4ff;
+  border-radius:10px;
+}
+
+.payment-section h3{
+  color:#212EA0;
+  margin-bottom:20px;
+}
+
+@media(max-width:480px){
+
+  .radio-group{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .payment-section{
+    padding:15px;
+  }
+}
 
 
 /* MOBILE */

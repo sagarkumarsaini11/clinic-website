@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import "./AddPatientForm.css";
 
-import {
-  FaBell,
-  FaBars,
-} from "react-icons/fa";
-
+import {  FaBell,  FaBars,} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function AddPatientForm() {
@@ -27,6 +23,13 @@ export default function AddPatientForm() {
       mobile: "",
       address: "",
       problem: "",
+      appointmentType: "",
+    appointmentDate: "",
+     appointmentTime: "",
+       amount: "",
+      cash: "",
+      upi: "",
+      total: "",
     });
 
 
@@ -54,6 +57,26 @@ export default function AddPatientForm() {
       [name]: "",
     }));
   };
+
+  //Payment change
+ const handlePaymentChange = (e) => {
+  const { name, value } = e.target;
+
+  const updatedData = {
+    ...formData,
+    [name]: value,
+  };
+
+  const cash =
+    Number(updatedData.cash || 0);
+
+  const upi =
+    Number(updatedData.upi || 0);
+
+  updatedData.total = cash + upi;
+
+  setFormData(updatedData);
+};
 
   // Validation
 
@@ -97,6 +120,56 @@ export default function AddPatientForm() {
         "Problem is required";
     }
 
+    if (!formData.appointmentType) {
+  newErrors.appointmentType =
+    "Appointment Type is required";
+}
+
+if (
+  formData.appointmentType === "Standard"
+) {
+
+  if (!formData.appointmentDate) {
+    newErrors.appointmentDate =
+      "Date is required";
+  }
+
+  if (!formData.appointmentTime) {
+    newErrors.appointmentTime =
+      "Time Slot is required";
+  }
+
+}
+
+if (!formData.amount) {
+  newErrors.amount =
+    "Amount is required";
+}
+
+if (
+  formData.amount &&
+  isNaN(formData.amount)
+) {
+  newErrors.amount =
+    "Only numbers allowed";
+}
+
+if (
+  formData.cash &&
+  isNaN(formData.cash)
+) {
+  newErrors.cash =
+    "Only numbers allowed";
+}
+
+if (
+  formData.upi &&
+  isNaN(formData.upi)
+) {
+  newErrors.upi =
+    "Only numbers allowed";
+}
+
     setErrors(newErrors);
 
     return Object.keys(newErrors)
@@ -106,6 +179,7 @@ export default function AddPatientForm() {
   // Submit
 
  const handleSubmit = async (e) => {
+ console.log("Complete Patient Data:",formData);
 
   e.preventDefault();
 
@@ -345,6 +419,229 @@ export default function AddPatientForm() {
               )}
 
             </div>
+
+{/* APPOINTMENT TYPE */}
+
+<div className="form-group">
+
+  <label>
+    Appointment Type <span>*</span>
+  </label>
+
+  <div className="radio-group">
+
+    <label>
+
+      <input
+        type="radio"
+        name="appointmentType"
+        value="Standard"
+        checked={
+          formData.appointmentType ===
+          "Standard"
+        }
+        onChange={handleChange}
+      />
+
+      Standard
+
+    </label>
+
+    <label>
+
+      <input
+        type="radio"
+        name="appointmentType"
+        value="Instant"
+        checked={
+          formData.appointmentType ===
+          "Instant"
+        }
+        onChange={handleChange}
+      />
+
+      Instant
+
+    </label>
+
+  </div>
+
+  {errors.appointmentType && (
+    <p className="error-text">
+      {errors.appointmentType}
+    </p>
+  )}
+
+</div>
+
+{/* STANDARD OPTIONS */}
+
+{formData.appointmentType ===
+  "Standard" && (
+
+  <>
+   <div className="form-group">
+  <label>
+    Available Date <span>*</span>
+  </label>
+
+ <input
+  type="date"
+  name="appointmentDate"
+  value={formData.appointmentDate}
+  onChange={handleChange}
+/>
+
+  {errors.appointmentDate && (
+    <p className="error-text">
+      {errors.appointmentDate}
+    </p>
+  )}
+</div>
+
+<div className="form-group">
+  <label>
+    Available Time Slot
+    <span>*</span>
+  </label>
+
+  <select
+    name="appointmentTime"
+    value={formData.appointmentTime}
+    onChange={handleChange}
+  >
+    <option value="">
+      Select Time
+    </option>
+
+    <option value="09:00 AM">
+      09:00 AM
+    </option>
+
+    <option value="10:00 AM">
+      10:00 AM
+    </option>
+
+    <option value="11:00 AM">
+      11:00 AM
+    </option>
+
+    <option value="12:00 PM">
+      12:00 PM
+    </option>
+
+    <option value="01:00 PM">
+      01:00 PM
+    </option>
+
+    <option value="02:00 PM">
+      02:00 PM
+    </option>
+     <option value="03:00 PM">
+      03:00 PM
+    </option>
+     <option value="04:00 PM">
+      04:00 PM
+    </option>
+     <option value="05:00 PM">
+      05:00 PM
+    </option>
+     <option value="06:00 PM">
+      06:00 PM
+    </option>
+     <option value="07:00 PM">
+      07:00 PM
+    </option>
+     <option value="08:00 PM">
+      08:00 PM
+    </option>
+     <option value="09:00 PM">
+      09:00 PM
+    </option>
+  </select>
+</div>
+  </>
+)}
+               {/* Payment Section */}
+
+<div className="payment-section">
+
+  <h3>Payment Details</h3>
+
+  <div className="form-group">
+
+    <label>Amount *</label>
+
+    <input
+      type="number"
+      name="amount"
+      placeholder="700"
+      value={formData.amount}
+      onChange={handlePaymentChange}
+    />
+
+    {errors.amount && (
+      <p className="error-text">
+        {errors.amount}
+      </p>
+    )}
+
+  </div>
+
+  <div className="form-group">
+
+    <label>Cash</label>
+
+    <input
+      type="number"
+      name="cash"
+      placeholder="500"
+      value={formData.cash}
+      onChange={handlePaymentChange}
+    />
+
+    {errors.cash && (
+      <p className="error-text">
+        {errors.cash}
+      </p>
+    )}
+
+  </div>
+
+  <div className="form-group">
+
+    <label>UPI</label>
+
+    <input
+      type="number"
+      name="upi"
+      placeholder="200"
+      value={formData.upi}
+      onChange={handlePaymentChange}
+    />
+
+    {errors.upi && (
+      <p className="error-text">
+        {errors.upi}
+      </p>
+    )}
+
+  </div>
+
+  <div className="form-group">
+
+    <label>Total</label>
+
+    <input
+      type="number"
+      value={formData.total}
+      readOnly
+    />
+
+  </div>
+
+</div>
+
 
                     {/* BUTTON */}
 
