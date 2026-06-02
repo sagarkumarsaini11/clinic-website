@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,  useRef,} from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
 import menu_icon from "../../assets/menu-icon.png";
@@ -6,6 +6,7 @@ import { Link } from "react-scroll";
 import BranchLogin from "../BranchLogin/BranchLogin";
 
 const Navbar = () => {
+  const menuRef = useRef(null);
 
        // Sticky Navbar
 
@@ -32,6 +33,34 @@ const Navbar = () => {
     setMobileMenu(false);
   };
 
+
+  useEffect(() => {
+
+  const handleClickOutside = (event) => {
+
+    if (
+      mobileMenu &&
+      menuRef.current &&
+      !menuRef.current.contains(event.target)
+    ) {
+      setMobileMenu(false);
+    }
+
+  };
+
+  document.addEventListener(
+    "mousedown",
+    handleClickOutside
+  );
+
+  return () => {
+    document.removeEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+  };
+
+}, [mobileMenu]);
   return (
 
     <nav className={`container ${sticky ? "dark-nav" : ""}`}>
@@ -42,8 +71,10 @@ const Navbar = () => {
 
            {/* Navbar Menu */}
 
-      <ul className={  mobileMenu ? "" : "hide-mobile-menu" }>
-
+      <ul ref={menuRef}  className={mobileMenu ? "" : "hide-mobile-menu"}>
+        {mobileMenu && (
+     <div className="mobile-overlay" onClick={() => setMobileMenu(false)}  />)}
+   
         <li>
           <Link to="hero"  smooth={true} offset={0}  duration={500}  onClick={closeMenu}>  Home </Link>
         </li>  
