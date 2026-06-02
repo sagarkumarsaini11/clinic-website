@@ -70,6 +70,8 @@ function App () {
 
                            {/* Patientn Attendance*/}
                <Route path="/attendance" element={<PatientAttendance/>}/>
+
+               
    </Routes>
   
   )

@@ -29,7 +29,7 @@
 }
 
 .about.show .about-left{
-  animation: imageSlideLeft 1.2s ease forwards;
+  animation: imageSlideLeft 1.5s ease forwards;
 }
 
 .about.show .about-right{

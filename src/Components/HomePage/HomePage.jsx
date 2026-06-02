@@ -22,8 +22,11 @@ const HomePage = () => {
 const navigate = useNavigate();
 const location = useLocation();
 
-  const [fileNumber, setFileNumber] =
-    useState("");
+//current patients details
+const [currentPatient, setCurrentPatient] =
+  useState(null);
+
+const [searchValue, setSearchValue] = useState("");
 
   const [showSidebar, setShowSidebar] =
     useState(false);
@@ -115,21 +118,28 @@ useEffect(() => {
 }, []);
 
   // SEARCH BUTTON CLICK
+const handleSubmit = () => {
 
-  const handleSubmit = () => {
+const patient = appointmentList.find(
+  (item) =>
+    item.name?.toLowerCase() ===
+      searchValue.toLowerCase() ||
+    item.mobile === searchValue ||
+    item.fileNo === searchValue
+);
 
-    if (fileNumber.length !== 5) {
+if (!patient) {
+  alert("Patient Not Found");
+  return;
+}
 
-      alert(
-        "Please enter valid 5 digit file number"
-      );
+setCurrentPatient(patient);
 
-      return;
-    }
+setAttendanceMarked(false);
+setAttendanceDate("Not Marked");
 
-    setShowPatientCard(true);
-  };
-
+setShowPatientCard(true);
+};
   // CAMERA CLICK
 
   const handleCameraClick = () => {
@@ -141,10 +151,22 @@ useEffect(() => {
     // Here you can add scanner functionality later
   };
 
+     // enter key
+     const handleEnterKey = (e) => {
+
+  if (e.key === "Enter") {
+
+    e.preventDefault();
+
+    handleSubmit();
+
+  }
+
+}; 
 
   //Attandence marked
 
-  const handleMarkAttendance = () => {
+const handleMarkAttendance = () => {
 
   const today =
     new Date().toLocaleDateString();
@@ -153,10 +175,11 @@ useEffect(() => {
 
   setAttendanceDate(today);
 
-  setUpdatedFileNumber(fileNumber);
-
-  alert("Attendance Marked Successfully!");
+  alert(
+    `${currentPatient?.name} Attendance Marked`
+  );
 };
+
 
 // delete button 
 
@@ -214,12 +237,23 @@ useEffect(() => {
                          {/* SEARCH BOX */}
 
       <div className="search-box">
-        <input  type="number"  placeholder="Enter File Number"  value={fileNumber}
-          onChange={(e) =>  setFileNumber(e.target.value) }/>
+     <input
+  type="text"
+  placeholder="Enter File No / Patient Name / Mobile No"
+  value={searchValue}
+  onChange={(e) =>
+    setSearchValue(e.target.value)
+  }
+ onKeyDown={handleEnterKey}/>
+
+
+
+         
+
 
                      {/* CAMERA OR SEARCH */}
 
-        {fileNumber.length > 0 ? (
+        {searchValue.trim().length > 0 ? (
 
           <button  className="search-icon-btn"  onClick={handleSubmit}>
             <FaSearch size={20} />
@@ -328,7 +362,8 @@ useEffect(() => {
 
             <div className="patient-header">
 
-              <h2> Rajan (27 / Male) </h2>
+            <h2> {currentPatient?.name}  {" "} ({currentPatient?.age} / {currentPatient?.gender})</h2>
+
            <p>  Last Attendance Date:  {attendanceDate}</p>
            <p> File Number:{updatedFileNumber}</p>
               <p>   Appointment Number: 23423</p>
@@ -367,31 +402,19 @@ useEffect(() => {
 
             <div className="feature-row">
 
-<div
-  className="feature-card"
-  onClick={() =>
-    navigate("/recharge", {
-      state: {
+     <div  className="feature-card"  onClick={() =>navigate("/recharge", {
+         state: {
         returnToPopup: true,
-      },
-    })
-  }
->
+         },})}>
+
                 <FaWallet size={35} />
                 <p>Recharge</p>
               </div>
 
-             <div
-  className="feature-card"
-  onClick={() =>
-    navigate("/openpatientlist", {
-      state: {
-        returnToPopup: true,
-      },
-    })
-  }
->
-                <FaFolder size={35} />
+             <div  className="feature-card"  onClick={() =>  navigate("/openpatientlist", {  state: {
+        returnToPopup: true,},  }) }>
+      
+               <FaFolder size={35} />
                 <p>Open Patient File</p>
               </div>
 

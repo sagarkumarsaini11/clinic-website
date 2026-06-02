@@ -335,9 +335,7 @@ if (
               <label> Gender <span>*</span></label>
           
               <select  name="gender"   value={formData.gender}  onChange={handleChange} >
-                  
-              
-   
+                
                 <option value="">  Select Gender </option>
                 <option value="Male"> Male  </option>
                    <option value="Female"> Female  </option>
@@ -356,20 +354,13 @@ if (
 
             <div className="form-group">
 
-              <label>
-                Mobile Number <span>*</span>
-              </label>
+              <label> Mobile Number <span>*</span>    </label>
+             
+          
 
-              <input
-                type="tel"
-                name="mobile"
-                placeholder="Enter Mobile Number"
-                maxLength="10"
-                value={formData.mobile}
-                onChange={handleChange}
-              />
-
-              {errors.mobile && (
+              <input  type="tel"    name="mobile" placeholder="Enter Mobile Number"
+                maxLength="10"   value={formData.mobile}  onChange={handleChange}/>
+               {errors.mobile && (
                 <p className="error-text">
                   {errors.mobile}
                 </p>
@@ -377,23 +368,15 @@ if (
 
             </div>
 
-            {/* ADDRESS */}
+                   {/* ADDRESS */}
 
             <div className="form-group full-width">
 
-              <label>
-                Address <span>*</span>
-              </label>
-
-              <textarea
-                name="address"
-                rows="3"
-                placeholder="Enter Address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-
-              {errors.address && (
+              <label>Address <span>*</span> </label>
+                
+              <textarea   name="address" rows="3"  placeholder="Enter Address"
+               value={formData.address} onChange={handleChange}/>
+                {errors.address && (
                 <p className="error-text">
                   {errors.address}
                 </p>
@@ -405,10 +388,7 @@ if (
 
             <div className="form-group full-width">
 
-              <label>
-                Problem <span>*</span>
-              </label>
-
+              <label>  Problem <span>*</span> </label>
               <textarea  name="problem" rows="4"
                 placeholder="Describe Patient Problem"  value={formData.problem}
                 onChange={handleChange}/>
@@ -420,144 +400,75 @@ if (
 
             </div>
 
-{/* APPOINTMENT TYPE */}
+                       {/* APPOINTMENT TYPE */}
 
-<div className="form-group">
+        <div className="form-group">
 
-  <label>
-    Appointment Type <span>*</span>
-  </label>
+         <label>  Appointment Type <span>*</span></label>
 
-  <div className="radio-group">
+           <div className="radio-group">
 
-    <label>
-
-      <input
-        type="radio"
-        name="appointmentType"
-        value="Standard"
-        checked={
+            <label>
+        <input  type="radio"  name="appointmentType"  value="Standard"
+       checked={
           formData.appointmentType ===
           "Standard"
-        }
-        onChange={handleChange}
-      />
-
-      Standard
-
-    </label>
+        } onChange={handleChange}/> Standard </label>
 
     <label>
+      <input    type="radio"  name="appointmentType"
+     value="Instant" checked={ formData.appointmentType === "Instant"}
+       onChange={handleChange}  />  Instant
+    </label>   
+  </div>       
+           {errors.appointmentType && (
+      <p className="error-text"> {errors.appointmentType}</p>
+      )}
+   </div> 
 
-      <input
-        type="radio"
-        name="appointmentType"
-        value="Instant"
-        checked={
-          formData.appointmentType ===
-          "Instant"
-        }
-        onChange={handleChange}
-      />
+           {/* STANDARD OPTIONS */}
 
-      Instant
+        {formData.appointmentType ===
+         "Standard" && (
 
-    </label>
-
-  </div>
-
-  {errors.appointmentType && (
-    <p className="error-text">
-      {errors.appointmentType}
-    </p>
-  )}
-
+      <>
+         <div className="form-group">
+          <label>Available Date <span>*</span></label>
+          <input type="date"  name="appointmentDate" value={formData.appointmentDate}
+       onChange={handleChange}/>
+          {errors.appointmentDate && (
+         <p className="error-text">
+            {errors.appointmentDate}
+        </p>
+     )}
 </div>
 
-{/* STANDARD OPTIONS */}
 
-{formData.appointmentType ===
-  "Standard" && (
+          <div className="form-group">
+         <label> Available Time Slot<span>*</span></label>
+   
+    
+  
 
-  <>
-   <div className="form-group">
-  <label>
-    Available Date <span>*</span>
-  </label>
+  <select  name="appointmentTime"  value={formData.appointmentTime}
+  onChange={handleChange}>
 
- <input
-  type="date"
-  name="appointmentDate"
-  value={formData.appointmentDate}
-  onChange={handleChange}
-/>
+    <option value="">Select Time</option>
 
-  {errors.appointmentDate && (
-    <p className="error-text">
-      {errors.appointmentDate}
-    </p>
-  )}
-</div>
+    <option value="09:00 AM">09:00 AM</option>
+    <option value="10:00 AM"> 10:00 AM</option>
+    <option value="11:00 AM">11:00 AM</option>
+    <option value="12:00 PM">12:00 PM</option>
+    <option value="01:00 PM"> 01:00 PM</option>
+    <option value="02:00 PM"> 02:00 PM </option>
+     <option value="03:00 PM"> 03:00 PM </option>
+     <option value="04:00 PM">04:00 PM</option>
+     <option value="05:00 PM"> 05:00 PM</option>
+     <option value="06:00 PM"> 06:00 PM </option>
+     <option value="07:00 PM">07:00 PM</option>
+     <option value="08:00 PM">  08:00 PM</option>
+     <option value="09:00 PM">09:00 PM </option>
 
-<div className="form-group">
-  <label>
-    Available Time Slot
-    <span>*</span>
-  </label>
-
-  <select
-    name="appointmentTime"
-    value={formData.appointmentTime}
-    onChange={handleChange}
-  >
-    <option value="">
-      Select Time
-    </option>
-
-    <option value="09:00 AM">
-      09:00 AM
-    </option>
-
-    <option value="10:00 AM">
-      10:00 AM
-    </option>
-
-    <option value="11:00 AM">
-      11:00 AM
-    </option>
-
-    <option value="12:00 PM">
-      12:00 PM
-    </option>
-
-    <option value="01:00 PM">
-      01:00 PM
-    </option>
-
-    <option value="02:00 PM">
-      02:00 PM
-    </option>
-     <option value="03:00 PM">
-      03:00 PM
-    </option>
-     <option value="04:00 PM">
-      04:00 PM
-    </option>
-     <option value="05:00 PM">
-      05:00 PM
-    </option>
-     <option value="06:00 PM">
-      06:00 PM
-    </option>
-     <option value="07:00 PM">
-      07:00 PM
-    </option>
-     <option value="08:00 PM">
-      08:00 PM
-    </option>
-     <option value="09:00 PM">
-      09:00 PM
-    </option>
   </select>
 </div>
   </>
@@ -570,21 +481,9 @@ if (
 
   <div className="form-group">
 
-    <label>Amount *</label>
+    <label>Amount * </label>
+   <label>700 </label>
 
-    <input
-      type="number"
-      name="amount"
-      placeholder="700"
-      value={formData.amount}
-      onChange={handlePaymentChange}
-    />
-
-    {errors.amount && (
-      <p className="error-text">
-        {errors.amount}
-      </p>
-    )}
 
   </div>
 

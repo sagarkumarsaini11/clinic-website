@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 const BranchLogin = () => {
     const navigate = useNavigate();
+    const [loginType, setLoginType] = useState("Admin");
+  
   const [showLogin, setShowLogin] = useState(false);
 
   const [loginData, setLoginData] = useState({
@@ -19,43 +21,100 @@ const BranchLogin = () => {
   };
 
 const handleLogin = (e) => {
+
   e.preventDefault();
 
-  if (!loginData.email || !loginData.password) {
+  if (
+    !loginData.email ||
+    !loginData.password
+  ) {
     alert("Please fill all fields");
     return;
   }
 
-  const validEmail = "admin@gmail.com";
-  const validPassword = "123456";
+  // ADMIN LOGIN
 
-  if (
-    loginData.email === validEmail &&
-    loginData.password === validPassword
-  ) {
-   
+  if (loginType === "Admin") {
 
-    setLoginData({
-      email: "",
-      password: "",
-    });
+    if (
+      loginData.email ===
+        "admin@gmail.com" &&
+      loginData.password ===
+        "123456"
+    ) {
 
-    setShowLogin(false);
+      setShowLogin(false);
 
-    // Open Homepage
-    navigate("/homepage");
-  } else {
-    alert("Invalid Email or Password");
+      navigate("/adminpanel");
+
+      return;
+    }
+
+    alert("Invalid Admin Login");
+    return;
+  }
+
+  // CLINIC LOGIN
+
+  if (loginType === "Clinic") {
+
+    if (
+      loginData.email ===
+        "clinic@gmail.com" &&
+      loginData.password ===
+        "123456"
+    ) {
+
+      setShowLogin(false);
+
+      navigate("/homepage");
+
+      return;
+    }
+
+    alert("Invalid Clinic Login");
+    return;
+  }
+
+  // PATIENT LOGIN
+
+  if (loginType === "Patient") {
+
+    if (
+      loginData.email ===
+        "patient@gmail.com" &&
+      loginData.password ===
+        "123456"
+    ) {
+
+      setShowLogin(false);
+
+      navigate("/patientdetails");
+
+      return;
+    }
+
+    alert("Invalid Patient Login");
   }
 };
 
+const handleLoginTypeChange = (e) => {
+
+  setLoginType(e.target.value);
+
+  setLoginData({
+    email: "",
+    password: "",
+  });
+
+};
   return (
     <>
       {/* Navbar Button */}
 
       <button
         className="branch-btn"
-        onClick={() => setShowLogin(true)}> Branch Login </button>
+        onClick={() => setShowLogin(true)}> Login </button>
       
       
                      {/* Login Modal */}
@@ -71,7 +130,43 @@ const handleLogin = (e) => {
               ×
             </button>
 
-            <h2>Branch Sign In</h2>
+            <h2>Sign In</h2>
+
+            <div className="radio-group-login">
+
+  <label>
+    <input
+      type="radio"
+      value="Admin"
+      checked={loginType === "Admin"}
+      onChange={handleLoginTypeChange}
+      
+    />
+    Admin
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      value="Clinic"
+      checked={loginType === "Clinic"}
+       onChange={handleLoginTypeChange}
+    />
+    Clinic
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      value="Patient"
+      checked={loginType === "Patient"}
+      onChange={handleLoginTypeChange}
+    />
+    Patient
+  </label>
+
+</div>         
+                       {/* Form */}
 
             <form onSubmit={handleLogin}>
 

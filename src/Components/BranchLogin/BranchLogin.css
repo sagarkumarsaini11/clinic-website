@@ -124,6 +124,28 @@
   background: #18248a;
 }
 
+.radio-group-login{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+color: #222;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.radio-group-login label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  font-weight:600;
+  cursor:pointer;
+}
+
+.radio-group-login input{
+  cursor:pointer;
+}
+
 /* Mobile */
 
 @media (max-width: 768px) {
