@@ -158,6 +158,9 @@ useEffect(() => {
   alert("Attendance Marked Successfully!");
 };
 
+// delete button 
+
+
   return (
 
     <div className="container-homepage">
@@ -240,54 +243,74 @@ useEffect(() => {
           ) : (
           <div className="records-section">
 
-                       {/* Patient Records */}
-
-    <h2>Patient Records</h2>
-
-    {patientList.length === 0 ? (
-
-      <p>No Patient Added</p>
-
-    ) : (
-
-      patientList.map((item, index) => (
-
-        <div  className="record-card"   key={index}>
-        <h3>{item.name}</h3>
-        <p>Age: {item.age}</p>
-        <p>Gender: {item.gender}</p>
-          <p>Mobile: {item.mobile}</p>
-          <p>Address: {item.address}</p>
-         <p>Problem: {item.problem}</p>
-        </div>
-           ))
-    )}  
 
 
             {/* Appointment Records */}
 
-    <h2>Appointment Records</h2>
 
-    {appointmentList.length === 0 ? (
+<h2>Appointment Records</h2>
 
-      <p>No Appointment Added</p>
+{appointmentList.length === 0 ? (
 
-    ) : (
+  <p>No Appointment Added</p>
 
-      appointmentList.map((item, index) => (
+) : (
 
-        <div className="record-card" key={index} >
-         <h3>{item.name}</h3>
-           <p>Age: {item.age}</p>
-         <p>Gender: {item.gender}</p>
-            <p>Mobile: {item.mobile}</p>
-              <p>Address: {item.address}</p>
-           <p>Problem: {item.problem}</p>
+  <div className="table-container">
 
-         </div>
+    <table className="appointment-table">
 
-        ))
-      )}
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Problem</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {appointmentList.map((item, index) => (
+
+          <tr key={index}>
+
+            <td>{index + 1}</td>
+
+            <td>{item.name}</td>
+
+            <td>{item.age}</td>
+
+            <td>
+              {item.gender || item.sex}
+            </td>
+
+            <td>
+              {item.mobile}
+            </td>
+
+            <td>
+              {item.address}
+            </td>
+
+            <td>
+              {item.problem}
+            </td>
+
+          </tr>
+
+        ))}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+)}
    </div>      
 )}
         
