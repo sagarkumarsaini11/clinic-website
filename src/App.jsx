@@ -18,6 +18,7 @@ import OpenPatientList from './Components/OpenPatientList/OpenPatientList'
 import Sidebar from './Components/Sidebar/Sidebar'
 import PatientAttendance from './Components/PatientAttendance/PatientAttendance'
 import ServiceCategory from './Components/ServiceCategory/ServiceCategory'
+import ServicesSubCategory from './Components/ServicesSubCategory/ServicesSubCategory'
 
 
 
@@ -69,6 +70,9 @@ function App () {
 
                               {/* Services Category*/}
                <Route path="/category" element={<ServiceCategory/>}/>
+
+                              {/* Services Sub-Category*/}
+               <Route path="/sub-category" element={<ServicesSubCategory/>}/>
    </Routes>
   
   )

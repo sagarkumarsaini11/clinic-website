@@ -25,9 +25,10 @@ export default function ServiceCategory() {
     }
 
     if (!categoryFee) {
-      newErrors.categoryFee =
-        "Category Fee is required";
-    }
+ newErrors.categoryFee =
+  "Category Fee is required";
+} else if ( !/^\d+(\.\d{1,2})?$/.test(categoryFee)) 
+{newErrors.categoryFee ="Only 2 decimal places allowed";}
 
     setErrors(newErrors);
 
@@ -136,8 +137,25 @@ export default function ServiceCategory() {
 
             <label> Category Fee </label>
 
-            <input  type="number" placeholder="Enter Fee" value={ categoryFee}
-            onChange={(e) =>  setCategoryFee( e.target.value) }/>
+            <input
+  type="number"
+  step="0.01"
+  min="0"
+  placeholder="Enter Fee"
+  value={categoryFee}
+  onChange={(e) => {
+
+    const value = e.target.value;
+
+    if (
+      value === "" ||
+      /^\d+(\.\d{0,2})?$/.test(value)
+    ) {
+      setCategoryFee(value);
+    }
+
+  }}
+/>
              
             {errors.categoryFee && (
               <p className="error-services"> { errors.categoryFee }</p>)}
