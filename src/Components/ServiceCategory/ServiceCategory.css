@@ -1,0 +1,163 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.service-page{
+  width:100%;
+  min-height:100vh;
+  background:#f5f7ff;
+  padding:30px 15px;
+}
+
+.service-card{
+  max-width:600px;
+  margin:auto;
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+.service-card h2{
+  text-align:center;
+  color:#212ea0;
+  margin-bottom:20px;
+}
+
+.form-group-services{
+  margin-bottom:18px;
+}
+
+.form-group-services label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+.form-group-services input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  outline:none;
+}
+
+.form-group-services input:focus{
+  border-color:#212ea0;
+}
+
+.error-services{
+  color:red;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.add-btn-services{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  background:#212ea0;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.table-card{
+  margin-top:30px;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+.table-card h3{
+  margin-bottom:15px;
+  color:#212ea0;
+}
+
+.table-wrapper{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+table th{
+  background:#212ea0;
+  color:white;
+  padding:12px;
+  text-align:left;
+}
+
+table td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+}
+
+.edit-btn-services{
+  background:#28a745;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  margin-right:8px;
+}
+
+.delete-btn-services{
+  background:#dc3545;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.edit-btn-services:hover{
+  background:#218838;
+}
+
+.delete-btn-services:hover{
+  background:#c82333;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+  .service-card{
+    padding:20px;
+  }
+
+  table th,
+  table td{
+    font-size:13px;
+    padding:10px;
+  }
+
+  .edit-btn-services,
+  .delete-btn-services{
+    padding:6px 10px;
+    font-size:12px;
+  }
+}
+
+@media(max-width:480px){
+
+  .service-page{
+    padding:15px 10px;
+  }
+
+  .service-card h2{
+    font-size:22px;
+  }
+
+  .table-card h3{
+    font-size:18px;
+  }
+}

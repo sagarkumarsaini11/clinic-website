@@ -52,6 +52,7 @@ const [updatedFileNumber, setUpdatedFileNumber] =
 const [appointmentList, setAppointmentList] =
   useState([]);
 
+//open popup
 
 useEffect(() => {
   if (location.state?.openPatientPopup) {
@@ -59,7 +60,7 @@ useEffect(() => {
   }
 }, [location]);
 
-
+      //API 
 useEffect(() => {
 
   const fetchAppointments = async () => {
@@ -225,7 +226,9 @@ const handleMarkAttendance = () => {
             <button  onClick={() => { navigate("/addpatient");   setShowSidebar(false);
               }}>  Add New Patient
              </button>
-            <button>Time Table</button>
+            <button >Time Table</button>
+              <button  onClick={() => { navigate("/category");   setShowSidebar(false);
+              }}>Service Category</button>
             <button>  Download Report</button>
              <button> New Query</button>
    

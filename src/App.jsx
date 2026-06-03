@@ -17,11 +17,7 @@ import Recharge from './Components/Recharge/Recharge'
 import OpenPatientList from './Components/OpenPatientList/OpenPatientList'
 import Sidebar from './Components/Sidebar/Sidebar'
 import PatientAttendance from './Components/PatientAttendance/PatientAttendance'
-
-
-
-
-
+import ServiceCategory from './Components/ServiceCategory/ServiceCategory'
 
 
 
@@ -37,7 +33,7 @@ function Website() {
       <About/>
       <Contact/>
       <Footer/>
-    
+
   
     </div>
    )    
@@ -71,7 +67,8 @@ function App () {
                            {/* Patientn Attendance*/}
                <Route path="/attendance" element={<PatientAttendance/>}/>
 
-               
+                              {/* Services Category*/}
+               <Route path="/category" element={<ServiceCategory/>}/>
    </Routes>
   
   )
