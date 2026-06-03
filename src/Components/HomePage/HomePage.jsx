@@ -227,10 +227,13 @@ const handleMarkAttendance = () => {
               }}>  Add New Patient
              </button>
             <button >Time Table</button>
+                  <button  onClick={() => { navigate("/services");   setShowSidebar(false);
+              }}>Service</button>
               <button  onClick={() => { navigate("/category");   setShowSidebar(false);
               }}>Service Category</button>
                <button  onClick={() => { navigate("/sub-category");   setShowSidebar(false);
               }}>Service Sub Category</button>
+           
             <button>  Download Report</button>
              <button> New Query</button>
    

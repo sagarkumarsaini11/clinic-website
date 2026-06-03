@@ -147,6 +147,9 @@
     font-size:12px;
     padding:6px 10px;
   }
+  .delete-btn-sub-category{
+   margin-top: 8px;
+  }
 }
 
 @media(max-width:480px){

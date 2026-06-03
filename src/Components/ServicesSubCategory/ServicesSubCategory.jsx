@@ -186,7 +186,7 @@ export default function ServicesSubCategory() {
             </select>
 
             {errors.category && (
-              <p className="error-text">
+              <p className="error-text-sub-category">
                 {errors.category}
               </p>
             )}
@@ -211,7 +211,7 @@ export default function ServicesSubCategory() {
             />
 
             {errors.subCategoryName && (
-              <p className="error-text">
+              <p className="error-text-sub-category">
                 {
                   errors.subCategoryName
                 }
