@@ -20,6 +20,9 @@ import PatientAttendance from './Components/PatientAttendance/PatientAttendance'
 import ServiceCategory from './Components/ServiceCategory/ServiceCategory'
 import ServicesSubCategory from './Components/ServicesSubCategory/ServicesSubCategory'
 import Services from './Components/Services/Services'
+import Admin from './Components/Admin/Admin'
+import AddClinic from './Components/AddClinic/AddClinic'
+import PreviouslyAddedClinics from './Components/PreviouslyAddedClinics/PreviouslyAddedClinics'
 
 
 
@@ -78,6 +81,16 @@ function App () {
                
                               {/* Services*/}
                <Route path="/services" element={<Services/>}/>
+
+               
+                               {/* Admin panel*/}
+               <Route path="/adminpanel" element={<Admin/>}/>
+
+                                    {/* Admin Add-Clinic*/}
+               <Route path="/add-clinic" element={<AddClinic/>}/>
+
+                       {/*Previously Add-Clinic*/}
+               <Route path="/previously-added-clinics" element={<PreviouslyAddedClinics/>}/>
    </Routes>
   
   )
