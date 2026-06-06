@@ -277,13 +277,10 @@ const handleMarkAttendance = () => {
 
             {/* Appointment Records */}
 
-<button
-  className="appointment-record-btn"
-  onClick={() =>
-    setShowAppointments(!showAppointments)
-  }
->
-  {showAppointments
+       <button  className="appointment-record-btn"
+         onClick={() =>  setShowAppointments(!showAppointments) }>
+       
+          {showAppointments
     ? "Hide Appointment Records"
     : "Show Appointment Records"}
 </button>

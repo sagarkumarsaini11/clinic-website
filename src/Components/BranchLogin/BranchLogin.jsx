@@ -86,7 +86,7 @@ Cookies.set(
   data.data.accessToken,
   {
     expires: expiryDate,
-    secure: false,
+    secure: true,
     sameSite: "Lax",
   }
 );
@@ -100,7 +100,7 @@ Cookies.set(
   data.data.refreshToken,
   {
     expires: expiryDate,
-    secure: false,
+    secure: true,
     sameSite: "Lax",
   }
 );
@@ -114,7 +114,7 @@ Cookies.set(
   ),
   {
     expires: expiryDate,
-    secure: false,
+    secure: true,
     sameSite: "Lax",
   }
 );

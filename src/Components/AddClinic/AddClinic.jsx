@@ -123,7 +123,13 @@ const handleSubmit = async (e) => {
    const token = Cookies.get("token");
    console.log ("Token:",token);
   
-   // Api Call
+   // Api Call  
+  console.log("========= FORM DATA =========");
+
+for (let pair of formData.entries()) {
+  console.log(pair[0], ":", pair[1]);
+}
+console.log("========= END =========");
 
 const response = await fetch(
   "https://clinic-backend-5ucx.onrender.com/api/clinics",
