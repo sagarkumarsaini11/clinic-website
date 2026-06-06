@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ServicesSubCategory.css";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function ServicesSubCategory() {
 
@@ -7,6 +8,7 @@ export default function ServicesSubCategory() {
     category: "",
     subCategoryName: "",
     subCategoryFee: "",
+    status: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -49,6 +51,11 @@ export default function ServicesSubCategory() {
 
     if (!formData.subCategoryName.trim()) {
       newErrors.subCategoryName =
+        "Select Status";
+    }
+
+       if (!formData.status) {
+      newErrors.status =
         "Sub Category Name is required";
     }
 
@@ -117,6 +124,7 @@ export default function ServicesSubCategory() {
       category: "",
       subCategoryName: "",
       subCategoryFee: "",
+      status:"",
     });
 
     setErrors({});
@@ -145,128 +153,103 @@ export default function ServicesSubCategory() {
     setSubCategories(filteredData);
   };
 
-  return (
+  return (<>
+
+  <Sidebar/>
     <div className="sub-page">
 
       <div className="sub-form-card">
 
-        <h2>
-          Services Sub Category
-        </h2>
-
+        <h2>Services Sub Category </h2>
+          
+                {/* Form */}
+ 
         <form onSubmit={handleSubmit}>
 
           <div className="form-group-sub-category">
 
-            <label>
-              Category
-            </label>
-
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option value="">
-                Select Category
-              </option>
-
-              <option value="Category A">
-                Category A
-              </option>
-
-              <option value="Category B">
-                Category B
-              </option>
-
-              <option value="Category C">
-                Category C
-              </option>
-
-            </select>
-
-            {errors.category && (
+            <label>Category</label>
+            <select name="category" value={formData.category}
+             onChange={handleChange} >
+             <option value="">Select Category</option>
+              <option value="Category A"> Category A</option>
+              <option value="Category B">Category B </option>
+              <option value="Category C">Category C </option>
+            </select>    
+             {errors.category && (
               <p className="error-text-sub-category">
                 {errors.category}
               </p>
             )}
 
-          </div>
+          </div>  
 
+                    {/* Sub Category Name */}
           <div className="form-group-sub-category">
-
-            <label>
-              Sub Category Name
-            </label>
-
-            <input
-              type="text"
-              name="subCategoryName"
-              maxLength="100"
-              placeholder="Enter Sub Category Name"
-              value={
-                formData.subCategoryName
-              }
-              onChange={handleChange}
-            />
+            <label> Sub Category Name</label>
+            <input type="text"  name="subCategoryName"
+               maxLength="100" placeholder="Enter Sub Category Name"
+              value={ formData.subCategoryName}
+              onChange={handleChange}  />
 
             {errors.subCategoryName && (
               <p className="error-text-sub-category">
-                {
-                  errors.subCategoryName
-                }
-              </p>
-            )}
-
-          </div>
-
+                { errors.subCategoryName }
+               </p>)}   
+            </div>   
+             
+                  {/* Sub Category Fee */}
           <div className="form-group-sub-category">
-
-            <label>
-              Sub Category Fee
-            </label>
-
-            <input
-              type="text"
-              name="subCategoryFee"
-              placeholder="Enter Fee"
-              value={
-                formData.subCategoryFee
-              }
-              onChange={handleChange}
-            />
-
+            <label>Sub Category Fee</label>
+            <input  type="text"  name="subCategoryFee"
+              placeholder="Enter Fee" value={ formData.subCategoryFee  }
+             onChange={handleChange} />
             {errors.subCategoryFee && (
               <p className="error-text-sub-category">
-                {
-                  errors.subCategoryFee
-                }
-              </p>
-            )}
+                { errors.subCategoryFee}
+              </p> )}  
+            </div>     
+                
+                   {/* Sub Category status */}
+        
+          <div className="form-group-sub-category">
 
-          </div>
+           <label>Status</label>
+          <div className="radio-group-sub-category">
+ 
 
-          <button
-            type="submit"
-            className="save-btn-sub-category"
-          >
-            {editId
-              ? "Update Sub Category"
-              : "Add Sub Category"}
+    <label>  <input  type="radio"  name="status"
+     value="Active"  checked={formData.status === "Active"}
+       onChange={handleChange}/> Active</label>
+      
+        
+       <label>
+      <input type="radio"  name="status"  value="Inactive"
+        checked={formData.status === "Inactive"} onChange={handleChange}/>
+       Inactive
+    </label>  
+   </div>     
+          {errors.status && (
+       <p className="error-text-sub-category">
+         {errors.status}
+       </p>)}
+  </div>
+       
+                {/* Submit button*/}
+     
+     <button  type="submit"  className="save-btn-sub-category">
+           {editId  ? "Update Sub Category" : "Add Sub Category"}
           </button>
+        </form>  
+ </div>
 
-        </form>
-
-      </div>
-
+     
+                   {/* Data Table */}
       {subCategories.length > 0 && (
 
         <div className="table-card-sub-category">
 
-          <h3>
-            Added Sub Categories
-          </h3>
-
+          <h3> Added Sub Categories</h3>
           <div className="table-wrapper-sub-category">
 
             <table className="table-sub-category">
@@ -278,6 +261,7 @@ export default function ServicesSubCategory() {
                   <th>Category</th>
                   <th>Sub Category</th>
                   <th>Fee</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
 
@@ -290,57 +274,34 @@ export default function ServicesSubCategory() {
 
                     <tr key={item.id}>
 
-                      <td>
-                        {index + 1}
-                      </td>
+                      <td> {index + 1}</td>
+                      <td>{item.category}</td>
+                      <td>{item.subCategoryName }</td>
+                      <td>   ₹{item.subCategoryFee}</td>
+                     <td>
+                         <span
+            className={  item.status === "Active" ? "status-active-sub-category"
+               : "status-inactive-sub-category" }>
+             {item.status}
+            </span>    
+           </td>
 
-                      <td>
-                        {item.category}
-                      </td>
 
-                      <td>
-                        {
-                          item.subCategoryName
-                        }
-                      </td>
-
-                      <td>
-                        ₹
-                        {
-                          item.subCategoryFee
-                        }
-                      </td>
-
-                      <td>
-
-                        <button
-                          className="edit-btn-sub-category"
-                          onClick={() =>
-                            handleEdit(item)
-                          }
-                        >
-                          Edit
+                <td className="action-cell-sub-category">
+                     <td>
+                        <button  className="edit-btn-sub-category"
+                        onClick={() => handleEdit(item)}>Edit
                         </button>
 
-                        <button
-                          className="delete-btn-sub-category"
-                          onClick={() =>
-                            handleDelete(
-                              item.id
-                            )
-                          }
-                        >
+                        <button  className="delete-btn-sub-category"
+                         onClick={() => handleDelete(item.id)}>
                           Delete
-                        </button>
-
-                      </td>
-
-                    </tr>
-
-                  )
-                )}
-
-              </tbody>
+                        </button>   
+                        </td>       
+                         </td>   
+                    </tr>      
+                   ) )}      
+              </tbody>           
 
             </table>
 
@@ -351,5 +312,6 @@ export default function ServicesSubCategory() {
       )}
 
     </div>
+    </>
   );
 }

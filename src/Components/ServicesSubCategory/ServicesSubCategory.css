@@ -128,6 +128,61 @@
   background:#c82333;
 }
 
+/* Radio Button */
+
+.radio-group-sub-category{
+  display:flex;
+  gap:25px;
+  align-items:center;
+  margin-top:10px;
+}
+
+.radio-group-sub-category label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+.radio-group-sub-category input[type="radio"]{
+  width:18px;
+  height:18px;
+}
+
+/* Status */
+
+.status-active-sub-category{
+  background:#28a745;
+  color:white;
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.status-inactive-sub-category{
+  background:#dc3545;
+  color:white;
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* Action */
+
+.action-cell-sub-category{
+  min-width:160px;
+}
+
+@media(max-width:768px){
+
+  .radio-group-sub-category{
+    flex-wrap:wrap;
+    gap:20px;
+  }
+}
+
 /* Mobile */
 
 @media(max-width:768px){

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Services.css";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function Services() {
 
@@ -11,6 +12,7 @@ export default function Services() {
     serviceType: "",
     advancedRecharge: "",
     priceSubCategory: "",
+    status:"",
   });
 
   const [services, setServices] = useState([]);
@@ -84,6 +86,10 @@ export default function Services() {
       newErrors.priceSubCategory =
         "Prize Sub Category Required";
 
+      if (!formData.status)
+      newErrors.status =
+        "Select Status";
+
     setErrors(newErrors);
 
     return (
@@ -132,6 +138,7 @@ export default function Services() {
       serviceType: "",
       advancedRecharge: "",
       priceSubCategory: "",
+      status:"",
     });
 
     setErrors({});
@@ -153,7 +160,8 @@ export default function Services() {
     );
   };
 
-  return (
+  return (<>
+    <Sidebar/>
     <div className="service-page">
 
       <div className="service-form">
@@ -165,81 +173,38 @@ export default function Services() {
           <div className="form-group-services">
             <label>Category</label>
 
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option value="">
-                Select Category
-              </option>
+            <select  name="category" value={formData.category} onChange={handleChange}>
 
-              <option>
-                Category A
-              </option>
-
-              <option>
-                Category B
-              </option>
-
-              <option>
-                Category C
-              </option>
+              <option value="">Select Category</option>
+              <option> Category A</option>
+              <option>Category B</option>
+              <option>Category C</option> 
             </select>
 
-            <p className="error-services">
-              {errors.category}
-            </p>
-          </div>
+            <p className="error-services">{errors.category} </p>
+          </div>    
+          
+          <div className="form-group-services">
+            <label>Sub Category</label>
+ 
+            <select  name="subCategory" value={formData.subCategory }
+            onChange={handleChange}>
+            <option value="">  Select Sub Category</option>
+
+              <option> Category A </option>
+              <option> Category B</option>
+              <option>Category C </option></select>
+
+            <p className="error-services">{errors.subCategory}   </p>
+          </div>    
+         
 
           <div className="form-group-services">
-            <label>
-              Sub Category
-            </label>
-
-            <select
-              name="subCategory"
-              value={
-                formData.subCategory
-              }
-              onChange={handleChange}
-            >
-              <option value="">
-                Select Sub Category
-              </option>
-
-              <option>
-                Category A
-              </option>
-
-              <option>
-                Category B
-              </option>
-
-              <option>
-                Category C
-              </option>
-            </select>
-
-            <p className="error-services">
-              {errors.subCategory}
-            </p>
-          </div>
-
-          <div className="form-group-services">
-            <label>
-              Service Name
-            </label>
-
-            <input
-              type="text"
-              maxLength="100"
-              name="serviceName"
-              value={
-                formData.serviceName
-              }
-              onChange={handleChange}
-            />
+            <label>Service Name</label>
+              
+            <input type="text" maxLength="100" name="serviceName"
+             value={  formData.serviceName}
+             onChange={handleChange} />
 
             <p className="error-services">
               {errors.serviceName}
@@ -247,119 +212,113 @@ export default function Services() {
           </div>
 
           <div className="form-group-services">
-            <label>
-              Standard Service Recharge
-            </label>
+            <label> Standard Service Recharge </label>
 
-            <input
-              type="text"
-              name="standardRecharge"
-              value={
-                formData.standardRecharge
-              }
-              onChange={handleChange}
-            />
+            <input type="text" name="standardRecharge"
+              value={formData.standardRecharge}
+              onChange={handleChange}/>
 
             <p className="error-services">
-              {
-                errors.standardRecharge
-              }
-            </p>
-          </div>
-
+              { errors.standardRecharge}
+            </p>   
+           </div>    
+            
           <div className="form-group-services">
-            <label>
-              Service Type
-            </label>
-
+            <label>Service Type </label>
             <div className="radio-group-services">
 
               <label>
-                <input
-                  type="radio"
-                  name="serviceType"
-                  value="Machine"
-                  checked={
-                    formData.serviceType ===
-                    "Machine"
-                  }
-                  onChange={handleChange}
-                />
-                Machine
-              </label>
+                <input  type="radio"  name="serviceType" value="Machine"
+                 checked={ formData.serviceType ==="Machine"}
+                 onChange={handleChange}/>
+                  Machine
+              </label>    
 
               <label>
-                <input
-                  type="radio"
-                  name="serviceType"
-                  value="Therapy"
-                  checked={
-                    formData.serviceType ===
-                    "Therapy"
-                  }
-                  onChange={handleChange}
-                />
-                Therapy
-              </label>
+                <input type="radio" name="serviceType"value="Therapy"
+                 checked={ formData.serviceType ===  "Therapy"}
+                 onChange={handleChange}/>
+                 Therapy  
+              </label>   
+            </div>       
 
-            </div>
+            <p className="error-services"> {errors.serviceType}</p>
+         </div>    
+            
+          <div className="form-group-services">
+            <label> Advanced Service Recharge </label>
+             
+           
+
+            <input  type="text"  name="advancedRecharge"
+              value={formData.advancedRecharge}
+             onChange={handleChange} />
 
             <p className="error-services">
-              {errors.serviceType}
-            </p>
+              {errors.advancedRecharge}
+             </p>    
           </div>
 
           <div className="form-group-services">
-            <label>
-              Advanced Service Recharge
-            </label>
+            <label>Prize Sub Category </label>
+              
+           
 
-            <input
-              type="text"
-              name="advancedRecharge"
-              value={
-                formData.advancedRecharge
-              }
-              onChange={handleChange}
-            />
+            <input type="text" name="priceSubCategory"
+              value={   formData.priceSubCategory}
+             onChange={handleChange}/>
 
             <p className="error-services">
-              {
-                errors.advancedRecharge
-              }
-            </p>
-          </div>
+              {errors.priceSubCategory}
+             </p>     
+          </div>    
 
           <div className="form-group-services">
-            <label>
-              Prize Sub Category
-            </label>
 
-            <input
-              type="text"
-              name="priceSubCategory"
-              value={
-                formData.priceSubCategory
-              }
-              onChange={handleChange}
-            />
+  <label>Status</label>
 
-            <p className="error-services">
-              {
-                errors.priceSubCategory
-              }
-            </p>
-          </div>
+  <div className="radio-group-services">
 
-          <button
-            type="submit"
-            className="save-btn"
-          >
-            {editId
-              ? "Update Service"
-              : "Add Service"}
-          </button>
+    <label>
+      <input
+        type="radio"
+        name="status"
+        value="Active"
+        checked={
+          formData.status ===
+          "Active"
+        }
+        onChange={handleChange}
+      />
+      Active
+    </label>
 
+    <label>
+      <input
+        type="radio"
+        name="status"
+        value="Inactive"
+        checked={
+          formData.status ===
+          "Inactive"
+        }
+        onChange={handleChange}
+      />
+      Inactive
+    </label>
+
+  </div>
+
+  <p className="error-services">
+    {errors.status}
+  </p>
+
+</div>
+        
+          <button   type="submit"  className="save-btn">
+          {editId  ? "Update Service" : "Add Service"}
+         </button>  
+        
         </form>
 
       </div>
@@ -368,7 +327,7 @@ export default function Services() {
 
         <div className="table-wrapper-services">
 
-          <table className="table--services">
+          <table className="table-services">
 
             <thead>
               <tr>
@@ -380,6 +339,7 @@ export default function Services() {
                 <th>Standard</th>
                 <th>Advanced</th>
                 <th>Prize</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -390,52 +350,28 @@ export default function Services() {
                 (item, index) => (
                   <tr key={item.id}>
 
-                    <td>
-                      {index + 1}
-                    </td>
+                    <td>{index + 1}</td>
+                    <td>{item.category}</td>
+                    <td> { item.subCategory}</td> 
+                    <td>{item.serviceName}</td>
+                    <td>{ item.serviceType}</td>
+                    <td>  ₹{ item.standardRecharge} </td> 
+                    <td> ₹{ item.advancedRecharge} </td> 
+                    <td> ₹{item.priceSubCategory}</td>
+<td>
 
-                    <td>
-                      {item.category}
-                    </td>
+  <span
+    className={
+      item.status === "Active"
+        ? "status-active-services"
+        : "status-inactive-services"
+    }
+  >
+    {item.status}
+  </span>
 
-                    <td>
-                      {
-                        item.subCategory
-                      }
-                    </td>
+</td>
 
-                    <td>
-                      {
-                        item.serviceName
-                      }
-                    </td>
-
-                    <td>
-                      {
-                        item.serviceType
-                      }
-                    </td>
-
-                    <td>
-                      ₹
-                      {
-                        item.standardRecharge
-                      }
-                    </td>
-
-                    <td>
-                      ₹
-                      {
-                        item.advancedRecharge
-                      }
-                    </td>
-
-                    <td>
-                      ₹
-                      {
-                        item.priceSubCategory
-                      }
-                    </td>
 
                     <td>
 
@@ -476,5 +412,6 @@ export default function Services() {
       )}
 
     </div>
+    </>
   );
 }

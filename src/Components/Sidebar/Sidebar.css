@@ -83,6 +83,8 @@
 
 /* SIDEBAR */
 
+
+
 .sidebar{
   width:280px;
   height:100vh;
@@ -92,8 +94,29 @@
   padding:20px;
 
   animation:slideIn .3s ease;
+
+  overflow-y:auto;   /* Scroll Enable */
+  overflow-x:hidden;
 }
 
+/* Scrollbar */
+
+.sidebar::-webkit-scrollbar{
+  width:6px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+  background:white;
+  border-radius:10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover{
+  background:#ddd;
+}
 .sidebar h2{
   color:white;
   margin-bottom:20px;
@@ -131,6 +154,21 @@
 }
 
 /* MOBILE */
+@media(max-width:768px){
+
+  .sidebar{
+    width:250px;
+    overflow-y:auto;
+  }
+}
+
+@media(max-width:480px){
+
+  .sidebar{
+    width:220px;
+    overflow-y:auto;
+  }
+}
 
 @media(max-width:768px){
 

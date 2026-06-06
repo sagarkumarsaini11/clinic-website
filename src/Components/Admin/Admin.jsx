@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, {useState,useEffect,} from "react";
 import "./Admin.css";
-
+import Cookies from "js-cookie";
 import {
+  FaHome,
   FaBars,
-  FaBell,
+  FaUserCircle,
   FaPlusCircle,
   FaList,
   FaFileAlt,
-  FaUser,
   FaSignOutAlt,
+  FaKey,
 } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
@@ -20,26 +21,97 @@ export default function Admin() {
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
 
+  const [profileOpen, setProfileOpen] =
+    useState(false);
+
+  const [user, setUser] =
+    useState(null);
+
+ useEffect(() => {
+
+  const token =
+    Cookies.get("token");
+
+  const storedUser =
+    Cookies.get("user");
+
+  console.log(
+    "Cookie Token:",
+    token
+  );
+
+  console.log(
+    "Cookie User:",
+    storedUser
+  );
+
+  if (!token || !storedUser) {
+
+    navigate("/");
+    return;
+  }
+
+  try {
+
+    const parsedUser =
+      JSON.parse(storedUser);
+
+    setUser(parsedUser);
+
+  } catch (error) {
+
+    console.log(error);
+
+    Cookies.remove("token");
+    Cookies.remove("refreshToken");
+    Cookies.remove("user");
+
+    navigate("/");
+  }
+
+}, [navigate]);
+
+const handleLogout = () => {
+
+  Cookies.remove("token");
+
+  Cookies.remove(
+    "refreshToken"
+  );
+
+  Cookies.remove("user");
+
+  navigate("/");
+};
+
   return (
     <div className="admin-container">
 
-      {/* Sidebar Overlay */}
+      {/* Sidebar */}
 
       {sidebarOpen && (
-        <div  className="sidebar-overlay-admin" onClick={() => setSidebarOpen(false)}>
-        
-         
-           
-          
-        
-          <div  className="sidebar-admin" onClick={(e) => e.stopPropagation() }>
-          
-           
-             
-           
-          
-
+        <div
+          className="sidebar-overlay-admin"
+          onClick={() =>
+            setSidebarOpen(false)
+          }
+        >
+          <div
+            className="sidebar-admin"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
             <h2>Admin</h2>
+
+            <button
+              className="sidebar-item-admin"
+              onClick={() =>
+                navigate("/")
+              }
+            ><FaHome/>
+              Web Homepage
+            </button>
 
             <button
               className="sidebar-item-admin"
@@ -48,9 +120,7 @@ export default function Admin() {
               }
             >
               <FaPlusCircle />
-              <span>
-                Add New Clinic
-              </span>
+              Add New Clinic
             </button>
 
             <button
@@ -62,33 +132,18 @@ export default function Admin() {
               }
             >
               <FaList />
-              <span>
-                Previously Added Clinics
-              </span>
+              Previously Added Clinics
             </button>
 
-            <button className="sidebar-item-admin">
+            <button
+              className="sidebar-item-admin"
+            >
               <FaFileAlt />
-              <span>
-                View Financial Report
-              </span>
+              View Financial Report
             </button>
-
-            <button className="sidebar-item-admin">
-              <FaUser />
-              <span>Profile</span>
-            </button>
-
-            <button className="sidebar-item-admin">
-              <FaSignOutAlt />
-              <span>Logout</span>
-            </button>
-
           </div>
         </div>
       )}
-
-      {/* Main Content */}
 
       <div className="main-content-admin">
 
@@ -109,13 +164,69 @@ export default function Admin() {
 
           <h2>Admin</h2>
 
-          <div className="notification-admin">
+          {/* Profile */}
 
-            <FaBell size={24} />
+          <div className="profile-section">
 
-            <span className="badge-admin">
-              3
-            </span>
+            <FaUserCircle
+              size={35}
+              className="profile-icon"
+              onClick={() =>
+                setProfileOpen(
+                  !profileOpen
+                )
+              }
+            />
+
+            {profileOpen && (
+
+              <div className="profile-dropdown">
+
+                <div className="profile-info">
+
+                  <h4>
+                    {user?.name}
+                  </h4>
+
+                  <p>
+                    {user?.email}
+                  </p>
+
+                  <p>
+                    Role :
+                    {user?.role}
+                  </p>
+
+                  <p>
+                    ID :
+                    {user?.id}
+                  </p>
+
+                </div>
+
+                <hr />
+
+                <button>
+                  <FaUserCircle />
+                  Profile
+                </button>
+
+                <button>
+                  <FaKey />
+                  Change Password
+                </button>
+
+                <button
+                  onClick={
+                    handleLogout
+                  }
+                >
+                  <FaSignOutAlt />
+                  Logout
+                </button>
+
+              </div>
+            )}
 
           </div>
 
@@ -128,7 +239,9 @@ export default function Admin() {
           <div
             className="card-admin"
             onClick={() =>
-              navigate("/add-clinic")
+              navigate(
+                "/add-clinic"
+              )
             }
           >
             <h3>
@@ -145,13 +258,17 @@ export default function Admin() {
             }
           >
             <h3>
-              PREVIOUSLY ADDED CLINICS
+              PREVIOUSLY ADDED
+              CLINICS
             </h3>
           </div>
 
-          <div className="card-admin">
+          <div
+            className="card-admin"
+          >
             <h3>
-              VIEW FINANCIAL REPORT
+              VIEW FINANCIAL
+              REPORT
             </h3>
           </div>
 

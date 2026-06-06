@@ -72,7 +72,25 @@ export default function Sidebar() {
                 setShowSidebar(false);
               }}> Recharge</button>
             
-        
+         <button
+              onClick={() => {
+                navigate("/services");
+                setShowSidebar(false);
+              }}> Services</button>
+
+                   
+         <button
+              onClick={() => {
+                navigate("/category");
+                setShowSidebar(false);
+              }}> Service Category</button>
+
+                 <button
+              onClick={() => {
+                navigate("/sub-category");
+                setShowSidebar(false);
+              }}> Service Sub Category</button>
+            
             <button>Time Table</button>
 
             <button>Download Report</button>

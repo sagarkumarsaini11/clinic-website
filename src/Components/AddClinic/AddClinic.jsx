@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "./AddClinic.css";
-
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
 export default function AddClinic() {
+
+const navigate = useNavigate();
+
 
   const [clinicName, setClinicName] = useState("");
   const [clinicAddress, setClinicAddress] = useState("");
-  const [contactNo, setContactNo] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
   const [email, setEmail] = useState("");
   const [doctorName, setDoctorName] = useState("");
   const [registrationNo, setRegistrationNo] = useState("");
@@ -16,29 +20,29 @@ export default function AddClinic() {
   const [footerFile, setFooterFile] = useState(null);
   const [idCardFile, setIdCardFile] = useState(null);
 
-const handleImageChange = (e, setter) => {
+  //Image change
 
-  const file = e.target.files[0];
+const handleImageChange = (e, setter) => {
+ 
+  const file =
+    e.target.files[0];
 
   if (!file) return;
 
-  const reader = new FileReader();
-
-  reader.onloadend = () => {
-    setter(reader.result);
-  };
-
-  reader.readAsDataURL(file);
+  setter(file);
 };
+ 
 
-const handleSubmit = (e) => {
+//handle Submit
+
+const handleSubmit = async (e) => {
 
   e.preventDefault();
 
   if (
     !clinicName ||
     !clinicAddress ||
-    !contactNo ||
+    !phoneNo ||
     !email ||
     !doctorName ||
     !registrationNo
@@ -47,240 +51,240 @@ const handleSubmit = (e) => {
     return;
   }
 
-  const clinicData = {
+  try {
 
-    id: Date.now(),
+    const formData = new FormData();
 
-    clinicName,
-    clinicAddress,
-    contactNo,
-    email,
-    doctorName,
-    registrationNo,
-    gstin,
+    formData.append(
+      "clinicName",
+      clinicName
+    );
 
-    logoFile,
-    headerFile,
-    footerFile,
-    idCardFile,
-  };
+    formData.append(
+      "clinicAddress",
+      clinicAddress
+    );
 
-  console.log("Clinic Data:");
-  console.log(clinicData);
+    formData.append(
+      "PhoneNo",
+      phoneNo
+    );
 
-  // SAVE DATA
+    formData.append(
+      "email",
+      email
+    );
 
-  const oldClinics =
-    JSON.parse(
-      localStorage.getItem("clinics")
-    ) || [];
+    formData.append(
+      "doctorName",
+      doctorName
+    );
 
-  oldClinics.push(clinicData);
+    formData.append(
+      "registrationNo",
+      registrationNo
+    );
 
-  localStorage.setItem(
-    "clinics",
-    JSON.stringify(oldClinics)
-  );
+    formData.append(
+      "gstin",
+      gstin
+    );
 
-  alert("Clinic Added Successfully");
+    // Images
 
-  // RESET FORM
+    if (logoFile) {
+      formData.append(
+        "logoFile",
+        logoFile
+      );
+    }
 
-  setClinicName("");
-  setClinicAddress("");
-  setContactNo("");
-  setEmail("");
-  setDoctorName("");
-  setRegistrationNo("");
-  setGstin("");
+    if (headerFile) {
+      formData.append(
+        "headerFile",
+        headerFile
+      );
+    }
 
-  setLogoFile(null);
-  setHeaderFile(null);
-  setFooterFile(null);
-  setIdCardFile(null);
+    if (footerFile) {
+      formData.append(
+        "footerFile",
+        footerFile
+      );
+    }
 
-  // REDIRECT
+    if (idCardFile) {
+      formData.append(
+        "idCardFile",
+        idCardFile
+      );
+    }
 
-  window.location.href =
-    "/previously-added-clinics";
+   const token = Cookies.get("token");
+   console.log ("Token:",token);
+  
+   // Api Call
+
+const response = await fetch(
+  "https://clinic-backend-5ucx.onrender.com/api/clinics",
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  }
+);
+
+    const data =
+      await response.json();
+
+    console.log(data);
+
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Failed to Add Clinic"
+      );
+
+      return;
+    }
+
+    alert(
+      "Clinic Added Successfully"
+    );
+
+    navigate(
+      "/previously-added-clinics"
+    );
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Server Error");
+  }
 };
 
   return (
 
     <div className="container-add-clinic">
 
-      <h1 className="heading-add-clinic">
-        ADD NEW CLINIC
-      </h1>
+      <h1 className="heading-add-clinic"> ADD NEW CLINIC</h1>
+       
+                      {/* Add Clinic Form */}
 
       <form onSubmit={handleSubmit}>
+            
+             {/*  Clinic Name*/}
 
-        <label className="label-add-clinic">
-          Clinic Name
-        </label>
-
-        <input
-          className="input-add-clinic"
+        <label className="label-add-clinic"> Clinic Name</label>  
+        <input className="input-add-clinic"
           value={clinicName}
           onChange={(e)=>setClinicName(e.target.value)}
-          placeholder="Enter Clinic Name"
-        />
+         placeholder="Enter Clinic Name"/>
+          
+          {/*  Clinic Address*/}
 
-        <label className="label-add-clinic">
-          Clinic Address
-        </label>
-
-        <input
-          className="input-add-clinic"
+        <label className="label-add-clinic">Clinic Address</label>
+        <input  className="input-add-clinic"
           value={clinicAddress}
-          onChange={(e)=>setClinicAddress(e.target.value)}
-          placeholder="Enter Address"
-        />
+        onChange={(e)=>setClinicAddress(e.target.value)}
+          placeholder="Enter Address"/>
+          
+                {/*  Phone no*/}
 
-        <label className="label-add-clinic">
-          Contact No
-        </label>
-
-        <input
-          className="input-add-clinic"
-          value={contactNo}
-          onChange={(e)=>setContactNo(e.target.value)}
-          placeholder="Enter Contact No"
-        />
-
-        <label className="label-add-clinic">
-          Email
-        </label>
-
-        <input
-          className="input-add-clinic"
-          value={email}
+        <label className="label-add-clinic"> Phone No</label>
+        <input   className="input-add-clinic"
+        value={phoneNo}
+        onChange={(e)=>setPhoneNo(e.target.value)}
+          placeholder="Enter Phone No" />
+          
+        
+                 {/*  Email*/}
+        <label className="label-add-clinic"> Email</label>
+        <input className="input-add-clinic"
+           value={email}
           onChange={(e)=>setEmail(e.target.value)}
-          placeholder="Enter Email"
-        />
+          placeholder="Enter Email"/>
+        
 
-        <label className="label-add-clinic">
-          Doctor Name
-        </label>
-
-        <input
-          className="input-add-clinic"
+                  {/*  Doctor Name*/}
+        <label className="label-add-clinic">Doctor Name</label>
+        <input  className="input-add-clinic"
           value={doctorName}
           onChange={(e)=>setDoctorName(e.target.value)}
-          placeholder="Enter Doctor Name"
-        />
-
-        <label className="label-add-clinic">
-          Registration Number
-        </label>
-
-        <input
-          className="input-add-clinic"
+          placeholder="Enter Doctor Name"/>
+        
+        
+                  {/*  Registration Number*/}
+        <label className="label-add-clinic">Registration Number</label>
+        <input className="input-add-clinic"
           value={registrationNo}
           onChange={(e)=>setRegistrationNo(e.target.value)}
-          placeholder="Enter Registration No"
-        />
-
-        <label className="label-add-clinic">
-          GSTIN
-        </label>
-
-        <input
-          className="input-add-clinic"
-          value={gstin}
+          placeholder="Enter Registration No"/>
+         
+        
+                 {/*  GSTIN*/}
+        <label className="label-add-clinic"> GSTIN </label>
+        <input  className="input-add-clinic"
+        value={gstin}
           onChange={(e)=>setGstin(e.target.value)}
-          placeholder="Enter GSTIN"
-        />
+          placeholder="Enter GSTIN"/>
+          
 
-        {/* Logo */}
+                   {/* Logo */}
 
-        <label className="label-add-clinic">
-          Upload Logo
-        </label>
+        <label className="label-add-clinic"> Upload Logo </label>
+        <input type="file"
+           accept="image/*"
+         onChange={(e)=>handleImageChange(e,setLogoFile)}/>
+         
+      {logoFile && (
+     <img  src={URL.createObjectURL(logoFile)}
+       alt="" className="preview-image-add-clinic" />
+    )}
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e)=>handleImageChange(e,setLogoFile)}
-        />
+            {/* Header File */}
 
-        {logoFile && (
-          <img
-            src={logoFile}
-            alt=""
-            className="preview-image-add-clinic"
-          />
-        )}
+        <label className="label-add-clinic"> Upload Header </label>
+        <input  type="file" accept="image/*"
+         onChange={(e)=>handleImageChange(e,setHeaderFile)} />
+          {headerFile && (
+    
+        <img src={URL.createObjectURL(headerFile)} alt=""
+        className="preview-image-add-clinic" />)}
 
-        {/* Header */}
+               {/* Footer file */}
 
-        <label className="label-add-clinic">
-          Upload Header
-        </label>
+        <label className="label-add-clinic"> Upload Footer </label>
+        <input type="file" accept="image/*"
+          onChange={(e)=>handleImageChange(e,setFooterFile)} />
+         
+       {footerFile && (
+       <img     src={URL.createObjectURL(footerFile)} alt=""
+        className="preview-image-add-clinic"/>)}
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e)=>handleImageChange(e,setHeaderFile)}
-        />
-
-        {headerFile && (
-          <img
-            src={headerFile}
-            alt=""
-            className="preview-image-add-clinic"
-          />
-        )}
-
-        {/* Footer */}
-
-        <label className="label-add-clinic">
-          Upload Footer
-        </label>
-
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e)=>handleImageChange(e,setFooterFile)}
-        />
-
-        {footerFile && (
-          <img
-            src={footerFile}
-            alt=""
-            className="preview-image-add-clinic"
-          />
-        )}
-
-        {/* ID Card */}
-
-        <label className="label-add-clinic">
-          Upload ID Card
-        </label>
-
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e)=>handleImageChange(e,setIdCardFile)}
-        />
+                     {/* ID Card */}
+        <label className="label-add-clinic">  Upload ID Card </label>
+        <input type="file"  accept="image/*" 
+          onChange={(e)=>handleImageChange(e,setIdCardFile)}/>
 
         {idCardFile && (
-          <img
-            src={idCardFile}
-            alt=""
-            className="preview-image-add-clinic"
-          />
-        )}
-
-        <button
-          type="submit"
-          className="submit-button-add-clinic"
-        >
-          Submit
-        </button>
-
-      </form>
-
-    </div>
-  );
+         <img  src={URL.createObjectURL(idCardFile)} alt=""
+            className="preview-image-add-clinic"/>)}
+   
+  
+                {/*Submit button*/}
+        <button   type="submit"  className="submit-button-add-clinic">Submit
+       </button>
+        
+      </form>  
+    </div>      
+  );      
 }
+      
+
+    
+  

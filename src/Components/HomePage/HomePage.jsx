@@ -21,6 +21,9 @@ const HomePage = () => {
 
 const navigate = useNavigate();
 const location = useLocation();
+// Appoinment record button
+
+const [showAppointments, setShowAppointments] =  useState(false);
 
 //current patients details
 const [currentPatient, setCurrentPatient] =
@@ -193,24 +196,18 @@ const handleMarkAttendance = () => {
 
       <div className="header">
 
-        <button
-          className="menu-btn"  onClick={() =>  setShowSidebar(true)}>
-         ☰
-         </button> 
-
+        <button className="menu-btn"  onClick={() =>  setShowSidebar(true)}>☰
+         </button>  
+         
         <h2>Homepage</h2>
 
         <div className="notification">
-
-          <FaBell size={24} />
-
+        <FaBell size={24} />
           <span className="badge">3 </span>
-        </div>    
-       </div>   
-
-        
-
-     
+        </div>
+         </div>
+           
+          
 
                         {/* Sidebar */}
 
@@ -245,18 +242,9 @@ const handleMarkAttendance = () => {
                          {/* SEARCH BOX */}
 
       <div className="search-box">
-     <input
-  type="text"
-  placeholder="Enter File No / Patient Name / Mobile No"
-  value={searchValue}
-  onChange={(e) =>
-    setSearchValue(e.target.value)
-  }
- onKeyDown={handleEnterKey}/>
-
-
-
-         
+     <input type="text" placeholder="Enter File No / Patient Name / Mobile No"
+     value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
+         onKeyDown={handleEnterKey}/>
 
 
                      {/* CAMERA OR SEARCH */}
@@ -289,9 +277,19 @@ const handleMarkAttendance = () => {
 
             {/* Appointment Records */}
 
+<button
+  className="appointment-record-btn"
+  onClick={() =>
+    setShowAppointments(!showAppointments)
+  }
+>
+  {showAppointments
+    ? "Hide Appointment Records"
+    : "Show Appointment Records"}
+</button>
 
-<h2>Appointment Records</h2>
-
+ {showAppointments && ( 
+  <>
 {appointmentList.length === 0 ? (
 
   <p>No Appointment Added</p>
@@ -311,47 +309,72 @@ const handleMarkAttendance = () => {
           <th>Mobile</th>
           <th>Address</th>
           <th>Problem</th>
+          <th>Action</th>
         </tr>
       </thead>
 
-      <tbody>
+    <tbody>
 
-        {appointmentList.map((item, index) => (
+  {appointmentList.map((item, index) => (
 
-          <tr key={index}>
+    <tr key={index}>
 
-            <td>{index + 1}</td>
+      <td>{index + 1}</td>
 
-            <td>{item.name}</td>
+      <td>{item.name}</td>
 
-            <td>{item.age}</td>
+      <td>{item.age}</td>
 
-            <td>
-              {item.gender || item.sex}
-            </td>
+      <td>
+        {item.gender || item.sex}
+      </td>
 
-            <td>
-              {item.mobile}
-            </td>
+      <td>
+        {item.mobile}
+      </td>
 
-            <td>
-              {item.address}
-            </td>
+      <td>
+        {item.address}
+      </td>
 
-            <td>
-              {item.problem}
-            </td>
+      <td>
+        {item.problem}
+      </td>
 
-          </tr>
+      <td>
 
-        ))}
+        <button
+          className="enter-btn"
+          onClick={() => {
 
-      </tbody>
+            setCurrentPatient(item);
+
+            setAttendanceMarked(false);
+
+            setAttendanceDate("Not Marked");
+
+            setShowPatientCard(true);
+
+          }}
+        >
+          Enter
+        </button>
+
+      </td>
+
+    </tr>
+
+  ))}
+
+</tbody>
 
     </table>
 
   </div>
 
+)}
+
+</>
 )}
    </div>      
 )}

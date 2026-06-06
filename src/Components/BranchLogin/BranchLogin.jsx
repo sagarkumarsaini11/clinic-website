@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import "./BranchLogin.css";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const BranchLogin = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    
     const [loginType, setLoginType] = useState("Admin");
   
   const [showLogin, setShowLogin] = useState(false);
@@ -20,7 +23,7 @@ const BranchLogin = () => {
     });
   };
 
-const handleLogin = (e) => {
+const handleLogin = async (e) => {
 
   e.preventDefault();
 
@@ -33,26 +36,122 @@ const handleLogin = (e) => {
   }
 
   // ADMIN LOGIN
+if (loginType === "Admin") {
 
-  if (loginType === "Admin") {
+  try {
 
-    if (
-      loginData.email ===
-        "admin@gmail.com" &&
-      loginData.password ===
-        "123456"
-    ) {
+    setLoading(true);
 
-      setShowLogin(false);
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginData.email,
+          password: loginData.password,
+        }),
+      }
+    );
 
-      navigate("/adminpanel");
+    const data = await response.json();
+
+    console.log("Login Response:", data);
+
+    // const newData = data.data
+
+    // console.log("token", data.data.accessToken)
+
+    if (!response.ok) {
+
+      alert(
+        data.message || "Login Failed"
+      );
 
       return;
     }
 
-    alert("Invalid Admin Login");
-    return;
+// Get expiry date from API
+
+const expiryDate = new Date(
+  data.data.refreshExpiresAt
+);
+
+// Store Access Token
+
+Cookies.set(
+  "token",
+  data.data.accessToken,
+  {
+    expires: expiryDate,
+    secure: false,
+    sameSite: "Lax",
   }
+);
+
+localStorage
+
+// Store Refresh Token
+
+Cookies.set(
+  "refreshToken",
+  data.data.refreshToken,
+  {
+    expires: expiryDate,
+    secure: false,
+    sameSite: "Lax",
+  }
+);
+
+// Store User Data
+
+Cookies.set(
+  "user",
+  JSON.stringify(
+    data.data.user
+  ),
+  {
+    expires: expiryDate,
+    secure: false,
+    sameSite: "Lax",
+  }
+);
+
+console.log(
+  "Token Cookie:",
+  Cookies.get("token")
+);
+
+console.log(
+  "User Cookie:",
+  Cookies.get("user")
+);
+
+console.log(
+  "Expiry Date:",
+  expiryDate
+);
+
+navigate("/adminpanel");
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Server Error");
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+  return;
+}
+
+
 
   // CLINIC LOGIN
 
@@ -194,12 +293,9 @@ const handleLoginTypeChange = (e) => {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="signin-btn"
-              >
-                Sign In
-              </button>
+            <button  type="submit"  className="signin-btn" disabled={loading}>
+           {loading ? "Loading..." : "Sign In"}
+        </button>
 
             </form>
           </div>

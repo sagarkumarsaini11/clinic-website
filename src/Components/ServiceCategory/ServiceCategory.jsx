@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./ServiceCategory.css";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function ServiceCategory() {
+
   const [categoryName, setCategoryName] = useState("");
   const [categoryFee, setCategoryFee] = useState("");
-
+  const [status, setStatus]=useState("");
   const [categories, setCategories] = useState([]);
 
   const [editId, setEditId] = useState(null);
@@ -24,11 +26,17 @@ export default function ServiceCategory() {
         "Maximum 100 characters allowed";
     }
 
+   
+
     if (!categoryFee) {
  newErrors.categoryFee =
   "Category Fee is required";
 } else if ( !/^\d+(\.\d{1,2})?$/.test(categoryFee)) 
 {newErrors.categoryFee ="Only 2 decimal places allowed";}
+
+     if (!status) {
+      newErrors.status = "Select Status";
+     }
 
     setErrors(newErrors);
 
@@ -46,6 +54,7 @@ export default function ServiceCategory() {
         Date.now(),
       categoryName,
       categoryFee,
+      status,
     };
 
     if (editId) {
@@ -78,6 +87,7 @@ export default function ServiceCategory() {
 
     setCategoryName("");
     setCategoryFee("");
+    setStatus("");
     setErrors({});
   };
 
@@ -89,6 +99,8 @@ export default function ServiceCategory() {
     setCategoryFee(
       item.categoryFee
     );
+
+    setStatus(item.status);
 
     setEditId(item.id);
   };
@@ -108,15 +120,16 @@ export default function ServiceCategory() {
     );
   };
 
-  return (
-    <div className="service-page">
+  return (<>
+  <Sidebar/>
+    <div className="service-page-category">
 
-      <div className="service-card">
+      <div className="service-card-category">
 
         <h2> Service Category </h2>
         
         <form onSubmit={handleSubmit}>
-          <div className="form-group-services">
+          <div className="form-group-category">
 
             <label>  Category Name </label>
             
@@ -133,7 +146,7 @@ export default function ServiceCategory() {
 
           </div>      
 
-          <div className="form-group-services">
+          <div className="form-group-category">
 
             <label> Category Fee </label>
 
@@ -158,10 +171,60 @@ export default function ServiceCategory() {
 />
              
             {errors.categoryFee && (
-              <p className="error-services"> { errors.categoryFee }</p>)}
+              <p className="error-category"> { errors.categoryFee }</p>)}
             </div>   
 
-          <button  type="submit"  className="add-btn-services">
+            <div className="form-group-category">
+
+  <label>Status</label>
+
+  <div className="radio-group-category">
+
+    <label>
+      <input
+        type="radio"
+        name="status"
+        value="Active"
+        checked={
+          status === "Active"
+        }
+        onChange={(e) =>
+          setStatus(
+            e.target.value
+          )
+        }
+      />
+      Active
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        name="status"
+        value="Inactive"
+        checked={
+          status === "Inactive"
+        }
+        onChange={(e) =>
+          setStatus(
+            e.target.value
+          )
+        }
+      />
+      Inactive
+    </label>
+
+  </div>
+
+  {errors.status && (
+    <p className="error-category">
+      {errors.status}
+    </p>
+  )}
+
+</div>
+
+          <button  type="submit"  className="add-btn-category">
            {editId ? "Update Category" : "Add Category"}
         
           </button>    
@@ -170,10 +233,10 @@ export default function ServiceCategory() {
 
       {categories.length >
         0 && (
-        <div className="table-card-services">
+        <div className="table-card-category">
 
           <h3>  Added Categories</h3>
-          <div className="table-wrapper-services">
+          <div className="table-wrapper-category">
 
             <table>
 
@@ -182,6 +245,7 @@ export default function ServiceCategory() {
                   <th> S.No </th>
                   <th>Category Name</th>
                   <th> Category Fee </th>
+                  <th>Status</th>
                   <th> Action </th>
                 </tr>
               </thead>
@@ -198,18 +262,33 @@ export default function ServiceCategory() {
                       <td> { item.categoryName}</td>  
                       <td>₹{ item.categoryFee }</td>
 
-                      <td>
-                        <button  className="edit-btn-services"
-                         onClick={() => handleEdit( item ) } >
-                           Edit
-                         </button>  
+<td>
+  <span
+    className={
+      item.status === "Active"
+        ? "status-active-category"
+        : "status-inactive-category"
+    }
+  >
+    {item.status}
+  </span>
+</td>
 
-                        <button    className="delete-btn-services"
-                         onClick={() => handleDelete( item.id )} >
-                        Delete
-                         </button>   
+<td className="action-cell-category">
+  <button
+    className="edit-btn-category"
+    onClick={() => handleEdit(item)}
+  >
+    Edit
+  </button>
 
-                      </td>
+  <button
+    className="delete-btn-category"
+    onClick={() => handleDelete(item.id)}
+  >
+    Delete
+  </button>
+</td>
                     </tr>
                   )
                 )}
@@ -224,5 +303,6 @@ export default function ServiceCategory() {
       )}
 
     </div>
+    </>
   );
 }
