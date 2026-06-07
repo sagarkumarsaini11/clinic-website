@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./AddPatientForm.css";
-
 import {  FaBell,  FaBars,} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+
 
 export default function AddPatientForm() {
 
@@ -245,6 +245,9 @@ if (
 };
 
   return (
+    <>
+   
+   
 
     <div className="page-wrapper-addpatient">
 
@@ -554,5 +557,6 @@ if (
       </div>
 
     </div>
+    </>
   );
 }

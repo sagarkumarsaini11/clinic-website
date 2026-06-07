@@ -104,14 +104,7 @@ const handleLogout = () => {
           >
             <h2>Admin</h2>
 
-            <button
-              className="sidebar-item-admin"
-              onClick={() =>
-                navigate("/")
-              }
-            ><FaHome/>
-              Web Homepage
-            </button>
+          
 
             <button
               className="sidebar-item-admin"

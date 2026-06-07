@@ -1,33 +1,109 @@
-import React,
-{
-  useState,
-  useEffect,
-} from "react";
+import React,{ useState,useEffect,} from "react";
 import "./PreviouslyAddedClinics.css";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function PreviouslyAddedClinics() {
 
   const navigate = useNavigate();
+ 
+    //get data 
+  const [loading, setLoading] =useState(true);
 
-  const [clinics, setClinics] = useState([]);
+const [clinics, setClinics] = useState([]);
+const [editingClinic, setEditingClinic] = useState(null);
+const [editData, setEditData] =useState({});
+  
 
-  const [editingClinic, setEditingClinic] =
-  useState(null);
+//API CALL
 
-const [editData, setEditData] =
-  useState({});
+useEffect(() => {
 
-  useEffect(() => {
+  const fetchClinics = async () => {
 
-  const savedClinics =
-    JSON.parse(
-      localStorage.getItem("clinics")
-    ) || [];
+    try {
 
-  setClinics(savedClinics);
+          const token = Cookies.get("token");
+
+    console.log("TOKEN:", token);
+
+    if (!token) {
+
+      console.log("No token found in cookies" );
+        
+      return;
+
+    }
+
+      const response = await fetch(
+        "https://clinic-backend-5ucx.onrender.com/api/clinics",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("API RESPONSE");
+      console.log (data);
+      console.log(
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      );
+
+
+      console.log(
+        "Clinic List:",
+        data
+      );
+
+      if (response.ok) {
+
+        if (Array.isArray(data)) {
+
+          setClinics(data);
+
+        } else if (data.data) {
+
+          setClinics(data.data);
+
+        } else if (data.clinics) {
+
+          setClinics(data.clinics);
+
+        }
+
+      } else {
+
+        console.log(
+          "API Error:",
+          data
+        );
+
+      }
+
+    } catch (error) {
+
+      console.log(
+        "Fetch Error:",
+        error
+      );
+
+    }
+
+  };
+
+  fetchClinics();
 
 }, []);
+
+  // IMAGE PREVIEW
 
   const [previewVisible, setPreviewVisible] =
     useState(false);
@@ -54,25 +130,76 @@ const [editData, setEditData] =
 };
 
 //Edit data save
-const handleSave = () => {
+const handleSave = async () => {
 
-  const updatedClinics =
-    clinics.map((clinic) =>
-      clinic.id === editingClinic
-        ? editData
-        : clinic
+  try {
+
+    const token = Cookies.get("token");
+
+    console.log("Updating Clinic ID:", editingClinic);
+
+
+    const response = await fetch(
+      `https://clinic-backend-5ucx.onrender.com/api/clinics/${editingClinic}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: editData.name,
+          doctor_name: editData.doctor_name,
+          phone: editData.phone,
+          email: editData.email,
+          state_council_registration_no:
+            editData.state_council_registration_no,
+          gstin: editData.gstin,
+        }),
+      }
     );
 
-  setClinics(updatedClinics);
+    const data = await response.json();
 
-  localStorage.setItem(
-    "clinics",
-    JSON.stringify(updatedClinics)
-  );
+    console.log("UPDATE RESPONSE:", data);
 
-  setEditingClinic(null);
+    if (!response.ok) {
 
-  alert("Clinic Updated Successfully");
+      alert(
+        data.message || "Failed to Update Clinic"
+      );
+
+      return;
+    }
+
+    const updatedClinics = clinics.map(
+      (clinic) =>
+        clinic.id === editingClinic
+          ? {
+              ...clinic,
+              ...editData,
+            }
+          : clinic
+    );
+
+    setClinics(updatedClinics);
+
+    setEditingClinic(null);
+
+    alert(
+      "Clinic Updated Successfully"
+    );
+
+  } catch (error) {
+
+    console.log(
+      "Update Error:",
+      error
+    );
+
+    alert("Server Error");
+
+  }
 };
 
   // Delete Clinic
@@ -107,34 +234,25 @@ const handleDelete = (id) => {
 
     <div className="container-clinic">
 
-      {/* Header */}
+                {/* Header */}
 
       <div className="header-clinic">
 
-        <h1 className="heading-clinic">
-          ADDED CLINICS
-        </h1>
+        <h1 className="heading-clinic">  ADDED CLINICS</h1>
+        
+        
+           {/* Button add clinic */}
 
-        <button
-          className="top-add-btn-clinic"
-          onClick={() =>
-            navigate("/add-clinic")
-          }
-        >
-          + Add
-        </button>
-
-      </div>
-
-      {/* Clinic List */}
+        <button   className="top-add-btn-clinic" onClick={() =>
+        navigate("/add-clinic")}> + Add</button>
+         </div>
+          
+                 {/* Clinic List */}
 
 {clinics.length === 0 ? (
 
-  <p className="empty-text-clinic">
-    No Clinics Added
-  </p>
-
-) : (
+  <p className="empty-text-clinic">  No Clinics Added </p>
+  ) : (
 
   <div className="table-container-clinic">
 
@@ -145,7 +263,7 @@ const handleDelete = (id) => {
           <th>S.No</th>
           <th>Clinic Name</th>
           <th>Doctor</th>
-          <th>Contact</th>
+          <th>Phone no</th>
           <th>Email</th>
           <th>Registration</th>
           <th>GSTIN</th>
@@ -161,72 +279,75 @@ const handleDelete = (id) => {
           <tr key={item.id}>
 
             <td>{index + 1}</td>
+            
+            {/* Clinic Name */}
 
           <td>
 
 {editingClinic === item.id ? (
 
   <input
-    value={editData.clinicName}
+    value={editData.name}
     onChange={(e) =>
       setEditData({
         ...editData,
-        clinicName: e.target.value,
+        name: e.target.value,
       })
-    }
-  />
-
+    } />
+ 
 ) : (
 
-  item.clinicName
+  item.name
 
 )}
 
 </td>
-
+                      {/* Doctor name */}
          <td>
 
 {editingClinic === item.id ? (
 
   <input
-    value={editData.doctorName}
+    value={editData.doctor_name}
     onChange={(e) =>
       setEditData({
         ...editData,
-        doctorName: e.target.value,
+        doctor_name: e.target.value,
       })
     }
   />
 
 ) : (
 
-  item.doctorName
+  item.doctor_name
 
 )}
 
 </td>
+            {/* COntact no */}
 
             <td>
 
 {editingClinic === item.id ? (
 
   <input
-    value={editData.contactNo}
+    value={editData.phone}
     onChange={(e) =>
       setEditData({
         ...editData,
-        contactNo: e.target.value,
+        phone: e.target.value,
       })
     }
   />
 
 ) : (
 
-  item.contactNo
+   item.phone
 
 )}
 
 </td>
+               {/* email */}
 
             <td>
 
@@ -249,29 +370,30 @@ const handleDelete = (id) => {
 )}
 
 </td>
+                  {/* registration no */}
 
            <td>
 
 {editingClinic === item.id ? (
 
   <input
-    value={editData.registrationNo}
+    value={editData.state_council_registration_no}
     onChange={(e) =>
       setEditData({
         ...editData,
-        registrationNo: e.target.value,
+        state_council_registration_no: e.target.value,
       })
     }
   />
 
 ) : (
 
-  item.registrationNo
+  item.state_council_registration_no
 
 )}
 
 </td>
-
+                 {/*GSTIN  */}
            <td>
 
 {editingClinic === item.id ? (
@@ -293,74 +415,86 @@ const handleDelete = (id) => {
 )}
 
 </td>
+                 {/* Images */}
+     <td>
+  <div className="table-images">
 
-            <td>
+    {item.logo_file && (
+      <div className="image-box">
+        <p className="image-title">Logo</p>
+        <img
+          src={item.logo_file}
+          alt="Logo"
+          className="small-image"
+          onClick={() => openImage(item.logo_file)}
+        />
+      </div>
+    )}
 
-              <div className="table-images">
+    {item.letterhead_header_file && (
+      <div className="image-box">
+        <p className="image-title">Header</p>
+        <img
+          src={item.letterhead_header_file}
+          alt="Header"
+          className="small-image"
+          onClick={() =>
+            openImage(item.letterhead_header_file)
+          }
+        />
+      </div>
+    )}
 
-                {[
-                  item.logoFile,
-                  item.headerFile,
-                  item.footerFile,
-                  item.idCardFile,
-                ].map(
-                  (image, i) =>
+    {item.letterhead_footer_file && (
+      <div className="image-box">
+        <p className="image-title">Footer</p>
+        <img
+          src={item.letterhead_footer_file}
+          alt="Footer"
+          className="small-image"
+          onClick={() =>
+            openImage(item.letterhead_footer_file)
+          }
+        />
+      </div>
+    )}
 
-                    image && (
+    {item.id_card_background_file && (
+      <div className="image-box">
+        <p className="image-title">ID Card</p>
+        <img
+          src={item.id_card_background_file}
+          alt="ID Card"
+          className="small-image"
+          onClick={() =>
+            openImage(item.id_card_background_file)
+          }
+        />
+      </div>
+    )}
 
-                      <img
-                        key={i}
-                        src={image}
-                        alt=""
-                        className="small-image"
-                        onClick={() =>
-                          openImage(image)
-                        }
-                      />
-                    )
-                )}
-
-              </div>
-
-            </td>
-
-            <td>
+  </div>
+</td>
+                      {/* SAVE OR EDIT BUTTON */}
+           
 <td>
 
 {editingClinic === item.id ? (
 
-  <button
-    className="save-btn-clinic"
-    onClick={handleSave}
-  >
-    Save
-  </button>
+  <button  className="save-btn-clinic" onClick={handleSave}> Save </button>
 
 ) : (
 
-  <button
-    className="edit-btn-clinic"
-    onClick={() =>
-      handleEdit(item)
-    }
-  >
+  <button className="edit-btn-clinic"  onClick={() =>  handleEdit(item)}>
     Edit
   </button>
+)}    
 
-)}
-
-<button
-  className="delete-btn-clinic"
-  onClick={() =>
-    handleDelete(item.id)
-  }
->
+                  {/* DELETE BUTTON */}
+<button  className="delete-btn-clinic"  onClick={() =>  handleDelete(item.id) }>
   Delete
 </button>
-
-</td>
-
-            </td>
+</td>  
 
           </tr>
 

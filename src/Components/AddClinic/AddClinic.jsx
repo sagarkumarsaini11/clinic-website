@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./AddClinic.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
+import SidebarAdmin from "../Sidebar/SibarAdmin";
+
 export default function AddClinic() {
 
 const navigate = useNavigate();
@@ -174,7 +176,8 @@ const response = await fetch(
 };
 
   return (
-
+<>
+<SidebarAdmin/>
     <div className="container-add-clinic">
 
       <h1 className="heading-add-clinic"> ADD NEW CLINIC</h1>
@@ -287,7 +290,8 @@ const response = await fetch(
        </button>
         
       </form>  
-    </div>      
+    </div> 
+     </>    
   );      
 }
       
