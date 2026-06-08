@@ -155,26 +155,94 @@ navigate("/adminpanel");
 
   // CLINIC LOGIN
 
-  if (loginType === "Clinic") {
+ if (loginType === "Clinic") {
 
-    if (
-      loginData.email ===
-        "clinic@gmail.com" &&
-      loginData.password ===
-        "123456"
-    ) {
+  try {
 
-      setShowLogin(false);
+    setLoading(true);
 
-      navigate("/homepage");
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginData.email,
+          password: loginData.password,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Clinic Login Response:", data);
+
+    if (!response.ok) {
+
+      alert(
+        data.message || "Clinic Login Failed"
+      );
 
       return;
     }
 
-    alert("Invalid Clinic Login");
-    return;
+    const expiryDate = new Date(
+      data.data.refreshExpiresAt
+    );
+
+    Cookies.set(
+      "token",
+      data.data.accessToken,
+      {
+        expires: expiryDate,
+        secure: true,
+        sameSite: "Lax",
+      }
+    );
+
+    Cookies.set(
+      "refreshToken",
+      data.data.refreshToken,
+      {
+        expires: expiryDate,
+        secure: true,
+        sameSite: "Lax",
+      }
+    );
+
+    Cookies.set(
+      "user",
+      JSON.stringify(data.data.user),
+      {
+        expires: expiryDate,
+        secure: true,
+        sameSite: "Lax",
+      }
+    );
+
+    console.log(
+      "Clinic Token:",
+      Cookies.get("token")
+    );
+
+    navigate("/homepage");
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Server Error");
+
+  } finally {
+
+    setLoading(false);
+
   }
 
+  return;
+}
   // PATIENT LOGIN
 
   if (loginType === "Patient") {

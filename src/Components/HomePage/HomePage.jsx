@@ -1,7 +1,9 @@
 import React, { useState, useEffect,} from "react";
 import "./HomePage.css";
+import Cookies from "js-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
+  FaUserCircle,
   FaBell,
   FaCamera,
   FaTimes,
@@ -21,42 +23,72 @@ const HomePage = () => {
 
 const navigate = useNavigate();
 const location = useLocation();
+
 // Appoinment record button
 
 const [showAppointments, setShowAppointments] =  useState(false);
 
 //current patients details
-const [currentPatient, setCurrentPatient] =
-  useState(null);
+const [currentPatient, setCurrentPatient] =  useState(null);
+
 
 const [searchValue, setSearchValue] = useState("");
 
-  const [showSidebar, setShowSidebar] =
-    useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+   
 
-  const [showPatientCard, setShowPatientCard] =
-    useState(false);
+  const [showPatientCard, setShowPatientCard] = useState(false);
+   
 
-    const [attendanceMarked, setAttendanceMarked] =
-  useState(false);
+ const [attendanceMarked, setAttendanceMarked] = useState(false);
+ 
 
-const [attendanceDate, setAttendanceDate] =
-  useState("Not Marked");
+const [attendanceDate, setAttendanceDate] = useState("Not Marked");
+ 
 
-const [updatedFileNumber, setUpdatedFileNumber] =
-  useState("00000");
+const [updatedFileNumber, setUpdatedFileNumber] =  useState("00000");
+
 
        //data list add appoi. add patient
-       const [loading, setLoading]= useState(true);
+ const [loading, setLoading]= useState(true);
 
-  const [patientList, setPatientList] =
-  useState([]);
+  const [patientList, setPatientList] = useState([]);
+ 
 
-const [appointmentList, setAppointmentList] =
-  useState([]);
+const [appointmentList, setAppointmentList] =  useState([]);
+ 
+// profile data
+const [showProfileMenu, setShowProfileMenu] =
+  useState(false);
+
+const [showProfileModal, setShowProfileModal] =
+  useState(false);
+
+const [userData, setUserData] =
+  useState(null);
+ // profile data
+ useEffect(() => {
+
+  const userCookie =
+    Cookies.get("user");
+
+  if (userCookie) {
+
+    const user =
+      JSON.parse(userCookie);
+
+    console.log(
+      "Logged User:",
+      user
+    );
+
+    setUserData(user);
+
+  }
+
+}, []);
 
 //open popup
-
 useEffect(() => {
   if (location.state?.openPatientPopup) {
     setShowPatientCard(true);
@@ -201,10 +233,64 @@ const handleMarkAttendance = () => {
          
         <h2>Homepage</h2>
 
-        <div className="notification">
-        <FaBell size={24} />
-          <span className="badge">3 </span>
-        </div>
+        {/* profile */}
+
+       <div className="profile-container">
+
+ <FaUserCircle
+  size={35}
+  className="profile-icon"
+  onClick={() => {
+    console.log("Profile Clicked");
+    setShowProfileMenu(!showProfileMenu);
+  }}
+/>
+
+  {showProfileMenu && (
+
+    <div className="profile-dropdown">
+
+      <button
+        onClick={() => {
+
+          setShowProfileModal(true);
+
+          setShowProfileMenu(false);
+
+        }}
+      >
+        Profile
+      </button>
+
+      <button
+        onClick={() => {
+
+          navigate("/change-password");
+
+        }}
+      >
+        Change Password
+      </button>
+
+      <button
+        onClick={() => {
+
+          Cookies.remove("token");
+          Cookies.remove("refreshToken");
+          Cookies.remove("user");
+
+          navigate("/");
+
+        }}
+      >
+        Logout
+      </button>
+
+    </div>
+
+  )}
+
+</div>
          </div>
            
           
@@ -508,7 +594,57 @@ const handleMarkAttendance = () => {
 
         </div>
       )}
+              {/* Profile data function */}
+              {showProfileModal && (
 
+  <div className="modal-overlay">
+
+    <div className="profile-modal">
+
+      <FaTimes
+        className="close-icon"
+        onClick={() =>
+          setShowProfileModal(false)
+        }
+      />
+
+      <h2>Clinic Profile</h2>
+
+      <p>
+        <strong>ID:</strong>
+        {" "}
+        {userData?.id}
+      </p>
+
+      <p>
+        <strong>Name:</strong>
+        {" "}
+        {userData?.name}
+      </p>
+
+      <p>
+        <strong>Email:</strong>
+        {" "}
+        {userData?.email}
+      </p>
+
+      <p>
+        <strong>Mobile:</strong>
+        {" "}
+        {userData?.mobile}
+      </p>
+
+      <p>
+        <strong>Role:</strong>
+        {" "}
+        {userData?.role}
+      </p>
+
+    </div>
+
+  </div>
+
+)}
     </div>
   );
 };

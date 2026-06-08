@@ -156,19 +156,19 @@
 .status-active-category{
   background:#28a745;
   color:white;
-  padding:5px 12px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:600;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 .status-inactive-category{
   background:#dc3545;
   color:white;
-  padding:5px 12px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:600;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 /* Edit */

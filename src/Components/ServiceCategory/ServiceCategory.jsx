@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ServiceCategory.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Cookies from "js-cookie";
+
+const BASE_URL =
+  "https://clinic-backend-5ucx.onrender.com/api/service-categories";
 
 export default function ServiceCategory() {
 
@@ -8,11 +12,58 @@ export default function ServiceCategory() {
   const [categoryFee, setCategoryFee] = useState("");
   const [status, setStatus]=useState("");
   const [categories, setCategories] = useState([]);
-
   const [editId, setEditId] = useState(null);
-
   const [errors, setErrors] = useState({});
 
+  //Get api
+useEffect(() => {
+
+  fetchCategories();
+
+}, []);
+
+const fetchCategories = async () => {
+
+  try {
+
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/service-categories",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("GET Categories:", data);
+
+    if (response.ok) {
+
+      if (Array.isArray(data)) {
+
+        setCategories(data);
+
+      } else if (data.data) {
+
+        setCategories(data.data);
+
+      }
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
+
+//form validatation
   const validateForm = () => {
     let newErrors = {};
 
@@ -25,8 +76,6 @@ export default function ServiceCategory() {
       newErrors.categoryName =
         "Maximum 100 characters allowed";
     }
-
-   
 
     if (!categoryFee) {
  newErrors.categoryFee =
@@ -43,82 +92,228 @@ export default function ServiceCategory() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  //API CALLING ADDING DATA
+ 
+const handleSubmit = async (e) => {
 
-    if (!validateForm()) return;
+  e.preventDefault();
 
-    const categoryData = {
-      id:
-        editId ||
-        Date.now(),
-      categoryName,
-      categoryFee,
-      status,
-    };
+  if (!validateForm()) return;
+
+  try {
+
+    const token = Cookies.get("token");
+
+    let response;
 
     if (editId) {
-      const updatedData =
-        categories.map((item) =>
-          item.id === editId
-            ? categoryData
-            : item
-        );
 
-      setCategories(updatedData);
-
-      console.log(
-        "Updated Category:",
-        categoryData
+      response = await fetch(
+        `https://clinic-backend-5ucx.onrender.com/api/service-categories/${editId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            cat_name: categoryName,
+            category_fee: categoryFee,
+          }),
+        }
       );
 
-      setEditId(null);
     } else {
-      setCategories([
-        ...categories,
-        categoryData,
-      ]);
 
-      console.log(
-        "New Category:",
-        categoryData
+      response = await fetch(
+        "https://clinic-backend-5ucx.onrender.com/api/service-categories",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            cat_name: categoryName,
+            category_fee: categoryFee,
+          }),
+        }
       );
+
     }
+
+    const data = await response.json();
+
+    console.log(data);
+
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Operation Failed"
+      );
+
+      return;
+    }
+
+    alert(
+      editId
+        ? "Category Updated Successfully"
+        : "Category Added Successfully"
+    );
 
     setCategoryName("");
     setCategoryFee("");
     setStatus("");
-    setErrors({});
-  };
+    setEditId(null);
 
-  const handleEdit = (item) => {
-    setCategoryName(
-      item.categoryName
+    fetchCategories();
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Server Error");
+
+  }
+
+};
+
+  //EDIT FUNCTION 
+ const handleEdit = (item) => {
+
+  setCategoryName(
+    item.cat_name
+  );
+
+  setCategoryFee(
+    item.category_fee
+  );
+
+  setStatus(
+    item.status || "Active"
+  );
+
+  setEditId(item.id);
+
+};
+
+  //DELETE FUNCTION
+  const handleDelete = async (id) => {
+
+  const confirmDelete =
+    window.confirm(
+      "Are you sure?"
     );
 
-    setCategoryFee(
-      item.categoryFee
+  if (!confirmDelete) return;
+
+  try {
+
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      `https://clinic-backend-5ucx.onrender.com/api/service-categories/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
-    setStatus(item.status);
+    const data =
+      await response.json();
 
-    setEditId(item.id);
-  };
+    console.log(data);
 
-  const handleDelete = (id) => {
-    const filteredData =
-      categories.filter(
-        (item) =>
-          item.id !== id
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Delete Failed"
       );
 
-    setCategories(filteredData);
+      return;
+
+    }
+
+    alert(
+      "Category Deleted Successfully"
+    );
+
+    fetchCategories();
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Server Error");
+
+  }
+
+};
+
+//Status change
+
+const handleStatusChange = async (
+  id,
+  currentStatus
+) => {
+     console.log("Function Called");
+  console.log("ID:", id);
+  console.log("Status:", currentStatus);
+  
+  try {
+
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      `https://clinic-backend-5ucx.onrender.com/api/service-categories/${id}/status`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify({
+          is_active:
+            Number(currentStatus) === 1
+              ? 0
+              : 1,
+        }),
+      }
+    );
+
+    const data =
+      await response.json();
 
     console.log(
-      "Deleted Category ID:",
-      id
+      "PATCH Response:",
+      data
     );
-  };
+
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Status Update Failed"
+      );
+
+      return;
+
+    }
+
+    await fetchCategories();
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
 
   return (<>
   <Sidebar/>
@@ -128,108 +323,76 @@ export default function ServiceCategory() {
 
         <h2> Service Category </h2>
         
+                {/* Category Form */}
+
         <form onSubmit={handleSubmit}>
           <div className="form-group-category">
-
-            <label>  Category Name </label>
-            
+              
+              {/* Category name */}
+            <label>  Category Name </label>  
      <input  type="text" maxLength="100" placeholder="Enter Category Name"
      value={ categoryName}  onChange={(e) => setCategoryName( e.target.value)} />
              
          {errors.categoryName && (
               <p className="error">
-                {
-                  errors.categoryName
-                }
-              </p>
-            )}
+                { errors.categoryName }
+               </p> )}  
+           </div>    
+         
+           
+             {/* category fee */}
+          <div className="form-group-category">  
+              <label> Category Fee </label>
+           <input  type="number"  step="0.01" min="0" placeholder="Enter Fee"
+           value={categoryFee} onChange={(e) => { const value = e.target.value;
 
-          </div>      
+           if ( value === "" ||  /^\d+(\.\d{0,2})?$/.test(value)
+           ) {setCategoryFee(value);}
+        }}/>
 
-          <div className="form-group-category">
-
-            <label> Category Fee </label>
-
-            <input
-  type="number"
-  step="0.01"
-  min="0"
-  placeholder="Enter Fee"
-  value={categoryFee}
-  onChange={(e) => {
-
-    const value = e.target.value;
-
-    if (
-      value === "" ||
-      /^\d+(\.\d{0,2})?$/.test(value)
-    ) {
-      setCategoryFee(value);
-    }
-
-  }}
-/>
-             
             {errors.categoryFee && (
               <p className="error-category"> { errors.categoryFee }</p>)}
             </div>   
-
+                  
+                  
+                  {/* Status */}
             <div className="form-group-category">
+           <label>Status</label>
+            <div className="radio-group-category">
 
-  <label>Status</label>
+           <label>
+          <input  type="radio"  name="status"  value="Active"
+           checked={ status === "Active"}
+           onChange={(e) => setStatus( e.target.value) }/>
+            Active
+           </label>
+       
+         
+           <label>  
+             <input type="radio" name="status"  value="Inactive"
+                checked={ status === "Inactive"}
+               onChange={(e) => setStatus(e.target.value) }/>
+              Inactive
+              </label>
+     </div>    
+      
+          {errors.status && (
+          <p className="error-category">
+            {errors.status}
+           </p>
+           )}
 
-  <div className="radio-group-category">
-
-    <label>
-      <input
-        type="radio"
-        name="status"
-        value="Active"
-        checked={
-          status === "Active"
-        }
-        onChange={(e) =>
-          setStatus(
-            e.target.value
-          )
-        }
-      />
-      Active
-    </label>
-
-    <label>
-      <input
-        type="radio"
-        name="status"
-        value="Inactive"
-        checked={
-          status === "Inactive"
-        }
-        onChange={(e) =>
-          setStatus(
-            e.target.value
-          )
-        }
-      />
-      Inactive
-    </label>
-
-  </div>
-
-  {errors.status && (
-    <p className="error-category">
-      {errors.status}
-    </p>
-  )}
-
-</div>
-
-          <button  type="submit"  className="add-btn-category">
+    </div>
+          {/* ADD BUTTON */}
+        <button  type="submit"  className="add-btn-category">
            {editId ? "Update Category" : "Add Category"}
         
           </button>    
         </form>
       </div>
+       
+    
+                {/*  Form Table  */}
 
       {categories.length >
         0 && (
@@ -259,50 +422,63 @@ export default function ServiceCategory() {
                   ) => (
                        <tr  key={ item.id}>
                       <td>  {index +1}  </td>
-                      <td> { item.categoryName}</td>  
-                      <td>₹{ item.categoryFee }</td>
+                      <td> { item.cat_name}</td>  
+                      <td>₹{ item.category_fee }</td>
+          
+          {/* status button */}
 
-<td>
-  <span
+    <td>
+  <button
+    type="button"
     className={
-      item.status === "Active"
+      Number(item.is_active) === 1
         ? "status-active-category"
         : "status-inactive-category"
     }
-  >
-    {item.status}
-  </span>
-</td>
+    onClick={() => {
+      console.log("Button Clicked");
+      console.log("ID:", item.id);
+      console.log("Current Status:", item.is_active);
 
-<td className="action-cell-category">
-  <button
-    className="edit-btn-category"
-    onClick={() => handleEdit(item)}
+      handleStatusChange(
+        item.id,
+        item.is_active
+      );
+    }}
   >
-    Edit
-  </button>
-
-  <button
-    className="delete-btn-category"
-    onClick={() => handleDelete(item.id)}
-  >
-    Delete
+    {Number(item.is_active) === 1
+      ? "Active"
+      : "Inactive"}
   </button>
 </td>
-                    </tr>
-                  )
-                )}
+ 
+        {/* Edit Button */}
+     <td className="action-cell-category">
+     <button  className="edit-btn-category" onClick={() => handleEdit(item)}>
+       Edit
+     </button> 
+  
+           {/* Delete Button */}
+  <button  className="delete-btn-category" onClick={() => handleDelete(item.id)} >
+  Delete
+  </button> 
+ </td>
+    </tr>
+  )
 
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-      )}
-
+ )}                    
+</tbody>                  
+</table>               
+</div>
+</div>              
+)}
+            
     </div>
     </>
   );
 }
+          
+
+        
+      
+
