@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Services.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Cookies from "js-cookie";
+
+const SERVICE_API =
+  "https://clinic-backend-5ucx.onrender.com/api/services";
+
+const CATEGORY_API =
+  "https://clinic-backend-5ucx.onrender.com/api/service-categories";
+
+const SUB_CATEGORY_API =
+  "https://clinic-backend-5ucx.onrender.com/api/service-sub-categories";
 
 export default function Services() {
 
@@ -15,9 +25,99 @@ export default function Services() {
     status:"",
   });
 
+
+
   const [services, setServices] = useState([]);
   const [editId, setEditId] = useState(null);
   const [errors, setErrors] = useState({});
+  
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+
+  //use Effect
+useEffect(() => {
+  fetchCategories();
+  fetchSubCategories();
+  fetchServices();
+}, []);
+
+//CATEGORY GET API
+const fetchCategories = async () => {
+  try {
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      CATEGORY_API,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setCategories(data.data || []);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//GET API FOR SUB CATEGORY
+const fetchSubCategories = async () => {
+  try {
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      SUB_CATEGORY_API,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setSubCategories(data.data || []);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//SERVICE GET API
+const fetchServices = async () => {
+  try {
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      SERVICE_API,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(
+      "GET Services:",
+      data
+    );
+
+    if (response.ok) {
+      setServices(data.data || []);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
   const handleChange = (e) => {
 
@@ -96,39 +196,86 @@ export default function Services() {
       Object.keys(newErrors).length === 0
     );
   };
+//handel submit with post and put api
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = (e) => {
+  if (!validateForm()) return;
 
-    e.preventDefault();
+  try {
+    const token = Cookies.get("token");
 
-    if (!validateForm()) return;
+    let response;
 
-    const newService = {
-      id: editId || Date.now(),
-      ...formData,
+    const payload = {
+      cat_id: formData.category,
+      sub_cat_id: formData.subCategory,
+      service_name: formData.serviceName,
+      service_type: formData.serviceType,
+      standard_price:
+        formData.standardRecharge,
+      advance_price:
+        formData.advancedRecharge,
+      price_sub_cat_id:
+        formData.priceSubCategory,
     };
 
     if (editId) {
-
-      setServices(
-        services.map((item) =>
-          item.id === editId
-            ? newService
-            : item
-        )
+      response = await fetch(
+        `${SERVICE_API}/${editId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type":
+              "application/json",
+            Authorization:
+              `Bearer ${token}`,
+          },
+          body: JSON.stringify(
+            payload
+          ),
+        }
       );
-
-      setEditId(null);
-
     } else {
-
-      setServices([
-        ...services,
-        newService,
-      ]);
+      response = await fetch(
+        SERVICE_API,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+            Authorization:
+              `Bearer ${token}`,
+          },
+          body: JSON.stringify(
+            payload
+          ),
+        }
+      );
     }
 
-    console.log(newService);
+    const data =
+      await response.json();
+
+    console.log(data);
+
+    if (!response.ok) {
+      alert(
+        data.message ||
+        "Operation Failed"
+      );
+      return;
+    }
+
+    alert(
+      editId
+        ? "Service Updated Successfully"
+        : "Service Added Successfully"
+    );
+
+    fetchServices();
+
+    setEditId(null);
 
     setFormData({
       category: "",
@@ -138,27 +285,138 @@ export default function Services() {
       serviceType: "",
       advancedRecharge: "",
       priceSubCategory: "",
-      status:"",
+      status: "",
     });
 
-    setErrors({});
-  };
+  } catch (error) {
+    console.log(error);
+    alert("Server Error");
+  }
+};
 
-  const handleEdit = (item) => {
+//HANDLE EDIT
+const handleEdit = (item) => {
 
-    setFormData(item);
+  setFormData({
+    category: item.cat_id,
+    subCategory: item.sub_cat_id,
+    serviceName: item.service_name,
+    standardRecharge:
+      item.standard_price,
+    serviceType:
+      item.service_type,
+    advancedRecharge:
+      item.advance_price,
+    priceSubCategory:
+      item.price_sub_cat_id,
+    status:
+      Number(item.is_active) === 1
+        ? "Active"
+        : "Inactive",
+  });
 
-    setEditId(item.id);
-  };
+  setEditId(item.id);
+};
 
-  const handleDelete = (id) => {
 
-    setServices(
-      services.filter(
-        (item) => item.id !== id
-      )
+//HANDLE DELETE
+ const handleDelete = async (id) => {
+
+  if (
+    !window.confirm(
+      "Delete Service?"
+    )
+  )
+    return;
+
+  try {
+
+    const token =
+      Cookies.get("token");
+
+    const response =
+      await fetch(
+        `${SERVICE_API}/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+      alert(
+        data.message ||
+        "Delete Failed"
+      );
+      return;
+    }
+
+    alert(
+      "Service Deleted Successfully"
     );
+
+    fetchServices();
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//STATUS PATCH API
+const handleStatusChange =
+  async (
+    id,
+    currentStatus
+  ) => {
+
+    try {
+
+      const token =
+        Cookies.get("token");
+
+      const response =
+        await fetch(
+          `${SERVICE_API}/${id}/status`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type":
+                "application/json",
+              Authorization:
+                `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              is_active:
+                Number(
+                  currentStatus
+                ) === 1
+                  ? 0
+                  : 1,
+            }),
+          }
+        );
+
+      const data =
+        await response.json();
+
+      console.log(
+        "PATCH Service:",
+        data
+      );
+
+      fetchServices();
+
+    } catch (error) {
+      console.log(error);
+    }
   };
+
 
   return (<>
     <Sidebar/>
@@ -169,31 +427,56 @@ export default function Services() {
         <h2>Services</h2>
 
         <form onSubmit={handleSubmit}>
-
+                
+                {/* category */}
           <div className="form-group-services">
             <label>Category</label>
 
-            <select  name="category" value={formData.category} onChange={handleChange}>
+         <select
+  name="category"
+  value={formData.category}
+  onChange={handleChange}
+>
+  <option value="">
+    Select Category
+  </option>
 
-              <option value="">Select Category</option>
-              <option> Category A</option>
-              <option>Category B</option>
-              <option>Category C</option> 
-            </select>
+  {categories.map((cat) => (
+    <option
+      key={cat.id}
+      value={cat.id}
+    >
+      {cat.cat_name}
+    </option>
+  ))}
+</select>
 
             <p className="error-services">{errors.category} </p>
           </div>    
-          
+
+
+          {/* sub category */}
           <div className="form-group-services">
             <label>Sub Category</label>
  
-            <select  name="subCategory" value={formData.subCategory }
-            onChange={handleChange}>
-            <option value="">  Select Sub Category</option>
+          <select
+  name="subCategory"
+  value={formData.subCategory}
+  onChange={handleChange}
+>
+  <option value="">
+    Select Sub Category
+  </option>
 
-              <option> Category A </option>
-              <option> Category B</option>
-              <option>Category C </option></select>
+  {subCategories.map((sub) => (
+    <option
+      key={sub.id}
+      value={sub.id}
+    >
+      {sub.sub_category_name}
+    </option>
+  ))}
+</select>
 
             <p className="error-services">{errors.subCategory}   </p>
           </div>    
@@ -228,15 +511,15 @@ export default function Services() {
             <div className="radio-group-services">
 
               <label>
-                <input  type="radio"  name="serviceType" value="Machine"
-                 checked={ formData.serviceType ==="Machine"}
+                <input  type="radio"  name="serviceType" value="M"
+                 checked={ formData.serviceType ==="M"}
                  onChange={handleChange}/>
                   Machine
               </label>    
 
               <label>
-                <input type="radio" name="serviceType"value="Therapy"
-                 checked={ formData.serviceType ===  "Therapy"}
+                <input type="radio" name="serviceType"value="T"
+                 checked={ formData.serviceType ===  "T"}
                  onChange={handleChange}/>
                  Therapy  
               </label>   
@@ -351,24 +634,35 @@ export default function Services() {
                   <tr key={item.id}>
 
                     <td>{index + 1}</td>
-                    <td>{item.category}</td>
-                    <td> { item.subCategory}</td> 
-                    <td>{item.serviceName}</td>
-                    <td>{ item.serviceType}</td>
-                    <td>  ₹{ item.standardRecharge} </td> 
-                    <td> ₹{ item.advancedRecharge} </td> 
-                    <td> ₹{item.priceSubCategory}</td>
+                  <td>{item.cat_name}</td>
+                 <td>{item.sub_category_name}</td>
+                 <td>{item.service_name}</td>
+                     <td>{item.service_type}</td>
+                 <td>₹{item.standard_price}</td>
+                <td>₹{item.advance_price}</td>
+               <td>{item.price_sub_cat_name}</td>
+
+                {/* Status Column */}
 <td>
 
-  <span
+  <button
+    type="button"
     className={
-      item.status === "Active"
+      Number(item.is_active) === 1
         ? "status-active-services"
         : "status-inactive-services"
     }
+    onClick={() =>
+      handleStatusChange(
+        item.id,
+        item.is_active
+      )
+    }
   >
-    {item.status}
-  </span>
+    {Number(item.is_active) === 1
+      ? "Active"
+      : "Inactive"}
+  </button>
 
 </td>
 

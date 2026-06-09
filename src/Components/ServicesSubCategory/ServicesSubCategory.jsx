@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ServicesSubCategory.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Cookies from "js-cookie";
+
+
+//BASE URL
+const BASE_URL =
+  "https://clinic-backend-5ucx.onrender.com/api/service-sub-categories";
 
 export default function ServicesSubCategory() {
 
@@ -14,7 +20,100 @@ export default function ServicesSubCategory() {
   const [errors, setErrors] = useState({});
   const [subCategories, setSubCategories] = useState([]);
   const [editId, setEditId] = useState(null);
+  const [categoriesList, setCategoriesList] = useState([]);
 
+ 
+  //ADD GET API
+useEffect(() => {
+
+  fetchSubCategories();
+
+  fetchCategories();
+
+}, []);
+
+
+//fetch sub categories
+const fetchSubCategories = async () => {
+  try {
+
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      BASE_URL,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("GET Sub Categories:", data);
+
+    if (response.ok) {
+
+      if (Array.isArray(data)) {
+        setSubCategories(data);
+      } else if (data.data) {
+        setSubCategories(data.data);
+      }
+
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//fatch categories 
+const fetchCategories = async () => {
+
+  try {
+
+    const token = Cookies.get("token");
+
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/service-categories",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(
+      "Category API:",
+      data
+    );
+
+    if (response.ok) {
+
+      if (Array.isArray(data)) {
+
+        setCategoriesList(data);
+
+      } else if (data.data) {
+
+        setCategoriesList(data.data);
+
+      }
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
+
+
+//handle change
   const handleChange = (e) => {
 
     const { name, value } = e.target;
@@ -78,80 +177,230 @@ export default function ServicesSubCategory() {
     );
   };
 
-  const handleSubmit = (e) => {
+  // HANDLE SUBMIT
 
-    e.preventDefault();
+  const handleSubmit = async (e) => {
 
-    if (!validateForm()) return;
+  e.preventDefault();
 
-    const newData = {
-      id: editId || Date.now(),
-      ...formData,
-    };
+  if (!validateForm()) return;
+
+  try {
+
+    const token = Cookies.get("token");
+
+    let response;
 
     if (editId) {
 
-      const updatedData =
-        subCategories.map((item) =>
-          item.id === editId
-            ? newData
-            : item
-        );
+      response = await fetch(
+        `${BASE_URL}/${editId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
 
-      setSubCategories(updatedData);
-
-      console.log(
-        "Updated Sub Category:",
-        newData
+          body: JSON.stringify({
+            category_id: formData.category,
+            sub_category_name:
+              formData.subCategoryName,
+            sub_category_fee:
+              formData.subCategoryFee,
+          }),
+        }
       );
-
-      setEditId(null);
 
     } else {
 
-      setSubCategories([
-        ...subCategories,
-        newData,
-      ]);
+      response = await fetch(
+        BASE_URL,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
 
-      console.log(
-        "Added Sub Category:",
-        newData
+          body: JSON.stringify({
+            category_id: formData.category,
+            sub_category_name:
+              formData.subCategoryName,
+            sub_category_fee:
+              formData.subCategoryFee,
+          }),
+        }
       );
+
     }
+
+    const data = await response.json();
+
+    console.log(data);
+
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Operation Failed"
+      );
+
+      return;
+    }
+
+    alert(
+      editId
+        ? "Updated Successfully"
+        : "Added Successfully"
+    );
 
     setFormData({
       category: "",
       subCategoryName: "",
       subCategoryFee: "",
-      status:"",
+      status: "",
     });
 
-    setErrors({});
-  };
+    setEditId(null);
 
-  const handleEdit = (item) => {
+    fetchSubCategories();
 
-    setFormData({
-      category: item.category,
-      subCategoryName:
-        item.subCategoryName,
-      subCategoryFee:
-        item.subCategoryFee,
-    });
+  } catch (error) {
 
-    setEditId(item.id);
-  };
+    console.log(error);
 
-  const handleDelete = (id) => {
+    alert("Server Error");
 
-    const filteredData =
-      subCategories.filter(
-        (item) => item.id !== id
+  }
+
+};
+
+//HANDLE EDIT
+ const handleEdit = (item) => {
+
+  setFormData({
+    category:
+      item.category_id,
+    subCategoryName:
+      item.sub_category_name,
+    subCategoryFee:
+      item.sub_category_fee,
+    status:
+      Number(item.is_active) === 1
+        ? "Active"
+        : "Inactive",
+  });
+
+  setEditId(item.id);
+
+};
+
+
+//HANDLE DELETE
+const handleDelete = async (id) => {
+
+  const confirmDelete =
+    window.confirm(
+      "Are you sure?"
+    );
+
+  if (!confirmDelete) return;
+
+  try {
+
+    const token =
+      Cookies.get("token");
+
+    const response = await fetch(
+      `${BASE_URL}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data =
+      await response.json();
+
+    console.log(data);
+
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Delete Failed"
       );
 
-    setSubCategories(filteredData);
-  };
+      return;
+    }
+
+    alert(
+      "Deleted Successfully"
+    );
+
+    fetchSubCategories();
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
+
+// STATUS CHANGE  Patch api 
+const handleStatusChange = async (
+  id,
+  currentStatus
+) => {
+
+  try {
+
+    const token =
+      Cookies.get("token");
+
+    const response =
+      await fetch(
+        `${BASE_URL}/${id}/status`,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+            Authorization:
+              `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            is_active:
+              Number(currentStatus) === 1
+                ? 0
+                : 1,
+          }),
+        }
+      );
+
+    const data =
+      await response.json();
+
+    console.log(
+      "PATCH:",
+      data
+    );
+
+    fetchSubCategories();
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
 
   return (<>
 
@@ -169,13 +418,27 @@ export default function ServicesSubCategory() {
           <div className="form-group-sub-category">
 
             <label>Category</label>
-            <select name="category" value={formData.category}
-             onChange={handleChange} >
-             <option value="">Select Category</option>
-              <option value="Category A"> Category A</option>
-              <option value="Category B">Category B </option>
-              <option value="Category C">Category C </option>
-            </select>    
+         <select
+  name="category"
+  value={formData.category}
+  onChange={handleChange}
+>
+  <option value="">
+    Select Category
+  </option>
+
+  {categoriesList.map((cat) => (
+
+    <option
+      key={cat.id}
+      value={cat.id}
+    >
+      {cat.cat_name}
+    </option>
+
+  ))}
+
+</select>   
              {errors.category && (
               <p className="error-text-sub-category">
                 {errors.category}
@@ -275,20 +538,35 @@ export default function ServicesSubCategory() {
                     <tr key={item.id}>
 
                       <td> {index + 1}</td>
-                      <td>{item.category}</td>
-                      <td>{item.subCategoryName }</td>
-                      <td>   ₹{item.subCategoryFee}</td>
-                     <td>
-                         <span
-            className={  item.status === "Active" ? "status-active-sub-category"
-               : "status-inactive-sub-category" }>
-             {item.status}
-            </span>    
-           </td>
+                      <td>{item.category_name}</td>
+                      <td>{item.sub_category_name }</td>
+                      <td>   ₹{item.sub_category_fee}</td>
+
+                      {/* submit button */}
+          <td>
+  <button
+    type="button"
+    className={
+      Number(item.is_active) === 1
+        ? "status-active-sub-category"
+        : "status-inactive-sub-category"
+    }
+    onClick={() =>
+      handleStatusChange(
+        item.id,
+        item.is_active
+      )
+    }
+  >
+    {Number(item.is_active) === 1
+      ? "Active"
+      : "Inactive"}
+  </button>
+</td>
 
 
                 <td className="action-cell-sub-category">
-                     <td>
+                     
                         <button  className="edit-btn-sub-category"
                         onClick={() => handleEdit(item)}>Edit
                         </button>
@@ -297,7 +575,7 @@ export default function ServicesSubCategory() {
                          onClick={() => handleDelete(item.id)}>
                           Delete
                         </button>   
-                        </td>       
+                           
                          </td>   
                     </tr>      
                    ) )}      
