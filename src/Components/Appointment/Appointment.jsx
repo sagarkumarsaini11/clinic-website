@@ -8,8 +8,8 @@ const Appointment = () => {
     age: "",
     gender: "",
     mobile: "",
-    address: "",
-    problem: "",
+    appointmentDate: "",
+    appointmentTime: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -57,16 +57,13 @@ const Appointment = () => {
         "Mobile number must be 10 digits";
     }
 
-    if (!formData.address.trim()) {
-      newErrors.address =
-        "Address is required";
-    }
+if (!formData.appointmentDate) {
+  newErrors.appointmentDate = "Date is required";
+}
 
-    if (!formData.problem.trim()) {
-      newErrors.problem =
-        "Problem is required";
-    }
-
+if (!formData.appointmentTime) {
+  newErrors.appointmentTime = "Time is required";
+}
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
@@ -111,8 +108,8 @@ const handleSubmit = async (e) => {
         age: "",
         gender: "",
         mobile: "",
-        address: "",
-        problem: "",
+        appointmentDate: "",
+    appointmentTime: "",
       });
 
     } else {
@@ -238,32 +235,49 @@ const handleSubmit = async (e) => {
           
                  {/* Address */}
 
-          <div className="input-group textarea-group">
+        <div className="input-group">
 
-            <textarea  rows="3"  name="address"   placeholder=""
-             value={formData.address}  onChange={handleChange} />
-              <label>Address</label>
-               {errors.address && (
-              <span className="error">
-                {errors.address}
-              </span>
-            )}
+  <input
+    type="date"
+    name="appointmentDate"
+    value={formData.appointmentDate}
+    onChange={handleChange}
+  />
 
-          </div>
+  <label className="date-label">
+    Appointment Date
+  </label>
+
+  {errors.appointmentDate && (
+    <span className="error">
+      {errors.appointmentDate}
+    </span>
+  )}
+
+</div>
 
                   {/* Problem */}
 
-          <div className="input-group textarea-group">
+        <div className="input-group">
 
-            <textarea  rows="3"  name="problem" placeholder="" value={formData.problem}  onChange={handleChange}  />
-            <label>Problem</label> 
-              {errors.problem && (
-              <span className="error">
-                {errors.problem}
-              </span>
-            )}
+  <input
+    type="time"
+    name="appointmentTime"
+    value={formData.appointmentTime}
+    onChange={handleChange}
+  />
 
-          </div>
+  <label className="date-label">
+    Appointment Time
+  </label>
+
+  {errors.appointmentTime && (
+    <span className="error">
+      {errors.appointmentTime}
+    </span>
+  )}
+
+</div>
   
           {/* Buttons */}
 

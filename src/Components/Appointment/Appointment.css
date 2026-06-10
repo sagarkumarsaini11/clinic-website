@@ -45,7 +45,7 @@
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     gap: 18px;
 }
@@ -54,7 +54,7 @@
 
 .textarea-group{
 
-    grid-column: span 2;
+    grid-column: span 3;
 }
 
 /* Input Group */
@@ -188,7 +188,7 @@
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-  margin-left: 100px;
+  margin-left: 50px;
 
 }
 .submit-btn-appointment:hover{
@@ -413,6 +413,27 @@
 
         font-size: 15px;
     }
+
+    .date-label {
+  top: -9px !important;
+  left: 10px !important;
+  font-size: 12px !important;
+  color: #134e4a !important;
+  font-weight: 600;
+  background: #fff;
+  padding: 0 5px;
+}
+
+.input-group input[type="date"],
+.input-group input[type="time"] {
+  color: #333;
+  cursor: pointer;
+}
+
+.input-group input[type="date"]::-webkit-calendar-picker-indicator,
+.input-group input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
 
     /* ERROR */
 
