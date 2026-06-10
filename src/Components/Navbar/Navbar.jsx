@@ -97,10 +97,7 @@ const Navbar = () => {
           
         </li>   
           
-        <li>
-          <Link  to="appointment"  smooth={true}  offset={-40} duration={500}
-            className="btn" onClick={closeMenu} > Add Appointment </Link>
-        </li>  
+       
 
         <li onClick={closeMenu}> <BranchLogin />  </li>   
       </ul>

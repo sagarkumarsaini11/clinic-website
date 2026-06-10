@@ -13,76 +13,78 @@ import {
 const Footer = () => {
   return (
     <footer className="footer">
+
       <div className="footer-top">
 
-        {/* Left Section */}
- {/* Left Section */}
-<div className="footer-col">
-  <img
-    src={logo}
-    alt="Krishna Clinic Logo"
-    className="footer-logo-img"
-  />
+                          {/* Left Section */}
+        <div className="footer-col">
+          <div className="footer-brand">
+            <img  src={logo} alt="Krishna Clinic Logo"  className="footer-logo-img"/>
+            <h2 className="footer-logo">Krishna Clinic</h2>
+          </div>   
+             <p>
+            Providing quality healthcare services with
+            personalized care and advanced medical
+            solutions for every patient.
+          </p>
+           
+                     {/* Social Icon */}
+              
+               <div className="social-icons">
+            <a href="#"><FaFacebookF /></a>
+            <a href="#"> <FaTwitter /></a>
+            <a href="#"> <FaLinkedinIn /></a>
+             <a href="#"> <FaInstagram /></a>  
+          </div>
 
-  <h2 className="footer-logo">
-    Krishna Clinic
-  </h2>
+        </div>
+          
+                          {/* Services Section */}
 
-  <p>
-    Providing quality healthcare services with personalized care and
-    advanced medical solutions for every patient.
-  </p>
-
-  <div className="social-icons">
-    <a href="#">
-      <FaFacebookF />
-    </a>
-    <a href="#">
-      <FaTwitter />
-    </a>
-    <a href="#">
-      <FaLinkedinIn />
-    </a>
-    <a href="#">
-      <FaInstagram />
-    </a>
-  </div>
-</div>
-
-        {/* Services Section */}
         <div className="footer-col">
           <h3>More Services</h3>
 
           <ul>
             <li>About Us</li>
             <li>Our Doctors</li>
-            <li>Blog</li> 
+            <li>Blog</li>
             <li>Appointments</li>
           </ul>
+
         </div>
 
-        {/* Contact Section */}
+                            {/* Contact Section */}
+
         <div className="footer-col">
+
           <h3>Contact</h3>
 
           <p className="contact-item">
-            <FaEnvelope /> info@krishnaclinic.com
+            <FaEnvelope />
+            info@krishnaclinic.com
           </p>
+
         </div>
 
       </div>
 
+                          {/* Bottom */}
+
       <div className="footer-bottom">
-        <p>
-          Copyright © 2026 Krishna Clinic. All Rights Reserved.
-        </p>
+
+        <p>Copyright © 2026 Krishna Clinic.
+          All Rights Reserved.
+        </p>  
+        
 
         <div className="footer-links">
           <span>Terms & Conditions</span>
           <span>FAQ</span>
           <span>Privacy Policy</span>
         </div>
+
       </div>
+
     </footer>
   );
 };

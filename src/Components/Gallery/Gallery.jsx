@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import './Gallery.css'
+import React from "react";
+import "./Gallery.css";
 
 import img1 from "../../assets/gallery1.jpeg";
 import img2 from "../../assets/gallery2.jpeg";
@@ -9,54 +9,42 @@ import img5 from "../../assets/gallery5.jpeg";
 import img6 from "../../assets/gallery6.jpeg";
 import img7 from "../../assets/gallery7.jpeg";
 import img8 from "../../assets/gallery8.jpeg";
+
 const Gallery = () => {
-  const [showMore, setShowMore] = useState(false);
 
   const images = [
- img1,
- img2,
- img3,
- img4,
- img5,
- img6,
- img7,
- img8,
+    { image: img1, },
+    { image: img2, },
+    { image: img3, },
+    { image: img4, },
+    { image: img5, },
+    { image: img6,},
+    { image: img7,},
+    { image: img8, },
   ];
 
   return (
     <section className="gallery">
 
       <div className="gallery-title">
-        <p>GALLERY</p>
+        <p>Clinic</p>
         <h2>Clinic Photos</h2>
       </div>
 
-      <div className="gallery-container">
+      <div className="slider">
 
-        {images.slice(0, 4).map((image, index) => (
-          <div className="gallery-card" key={index}>
-            <img src={image} alt="" />
-          </div>
-        ))}
+        <div className="slide-track">
 
-      </div>
-
-      {showMore && (
-        <div className="gallery-container second-row">
-          {images.slice(4, 8).map((image, index) => (
-            <div className="gallery-card" key={index}>
-              <img src={image} alt="" />
+          {[...images, ...images].map((item, index) => (
+            <div className="slide" key={index}>
+              <img src={item.image}  />
+              
             </div>
           ))}
-        </div>
-      )}
 
-      <button
-        className="gallery-btn"
-        onClick={() => setShowMore(!showMore)}
-      >
-        {showMore ? "Show Less ↑" : "See More Here →"}
-      </button>
+        </div>
+
+      </div>
 
     </section>
   );
