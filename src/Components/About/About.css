@@ -1,7 +1,7 @@
 .about {
   margin: 100px auto;
   width: 90%;
-
+   
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,15 +64,15 @@
 }
 
 .about-img {
-  width: 100%;
+  width: 330px;
   border-radius: 15px;
   display: block;
-
+  height: 435px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 .about-right h4 {
-  color: #212ea0;
+  color: #134e4a;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -80,7 +80,7 @@
 
 .about-right h2 {
   font-size: 48px;
-  color: #000f38;
+  color: #134e4a;
   margin-bottom: 20px;
   line-height: 1.2;
 }
@@ -89,7 +89,7 @@
   color: #555;
   line-height: 1.8;
   margin-bottom: 15px;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .clinic-info {
@@ -98,7 +98,7 @@
 
 .info-box {
   background: #f8f9ff;
-  border-left: 5px solid #212ea0;
+  border-left: 5px solid #134e4a;
 
   padding: 15px;
   margin-bottom: 15px;
@@ -109,7 +109,7 @@
 .info-box span {
   display: block;
   font-weight: 700;
-  color: #212ea0;
+  color: #134e4a;
   margin-bottom: 5px;
 }
 
@@ -159,7 +159,7 @@
     line-height: 1.7;
   }
 
-  .info-box {
+  /* .info-box {
     padding: 12px;
   }
 
@@ -169,5 +169,5 @@
 
   .info-box p {
     font-size: 14px;
-  }
+  } */
 }

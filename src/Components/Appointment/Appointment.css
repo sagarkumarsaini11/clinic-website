@@ -34,7 +34,7 @@
 
     margin-bottom: 35px;
 
-    color: #212ea0;
+    color: #134e4a;
 
     font-size: 32px;
 }
@@ -105,7 +105,7 @@
 .input-group select:focus,
 .input-group textarea:focus{
 
-    border-color: #212ea0;
+    border-color: #134e4a;
 }
  /* Emplty select*/
 .input-group select:invalid{
@@ -151,7 +151,7 @@
 
     font-size: 12px;
 
-    color: #212ea0;
+    color: #134e4a;
 
     font-weight: 600;
 }
@@ -180,20 +180,22 @@
 
 .submit-btn-appointment{
   width: 610px;
-  background: #212EA0;
+  height: 50px;
+  background: #134e4a;
   color: #fff;
   border: 0;
   outline: 0;
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
+  margin-left: 100px;
 
 }
 .submit-btn-appointment:hover{
-  background: #1a73e8;
+  background:  #0f766e;
 
 }
-/* Cancel Button */
+/* Cancel Button 
 
 .cancel-btn{
 
@@ -219,7 +221,7 @@
 .cancel-btn:hover{
 
     background: #b52b38;
-}
+}*/
 
 
 

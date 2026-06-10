@@ -1,11 +1,12 @@
 .gallery {
-  width: 90%;
+  width: 100%;
   margin: 100px auto;
   text-align: center;
+  background-color: #f5f7ff;
 }
 
 .gallery-title p {
-  color: #212ea0;
+  color: #134e4a;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -13,7 +14,7 @@
 }
 
 .gallery-title h2 {
-  color: #000f38;
+  color: #134e4a;
   font-size: 42px;
   margin-bottom: 50px;
 }
@@ -51,7 +52,7 @@
   outline: none;
   padding: 15px 35px;
   border-radius: 40px;
-  background: #212ea0;
+  background: #134e4a;
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -59,7 +60,7 @@
 }
 
 .gallery-btn:hover {
-  background: #18248a;
+  background: #134e4a;
 }
 
 @media (max-width: 992px) {

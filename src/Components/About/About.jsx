@@ -70,7 +70,7 @@ const About = () => {
           friendly, and supportive environment.
         </p>
 
-        <div className="clinic-info">
+        {/* <div className="clinic-info">
 
           <div className="info-box">
             <span>📍 Address</span>
@@ -92,7 +92,7 @@ const About = () => {
             </p>
           </div>
 
-        </div>
+        </div> */}
 
       </div>
 

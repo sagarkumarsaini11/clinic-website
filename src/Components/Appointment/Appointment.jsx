@@ -137,29 +137,29 @@ const handleSubmit = async (e) => {
   }
 };
 
-  // Cancel
+  // // Cancel
 
-  const handleCancel = () => {
+  // const handleCancel = () => {
 
-    const confirmCancel =
-      window.confirm(
-        "Are you sure you want to cancel?"
-      );
+  //   const confirmCancel =
+  //     window.confirm(
+  //       "Are you sure you want to cancel?"
+  //     );
 
-    if (confirmCancel) {
+  //   if (confirmCancel) {
 
-      setFormData({
-        name: "",
-        age: "",
-        gender: "",
-        mobile: "",
-        address: "",
-        problem: "",
-      });
+  //     setFormData({
+  //       name: "",
+  //       age: "",
+  //       gender: "",
+  //       mobile: "",
+  //       address: "",
+  //       problem: "",
+  //     });
 
-      alert("Appointment Cancelled");
-    }
-  };
+  //     alert("Appointment Cancelled");
+  //   }
+  // };
 
   return (
 
@@ -269,10 +269,10 @@ const handleSubmit = async (e) => {
 
           <div className="button-group">
 
-            <button  type="button"  className="cancel-btn"   onClick={handleCancel}> Cancel </button>
+            {/* <button  type="button"  className="cancel-btn"   onClick={handleCancel}> Cancel </button> */}
     
       <button  type="submit"  className="submit-btn-appointment"  disabled=       {loading}>
-         {loading ? "Submitting...": "Add Appointment"}
+         {loading ? "Submitting...": "SUBMIT"}
        </button>
 
           </div>

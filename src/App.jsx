@@ -23,6 +23,8 @@ import Services from './Components/Services/Services'
 import Admin from './Components/Admin/Admin'
 import AddClinic from './Components/AddClinic/AddClinic'
 import PreviouslyAddedClinics from './Components/PreviouslyAddedClinics/PreviouslyAddedClinics'
+import FeatureSection from './Components/FeatureSection/FeatureSection'
+
 
 
 
@@ -34,6 +36,7 @@ function Website() {
       <Hero/>
       <Appointment/>
       <Facilities/>
+    <FeatureSection/>
       <Gallery/>
       <About/>
       <Contact/>

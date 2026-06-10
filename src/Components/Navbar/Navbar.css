@@ -48,7 +48,13 @@ nav ul li a:hover{
 /* Sticky Navbar */
 
 .dark-nav{
-    background: #212EA0;
+     background: linear-gradient(
+    135deg,
+    #0f172a,
+    #134e4a,
+    #0f766e
+  );
+  color: #fff;
     transition: 0.5s;
 }
 
