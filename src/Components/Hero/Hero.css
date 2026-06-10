@@ -1,21 +1,32 @@
-.hero{
-    width: 100%;
-    min-height: 100vh;
-    background:    linear-gradient(
+.hero {
+  width: 100%;
+  min-height: 100vh;
 
-      rgba(14, 91, 89, 0.45),
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-      rgba(41, 130, 122, 0.45)
+  transition: background-image 1.5s ease-in-out;
 
-    ), url('../../assets/hero1.jpg');
-   background-size: cover;
-   background-position: center;
-   color: #fff;
-   display: flex;
-    align-items: center;
-    justify-content: center;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero {
+  animation: heroFade 1.5s ease;
 }
 
+@keyframes heroFade {
+  from {
+    opacity: 0.85;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 .hero-text{
     text-align: center;
     max-width: 800px;

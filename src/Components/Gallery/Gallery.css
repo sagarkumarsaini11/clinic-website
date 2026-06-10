@@ -16,6 +16,7 @@
   font-weight: 600;
   margin-bottom: 10px;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .gallery-title h2 {
@@ -26,52 +27,48 @@
 
 /* Slider */
 
-.slider {
+.slider-gallery {
   width: 100%;
   overflow: hidden;
   position: relative;
-  padding: 40px 0;
+  padding: 50px 0;
 }
 
-.slide-track {
+.slide-track-gallery {
   display: flex;
   align-items: flex-start;
   gap: 30px;
-
   width: max-content;
-
   animation: scroll 35s linear infinite;
 }
 
-.slide {
+/* Card */
+
+.slide-gallery {
   flex-shrink: 0;
   width: 340px;
 }
 
 /* Zig-Zag Layout */
 
-.slide:nth-child(odd) {
+.slide-gallery:nth-child(odd) {
   margin-top: 80px;
 }
 
-.slide:nth-child(even) {
+.slide-gallery:nth-child(even) {
   margin-top: 0;
 }
 
-.slide img {
+.slide-gallery img {
   width: 100%;
-  height: 450px;
-
+  height: 400px;
   object-fit: cover;
-
   border-radius: 28px;
-
   display: block;
-
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Continuous scrolling */
+/* Auto Scroll */
 
 @keyframes scroll {
   0% {
@@ -91,28 +88,32 @@
     padding: 60px 0;
   }
 
+  .gallery-title {
+    margin-bottom: 40px;
+  }
+
   .gallery-title h2 {
     font-size: 32px;
   }
 
-  .slide {
+  .slide-gallery {
     width: 260px;
   }
 
-  .slide img {
+  .slide-gallery img {
     height: 340px;
     border-radius: 22px;
   }
 
-  .slide-track {
+  .slide-track-gallery {
     gap: 20px;
   }
 
-  .slide:nth-child(odd) {
+  .slide-gallery:nth-child(odd) {
     margin-top: 40px;
   }
 
-  .slide:nth-child(even) {
+  .slide-gallery:nth-child(even) {
     margin-top: 0;
   }
 }
@@ -126,31 +127,35 @@
   }
 
   .gallery-title {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+  }
+
+  .gallery-title p {
+    font-size: 12px;
   }
 
   .gallery-title h2 {
     font-size: 26px;
   }
 
-  .slide {
+  .slide-gallery {
     width: 220px;
   }
 
-  .slide img {
+  .slide-gallery img {
     height: 280px;
     border-radius: 18px;
   }
 
-  .slide-track {
+  .slide-track-gallery {
     gap: 15px;
   }
 
-  .slide:nth-child(odd) {
+  .slide-gallery:nth-child(odd) {
     margin-top: 30px;
   }
 
-  .slide:nth-child(even) {
+  .slide-gallery:nth-child(even) {
     margin-top: 0;
   }
 }

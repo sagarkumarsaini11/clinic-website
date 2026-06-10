@@ -31,12 +31,12 @@ const Gallery = () => {
         <h2>Clinic Photos</h2>
       </div>
 
-      <div className="slider">
+      <div className="slider-gallery">
 
-        <div className="slide-track">
+        <div className="slide-track-gallery">
 
           {[...images, ...images].map((item, index) => (
-            <div className="slide" key={index}>
+            <div className="slide-gallery" key={index}>
               <img src={item.image}  />
               
             </div>
