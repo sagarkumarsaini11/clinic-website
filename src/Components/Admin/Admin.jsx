@@ -1,3 +1,5 @@
+
+
 import React, {useState,useEffect,} from "react";
 import "./Admin.css";
 import Cookies from "js-cookie";
@@ -103,7 +105,15 @@ const handleLogout = () => {
             }
           >
             <h2>Admin</h2>
-
+ <button
+              className="sidebar-item-admin"
+              onClick={() =>
+                navigate("/deshboard-admin")
+              }
+            >
+              <FaPlusCircle />
+              Deshboard
+            </button>
           
 
             <button

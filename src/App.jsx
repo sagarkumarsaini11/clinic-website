@@ -25,6 +25,8 @@ import AddClinic from './Components/AddClinic/AddClinic'
 import PreviouslyAddedClinics from './Components/PreviouslyAddedClinics/PreviouslyAddedClinics'
 import FeatureSection from './Components/FeatureSection/FeatureSection'
 import TreatmentSection from './Components/TreatmentSection/TreatmentSection'
+import Dashboard from './Components/Dashboard/Dashboard'
+
 
 
 
@@ -43,6 +45,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
+ 
 
   
     </div>
@@ -91,11 +94,16 @@ function App () {
                                {/* Admin panel*/}
                <Route path="/adminpanel" element={<Admin/>}/>
 
+                          
+
                                     {/* Admin Add-Clinic*/}
                <Route path="/add-clinic" element={<AddClinic/>}/>
 
                        {/*Previously Add-Clinic*/}
                <Route path="/previously-added-clinics" element={<PreviouslyAddedClinics/>}/>
+
+                               {/*Deshboard Admin*/}
+               <Route path="/deshboard-admin" element={<Dashboard/>}/>
    </Routes>
   
   )

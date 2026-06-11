@@ -137,7 +137,7 @@ console.log(
   expiryDate
 );
 
-navigate("/adminpanel");
+navigate("/deshboard-admin");
 
   } catch (error) {
 

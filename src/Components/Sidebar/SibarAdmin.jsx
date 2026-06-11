@@ -40,6 +40,13 @@ export default function Sidebar() {
          
             <h2>MENU</h2>
               
+              <button
+              onClick={() => {
+                navigate("/deshboard-admin");
+                setShowSidebar(false);
+              }} >Dashboard</button>
+
+
             <button
               onClick={() => {
                 navigate("/adminpanel");

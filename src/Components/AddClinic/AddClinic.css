@@ -90,7 +90,7 @@ input[type="file"]{
 
 .submit-button-add-clinic{
   width:100%;
-  background:#212EA0;
+  background:#134e4a;
   color:#fff;
 
   border:none;
@@ -109,7 +109,7 @@ input[type="file"]{
 }
 
 .submit-button-add-clinic:hover{
-  background:#1a73e8;
+  background:#0f766e;
 }
 
 /* Card */
