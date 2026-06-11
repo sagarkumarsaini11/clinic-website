@@ -78,6 +78,8 @@ nav ul li a:hover{
     }
 }
 
+
+
 /* Mobile View */
 
 @media (max-width:840px){
@@ -94,12 +96,12 @@ nav ul li a:hover{
         right: 0;
         bottom: 0;
 
-         background: linear-gradient(
-    135deg,
-    #0f172a,
-    #134e4a,
-    #0f766e
-  );
+        background: linear-gradient(
+            135deg,
+            #0f172a,
+            #134e4a,
+            #0f766e
+        );
 
         width: 230px;
 
@@ -124,5 +126,17 @@ nav ul li a:hover{
 
     .hide-mobile-menu{
         right: -230px;
+    }
+
+    /* Overlay */
+
+    .mobile-overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100vw - 230px);
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: -1;
     }
 }

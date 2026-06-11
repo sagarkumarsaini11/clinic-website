@@ -28,14 +28,14 @@ const FeatureSection = () => {
   ];
 
   return (
-    <div className="features">
+    <div className="features-web">
       {features.map((item, index) => (
-        <div className="feature-card" key={index}>
-          <div className="icon-box">
+        <div className="feature-card-web" key={index}>
+          <div className="icon-box-web">
             <img src={item.icon} alt={item.title} />
           </div>
 
-          <div className="content">
+          <div className="content-web">
             <h3>{item.title}</h3>
             <p>{item.description}</p>
           </div>

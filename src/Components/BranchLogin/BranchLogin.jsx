@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./BranchLogin.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import logo from "../../assets/logo.png"
 
-const BranchLogin = () => {
+const BranchLogin = ({closeMenu}) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     
@@ -15,6 +16,8 @@ const BranchLogin = () => {
     email: "",
     password: "",
   });
+
+  
 
   const handleChange = (e) => {
     setLoginData({
@@ -279,96 +282,137 @@ const handleLoginTypeChange = (e) => {
     <>
       {/* Navbar Button */}
 
-      <button
-        className="branch-btn"
-        onClick={() => setShowLogin(true)}> Login </button>
+   <button
+  className="btn"
+  onClick={() => {
+    closeMenu && closeMenu();
+    setShowLogin(true);
+  }}
+>
+  Login
+</button>
       
       
                      {/* Login Modal */}
 
-      {showLogin && (
-        <div className="login-overlay">
-          <div className="login-box">
+     {showLogin && (
+  <div className="login-overlay">
 
-            <button
-              className="close-btn"
-              onClick={() => setShowLogin(false)}
-            >
-              ×
-            </button>
+    <div className="modern-login-card">
 
-            <h2>Sign In</h2>
+      <button
+        className="close-btn-login"
+        onClick={() => setShowLogin(false)}
+      >
+        ×
+      </button>
 
-            <div className="radio-group-login">
+      <div className="login-header">
+        <img
+          src={logo}
+          alt="logo"
+          className="login-logo"
+        />
 
-  <label>
-    <input
-      type="radio"
-      value="Admin"
-      checked={loginType === "Admin"}
-      onChange={handleLoginTypeChange}
-      
-    />
-    Admin
-  </label>
+        <h2>Krishna Advance Physio Clinic</h2>
 
-  <label>
-    <input
-      type="radio"
-      value="Clinic"
-      checked={loginType === "Clinic"}
-       onChange={handleLoginTypeChange}
-    />
-    Clinic
-  </label>
+        <p>
+          Physiotherapy · Scoliosis · Joint Care
+        </p>
+      </div>
 
-  <label>
-    <input
-      type="radio"
-      value="Patient"
-      checked={loginType === "Patient"}
-      onChange={handleLoginTypeChange}
-    />
-    Patient
-  </label>
+      <div className="login-box-new">
 
-</div>         
-                       {/* Form */}
+        <h3>Welcome</h3>
 
-            <form onSubmit={handleLogin}>
+        <span>
+          Choose how you want to sign in
+        </span>
 
-              <div className="input-group-login">
-                <label>Email</label>
+        {/* RADIO BUTTONS SAME */}
 
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter Email"
-                  value={loginData.email}
-                  onChange={handleChange}
-                />
-              </div>
+        <div className="radio-group-login">
 
-              <div className="input-group-login">
-                <label>Password</label>
+          <label>
+            <input
+              type="radio"
+              value="Admin"
+              checked={loginType === "Admin"}
+              onChange={handleLoginTypeChange}
+            />
+            Admin
+          </label>
 
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter Password"
-                  value={loginData.password}
-                  onChange={handleChange}
-                />
-              </div>
+          <label>
+            <input
+              type="radio"
+              value="Clinic"
+              checked={loginType === "Clinic"}
+              onChange={handleLoginTypeChange}
+            />
+            Clinic
+          </label>
 
-            <button  type="submit"  className="signin-btn" disabled={loading}>
-           {loading ? "Loading..." : "Sign In"}
-        </button>
+          <label>
+            <input
+              type="radio"
+              value="Patient"
+              checked={loginType === "Patient"}
+              onChange={handleLoginTypeChange}
+            />
+            Patient
+          </label>
 
-            </form>
-          </div>
         </div>
-      )}
+
+        <form onSubmit={handleLogin}>
+
+          <div className="input-group-login">
+
+            <label>Email</label>
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email"
+              value={loginData.email}
+              onChange={handleChange}
+            />
+
+          </div>
+
+          <div className="input-group-login">
+
+            <label>Password</label>
+
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              value={loginData.password}
+              onChange={handleChange}
+            />
+
+          </div>
+
+          <button
+            type="submit"
+            className="signin-btn"
+            disabled={loading}
+          >
+            {loading
+              ? "Loading..."
+              : "Sign In"}
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
     </>
   );
 };

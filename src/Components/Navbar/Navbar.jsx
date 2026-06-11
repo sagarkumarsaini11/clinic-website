@@ -99,7 +99,10 @@ const Navbar = () => {
           
        
 
-        <li onClick={closeMenu}> <BranchLogin />  </li>   
+      <li>
+  <BranchLogin closeMenu={closeMenu} />
+</li>
+
       </ul>
      
       {/* Menu Icon */}

@@ -42,7 +42,7 @@ const Footer = () => {
                           {/* Services Section */}
 
         <div className="footer-col">
-          <h3>More Services</h3>
+          <h3>Usefull Links</h3>
 
           <ul>
             <li>About Us</li>

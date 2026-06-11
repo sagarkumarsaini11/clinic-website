@@ -173,7 +173,8 @@ const handleSubmit = async (e) => {
 
           <div className="input-group">
 
-            <input   type="text"  name="name"  placeholder=""  value={formData.name} onChange={handleChange} />
+            <input   type="text"  name="name"   value={formData.name} onChange={handleChange} 
+             placeholder=""/>
             <label>Name</label>
              {errors.name && (
               <span className="error">
@@ -187,8 +188,8 @@ const handleSubmit = async (e) => {
 
           <div className="input-group">
 
-            <input  type="number" name="age"  placeholder=""  value={formData.age}
-              onChange={handleChange}/>
+            <input  type="number" name="age"   value={formData.age}
+              onChange={handleChange} placeholder=""/>
              <label>Age</label>
               {errors.age && (
               <span className="error">
@@ -202,7 +203,7 @@ const handleSubmit = async (e) => {
 
           <div className="input-group">
 
-            <select  name="gender"  placeholder=""  value={formData.gender}
+            <select  name="gender"    value={formData.gender}
                onChange={handleChange}>
                <option value="" disabled hidden></option>
               <option>Male</option>
@@ -222,9 +223,9 @@ const handleSubmit = async (e) => {
 
           <div className="input-group">
 
-            <input  type="tel"  name="mobile"  placeholder=""
-              maxLength="10" value={formData.mobile} onChange={handleChange}/>
-            <label>Mobile Number</label>
+            <input  type="tel"  name="mobile"  
+              maxLength="10" value={formData.mobile} onChange={handleChange}  placeholder=""/>
+            <label>Whatsapp Number</label>
              {errors.mobile && (
               <span className="error">
                 {errors.mobile}
@@ -233,7 +234,7 @@ const handleSubmit = async (e) => {
 
           </div>
           
-                 {/* Address */}
+                 {/* Date */}
 
         <div className="input-group">
 
@@ -256,7 +257,7 @@ const handleSubmit = async (e) => {
 
 </div>
 
-                  {/* Problem */}
+                  {/* Time */}
 
         <div className="input-group">
 
