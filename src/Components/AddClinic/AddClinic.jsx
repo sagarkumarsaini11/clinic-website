@@ -3,19 +3,54 @@ import "./AddClinic.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import SidebarAdmin from "../Sidebar/SibarAdmin";
+import { useLocation } from "react-router-dom";
+
 
 export default function AddClinic() {
 
 const navigate = useNavigate();
+const location = useLocation();
 
+const clinicData =
+  location.state?.clinic;
 
-  const [clinicName, setClinicName] = useState("");
-  const [clinicAddress, setClinicAddress] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [doctorName, setDoctorName] = useState("");
-  const [registrationNo, setRegistrationNo] = useState("");
-  const [gstin, setGstin] = useState("");
+const isEdit =
+  location.state?.isEdit;
+
+const [clinicName, setClinicName] =
+  useState(
+    clinicData?.name || ""
+  );
+
+const [clinicAddress, setClinicAddress] =
+  useState(
+    clinicData?.address || ""
+  );
+
+const [phoneNo, setPhoneNo] =
+  useState(
+    clinicData?.phone || ""
+  );
+
+const [email, setEmail] =
+  useState(
+    clinicData?.email || ""
+  );
+
+const [doctorName, setDoctorName] =
+  useState(
+    clinicData?.doctor_name || ""
+  );
+
+const [registrationNo, setRegistrationNo] =
+  useState(
+    clinicData?.state_council_registration_no || ""
+  );
+
+const [gstin, setGstin] =
+  useState(
+    clinicData?.gstin || ""
+  );
 
   const [logoFile, setLogoFile] = useState(null);
   const [headerFile, setHeaderFile] = useState(null);
@@ -133,16 +168,71 @@ for (let pair of formData.entries()) {
 }
 console.log("========= END =========");
 
-const response = await fetch(
-  "https://clinic-backend-5ucx.onrender.com/api/clinics",
-  {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  }
-);
+let response;
+
+if (isEdit) {
+
+  const formData = new FormData();
+
+  formData.append(
+    "clinicName",
+    clinicName
+  );
+
+  formData.append(
+    "clinicAddress",
+    clinicAddress
+  );
+
+  formData.append(
+    "PhoneNo",
+    phoneNo
+  );
+
+  formData.append(
+    "email",
+    email
+  );
+
+  formData.append(
+    "doctorName",
+    doctorName
+  );
+
+  formData.append(
+    "registrationNo",
+    registrationNo
+  );
+
+  formData.append(
+    "gstin",
+    gstin
+  );
+
+  response = await fetch(
+    `https://clinic-backend-5ucx.onrender.com/api/clinics/${clinicData.id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }
+  );
+
+} else {
+
+  response = await fetch(
+    "https://clinic-backend-5ucx.onrender.com/api/clinics",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }
+  );
+}
 
     const data =
       await response.json();
@@ -160,12 +250,14 @@ const response = await fetch(
     }
 
     alert(
-      "Clinic Added Successfully"
-    );
+  isEdit
+    ? "Clinic Updated Successfully"
+    : "Clinic Added Successfully"
+);
 
-    navigate(
-      "/previously-added-clinics"
-    );
+navigate(
+  "/previously-added-clinics"
+);
 
   } catch (error) {
 
@@ -286,8 +378,14 @@ const response = await fetch(
    
   
                 {/*Submit button*/}
-        <button   type="submit"  className="submit-button-add-clinic">Submit
-       </button>
+       <button
+  type="submit"
+  className="submit-button-add-clinic"
+>
+  {isEdit
+    ? "Update Clinic"
+    : "Submit"}
+</button>
         
       </form>  
     </div> 

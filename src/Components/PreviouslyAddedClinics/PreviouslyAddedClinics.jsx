@@ -14,7 +14,8 @@ const [clinics, setClinics] = useState([]);
 const [editingClinic, setEditingClinic] = useState(null);
 const [editData, setEditData] =useState({});
   
-
+//Suspend Function
+const [statusMap, setStatusMap] = useState({});
 //API CALL
 
 useEffect(() => {
@@ -120,13 +121,23 @@ useEffect(() => {
   };
 
   // EDIT DATA
-  const handleEdit = (clinic) => {
-
-  setEditingClinic(clinic.id);
-
-  setEditData({
-    ...clinic,
+const handleEdit = (clinic) => {
+  navigate("/add-clinic", {
+    state: {
+      clinic,
+      isEdit: true,
+    },
   });
+};
+ //handle suspend 
+ const handleSuspend = (id) => {
+  setClinicStatus((prev) => ({
+    ...prev,
+    [id]:
+      prev[id] === "Suspended"
+        ? "Active"
+        : "Suspended",
+  }));
 };
 
 //Edit data save
@@ -269,6 +280,7 @@ const handleDelete = (id) => {
           <th>GSTIN</th>
           <th>Images</th>
           <th>Action</th>
+          <th>Status</th>
         </tr>
       </thead>
 
@@ -472,9 +484,10 @@ const handleDelete = (id) => {
         />
       </div>
     )}
-
   </div>
 </td>
+<td>{statusMap[item.id]|| "Active"}</td>
+ 
                       {/* SAVE OR EDIT BUTTON */}
            
 <td>
@@ -494,7 +507,23 @@ const handleDelete = (id) => {
 <button  className="delete-btn-clinic"  onClick={() =>  handleDelete(item.id) }>
   Delete
 </button>
+             {/*  Suspended button */}
+
+    <button
+      className={
+        statusMap[item.id] === "Suspended"
+          ? "active-btn-clinic"
+          : "suspend-btn-clinic"
+      }
+      onClick={() => handleSuspend(item.id)}
+    >
+      {statusMap[item.id] === "Suspended"
+        ? "Active"
+        : "Suspend"}
+    </button>
+
 </td>  
+                                     
 
           </tr>
 
