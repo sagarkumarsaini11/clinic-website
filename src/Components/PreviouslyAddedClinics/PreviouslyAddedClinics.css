@@ -221,14 +221,14 @@
   cursor:pointer;
 }
 
-.delete-btn-clinic{
+/* .delete-btn-clinic{
   background:red;
   color:white;
   border:none;
   padding:8px 12px;
   border-radius:6px;
   cursor:pointer;
-}
+} */
 
 .clinic-table tbody tr:hover{
   background:#f5f5f5;
@@ -258,9 +258,10 @@
   padding:8px 12px;
   border-radius:6px;
   cursor:pointer;
-  margin-right:6px;
+  width:90px;
+  display:block;
+  margin-bottom:6px;
 }
-
 .save-btn-clinic{
   background:#28a745;
   color:white;
@@ -268,7 +269,9 @@
   padding:8px 12px;
   border-radius:6px;
   cursor:pointer;
-  margin-right:6px;
+  width:90px;
+  display:block;
+  margin-bottom:6px;
 }
 
 .clinic-table input{
@@ -298,7 +301,23 @@
   
 }
 
-.suspend-btn-clinic {
+.access-btn-clinic{
+  background:#ff9800;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:6px;
+  width:90px;
+  display:block;
+}
+
+.access-btn-clinic:hover{
+  background:#f57c00;
+}
+
+/* .suspend-btn-clinic {
   background: orange;
   color: white;
   border: none;
@@ -318,7 +337,7 @@
   cursor: pointer;
   margin-top: 6px;
   width: 90%;
-}
+} */
 /* Tablet */
 
 @media(max-width:768px){

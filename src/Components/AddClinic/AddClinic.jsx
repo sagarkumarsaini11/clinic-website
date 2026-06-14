@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
 import "./AddClinic.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
@@ -11,16 +12,12 @@ export default function AddClinic() {
 const navigate = useNavigate();
 const location = useLocation();
 
-const clinicData =
-  location.state?.clinic;
+const clinicData = location.state?.clinic;
+const isEdit = location.state?.isEdit;
+const [clinicName, setClinicName] =  useState( clinicData?.name || "");
+   
+  
 
-const isEdit =
-  location.state?.isEdit;
-
-const [clinicName, setClinicName] =
-  useState(
-    clinicData?.name || ""
-  );
 
 const [clinicAddress, setClinicAddress] =
   useState(
@@ -52,6 +49,28 @@ const [gstin, setGstin] =
     clinicData?.gstin || ""
   );
 
+  const [regCouncilName, setRegCouncilName] =
+  useState(
+    clinicData?.reg_council_name || ""
+  );
+
+const [doctorDegree, setDoctorDegree] =
+  useState(
+    clinicData?.doctor_degree || ""
+  );
+
+const [password, setPassword] =
+  useState(
+    clinicData?.password || ""
+  );
+
+const [confirmPassword, setConfirmPassword] =
+  useState(
+    clinicData?.password || ""
+  );
+const [showPassword, setShowPassword] = useState(false);
+
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [logoFile, setLogoFile] = useState(null);
   const [headerFile, setHeaderFile] = useState(null);
   const [footerFile, setFooterFile] = useState(null);
@@ -317,8 +336,24 @@ navigate(
           value={doctorName}
           onChange={(e)=>setDoctorName(e.target.value)}
           placeholder="Enter Doctor Name"/>
-        
-        
+
+
+                  {/*  Doctor Degree*/}
+          <label className="label-add-clinic">Doctor Degree</label>
+        <input className="input-add-clinic" value={doctorDegree}
+        onChange={(e) =>  setDoctorDegree(e.target.value) }
+        placeholder="Enter Doctor Degree"/>
+
+
+                    {/* REG Council Name */}
+
+          <label className="label-add-clinic">REG Council Name</label>
+       <input  className="input-add-clinic" 
+        value={regCouncilName}
+       onChange={(e) =>setRegCouncilName(e.target.value)}
+          placeholder="Enter REG Council Name"/>
+
+
                   {/*  Registration Number*/}
         <label className="label-add-clinic">Registration Number</label>
         <input className="input-add-clinic"
@@ -335,21 +370,64 @@ navigate(
           placeholder="Enter GSTIN"/>
           
 
-                   {/* Logo */}
+                  {/* password  */}
+          <label className="label-add-clinic"> Password</label>
+      <div className="password-wrapper">
+       <input className="input-add-clinic" type={
+          showPassword
+         ? "text"
+        : "password" }
+       value={password}  onChange={(e) =>setPassword(e.target.value)}
+        placeholder="Enter Password"/>
+           <span
+        className="eye-icon"
+         onClick={() =>  setShowPassword(!showPassword)} >
+          {showPassword
+          ? <FaEyeSlash />
+          : <FaEye />}
+         </span>
+        </div>
 
+                         {/* Confirm Password */}
+
+               <label className="label-add-clinic">Confirm Password</label>
+           <div className="password-wrapper">
+           <input className="input-add-clinic"
+               type={showConfirmPassword
+                   ? "text"
+                   : "password" }
+         value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value) }
+      placeholder="Confirm Password"/>
+          <span className="eye-icon" 
+    onClick={() =>  setShowConfirmPassword( !showConfirmPassword) } >
+    {showConfirmPassword
+      ? <FaEyeSlash />
+      : <FaEye />}
+      </span>
+      </div>
+   
+
+                                {/* Logo */}
         <label className="label-add-clinic"> Upload Logo </label>
         <input type="file"
            accept="image/*"
          onChange={(e)=>handleImageChange(e,setLogoFile)}/>
          
-      {logoFile && (
-     <img  src={URL.createObjectURL(logoFile)}
-       alt="" className="preview-image-add-clinic" />
-    )}
+   {logoFile && (
+               <div className="image-preview-box">
 
-            {/* Header File */}
+    <img  src={URL.createObjectURL(logoFile)} alt=""
+      className="preview-image-add-clinic"/>
+    <button type="button" className="remove-image-btn"
+      onClick={() =>  setLogoFile(null) }>
+     <FaTrash /> Remove  </button>
 
-        <label className="label-add-clinic"> Upload Header </label>
+  </div>
+)}
+
+                     {/* Header File */}
+
+        <label className="label-add-clinic"> Upload Letter Header </label>
         <input  type="file" accept="image/*"
          onChange={(e)=>handleImageChange(e,setHeaderFile)} />
           {headerFile && (
@@ -359,7 +437,7 @@ navigate(
 
                {/* Footer file */}
 
-        <label className="label-add-clinic"> Upload Footer </label>
+        <label className="label-add-clinic"> Upload Letter Footer </label>
         <input type="file" accept="image/*"
           onChange={(e)=>handleImageChange(e,setFooterFile)} />
          
@@ -378,14 +456,19 @@ navigate(
    
   
                 {/*Submit button*/}
-       <button
-  type="submit"
-  className="submit-button-add-clinic"
->
-  {isEdit
-    ? "Update Clinic"
-    : "Submit"}
-</button>
+        <div className="button-row">
+
+       <button type="submit"  className="submit-button-add-clinic">
+           {isEdit
+           ? "Update Clinic"
+            : "Submit"}
+       </button>
+
+  <button   type="button"  className="delete-form-btn"> Delete </button>
+
+  <button type="button" className="suspend-form-btn">Suspend</button>
+
+</div>
         
       </form>  
     </div> 

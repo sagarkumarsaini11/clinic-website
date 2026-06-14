@@ -8,14 +8,14 @@ export default function PreviouslyAddedClinics() {
   const navigate = useNavigate();
  
     //get data 
-  const [loading, setLoading] =useState(true);
 
+const [loading, setLoading] =useState(true);
 const [clinics, setClinics] = useState([]);
 const [editingClinic, setEditingClinic] = useState(null);
 const [editData, setEditData] =useState({});
   
 //Suspend Function
-const [statusMap, setStatusMap] = useState({});
+// const [statusMap, setStatusMap] = useState({});
 //API CALL
 
 useEffect(() => {
@@ -215,31 +215,31 @@ const handleSave = async () => {
 
   // Delete Clinic
 
-const handleDelete = (id) => {
+// const handleDelete = (id) => {
 
-  const confirmDelete =
-    window.confirm(
-      "Are you sure you want to delete this clinic?"
-    );
+//   const confirmDelete =
+//     window.confirm(
+//       "Are you sure you want to delete this clinic?"
+//     );
 
-  if (!confirmDelete) return;
+//   if (!confirmDelete) return;
 
-  const updatedClinics =
-    clinics.filter(
-      (clinic) => clinic.id !== id
-    );
+//   const updatedClinics =
+//     clinics.filter(
+//       (clinic) => clinic.id !== id
+//     );
 
-  setClinics(updatedClinics);
+//   setClinics(updatedClinics);
 
-  localStorage.setItem(
-    "clinics",
-    JSON.stringify(updatedClinics)
-  );
+//   localStorage.setItem(
+//     "clinics",
+//     JSON.stringify(updatedClinics)
+//   );
 
-  alert(
-    "Clinic deleted successfully."
-  );
-};
+//   alert(
+//     "Clinic deleted successfully."
+//   );
+// };
 
   return (
 
@@ -280,7 +280,7 @@ const handleDelete = (id) => {
           <th>GSTIN</th>
           <th>Images</th>
           <th>Action</th>
-          <th>Status</th>
+          {/* <th>Status</th> */}
         </tr>
       </thead>
 
@@ -486,42 +486,62 @@ const handleDelete = (id) => {
     )}
   </div>
 </td>
-<td>{statusMap[item.id]|| "Active"}</td>
+{/* <td>{statusMap[item.id]|| "Active"}</td> */}
  
                       {/* SAVE OR EDIT BUTTON */}
            
 <td>
 
-{editingClinic === item.id ? (
-
-  <button  className="save-btn-clinic" onClick={handleSave}> Save </button>
-
-) : (
-
-  <button className="edit-btn-clinic"  onClick={() =>  handleEdit(item)}>
-    Edit
-  </button>
-)}    
-
-                  {/* DELETE BUTTON */}
-<button  className="delete-btn-clinic"  onClick={() =>  handleDelete(item.id) }>
-  Delete
-</button>
-             {/*  Suspended button */}
+  {editingClinic === item.id ? (
 
     <button
+      className="save-btn-clinic"
+      onClick={handleSave}
+    >
+      Save
+    </button>
+
+  ) : (
+
+    <button
+      className="edit-btn-clinic"
+      onClick={() => handleEdit(item)}
+    >
+      Edit
+    </button>
+
+  )}
+
+  <button
+    className="access-btn-clinic"
+    onClick={() =>
+      navigate(`/clinic-access/${item.id}`)
+    }
+  >
+    Access
+  </button>
+
+
+ 
+                  {/* DELETE BUTTON */}
+{/* <button  className="delete-btn-clinic"  onClick={() =>  handleDelete(item.id) }>
+  Delete
+</button> */}
+             {/*  Suspended button */}
+
+    {/* <button
       className={
-        statusMap[item.id] === "Suspended"
+        statusMap[item.isSuspended] === "True" //True or 1
           ? "active-btn-clinic"
           : "suspend-btn-clinic"
       }
       onClick={() => handleSuspend(item.id)}
     >
-      {statusMap[item.id] === "Suspended"
+      {statusMap[item.isSuspended] === "True" //True or 1
         ? "Active"
         : "Suspend"}
-    </button>
-
+    </button> */}
+ 
 </td>  
                                      
 

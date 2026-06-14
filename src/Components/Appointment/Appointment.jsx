@@ -238,35 +238,44 @@ const handleSubmit = async (e) => {
 
         <div className="input-group">
 
-  <input
-    type="date"
-    name="appointmentDate"
-    value={formData.appointmentDate}
-    onChange={handleChange}
-  />
+           <input type="date" name="appointmentDate" value={formData.appointmentDate} onChange={handleChange} />
+        <label className="date-label">Appointment Date</label>
+            {errors.appointmentDate && (
+             <span className="error">
+              {errors.appointmentDate}
+         </span>
+      )}
 
-  <label className="date-label">
-    Appointment Date
-  </label>
-
-  {errors.appointmentDate && (
-    <span className="error">
-      {errors.appointmentDate}
-    </span>
-  )}
-
-</div>
+  </div>
 
                   {/* Time */}
 
-        <div className="input-group">
+               <div className="input-group">
 
-  <input
-    type="time"
-    name="appointmentTime"
-    value={formData.appointmentTime}
-    onChange={handleChange}
-  />
+             <select  name="appointmentTime"  value={formData.appointmentTime}  onChange={handleChange} >
+
+
+          <option value="">Select Time Slot</option>
+
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="09:30 AM">09:30 AM</option>
+           <option value="10:00 AM">10:00 AM</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+          <option value="11:30 AM">11:30 AM</option>
+          <option value="12:00 PM">12:00 PM</option>
+             <option value="12:30 PM">12:30 PM</option>
+
+             <option value="02:00 PM">02:00 PM</option>
+          <option value="02:30 PM">02:30 PM</option>
+           <option value="03:00 PM">03:00 PM</option>
+            <option value="03:30 PM">03:30 PM</option>
+             <option value="04:00 PM">04:00 PM</option>
+             <option value="04:30 PM">04:30 PM</option>
+           <option value="05:00 PM">05:00 PM</option>
+               <option value="05:30 PM">05:30 PM</option>
+               <option value="06:00 PM">06:00 PM</option>
+  </select>
 
   <label className="date-label">
     Appointment Time
@@ -278,7 +287,7 @@ const handleSubmit = async (e) => {
     </span>
   )}
 
-</div>
+</div>                                     
   
           {/* Buttons */}
 

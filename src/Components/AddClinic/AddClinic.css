@@ -128,6 +128,89 @@ input[type="file"]{
   margin-bottom:10px;
 }
 
+
+.password-wrapper{
+  position:relative;
+}
+
+.eye-icon{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  font-size:18px;
+  color:#666;
+}
+
+.image-preview-box{
+  margin-top:15px;
+}
+
+.remove-image-btn{
+  background:red;
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.button-row{
+  display:flex;
+  gap:15px;
+  margin-top:30px;
+  margin-bottom:40px;
+}
+
+.submit-button-add-clinic{
+  flex:1;
+  margin:0;
+}
+
+.delete-form-btn{
+  flex:1;
+  background:rgb(177, 59, 59);
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.suspend-form-btn{
+  flex:1;
+  background:#ce8d2b;
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.delete-form-btn,
+.suspend-form-btn{
+  padding:16px;
+}
+
+@media(max-width:768px){
+
+  .button-row{
+    flex-direction:column;
+  }
+
+  .delete-form-btn,
+  .suspend-form-btn,
+  .submit-button-add-clinic{
+    width:100%;
+  }
+}
 /* Tablet */
 
 @media(max-width:768px){

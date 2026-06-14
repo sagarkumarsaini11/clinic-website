@@ -64,7 +64,7 @@ export default function Sidebar() {
               onClick={() => {
                 navigate("/previously-added-clinics");
                 setShowSidebar(false);
-              }} > Previous Added Clinic </button>
+              }} > Running Clinic </button>
            
           
             <button

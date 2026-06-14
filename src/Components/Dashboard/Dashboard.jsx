@@ -74,7 +74,7 @@ export default function Dashboard() {
             onClick={() => navigate("/previously-added-clinics")}
           >
             <FaClinicMedical />
-            <span>Previously Added Clinic</span>
+            <span>Running  Clinic</span>
           </button>
 
         </div>
