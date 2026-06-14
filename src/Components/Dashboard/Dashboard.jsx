@@ -67,14 +67,26 @@ export default function Dashboard() {
 
           <button
             className={`menu-item ${
-              location.pathname === "/previously-added-clinics"
+              location.pathname === "/running-clinic"
                 ? "active"
                 : ""
             }`}
-            onClick={() => navigate("/previously-added-clinics")}
+            onClick={() => navigate("/running-clinic")}
           >
             <FaClinicMedical />
             <span>Running  Clinic</span>
+          </button>
+          
+          <button
+            className={`menu-item ${
+              location.pathname === "/suspended-clinics"
+                ? "active"
+                : ""
+            }`}
+            onClick={() => navigate("/suspended-clinic")}
+          >
+            <FaClinicMedical />
+            <span>Suspended  Clinic</span>
           </button>
 
         </div>

@@ -62,9 +62,9 @@ export default function Sidebar() {
   
             <button
               onClick={() => {
-                navigate("/previously-added-clinics");
+                navigate("/running-clinic");
                 setShowSidebar(false);
-              }} > Running Clinic </button>
+              }} > Running  Clinic </button>
            
           
             <button

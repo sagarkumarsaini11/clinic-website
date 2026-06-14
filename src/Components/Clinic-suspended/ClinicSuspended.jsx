@@ -1,5 +1,5 @@
 import React,{ useState,useEffect,} from "react";
-import "./PreviouslyAddedClinics.css";
+import "./ClinicSuspended.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
