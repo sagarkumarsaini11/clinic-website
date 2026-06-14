@@ -347,7 +347,7 @@ navigate(
 
                     {/* REG Council Name */}
 
-          <label className="label-add-clinic">REG Council Name</label>
+          <label className="label-add-clinic">Reg. Council Name</label>
        <input  className="input-add-clinic" 
         value={regCouncilName}
        onChange={(e) =>setRegCouncilName(e.target.value)}
