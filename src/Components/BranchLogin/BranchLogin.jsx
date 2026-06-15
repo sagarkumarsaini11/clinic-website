@@ -16,6 +16,7 @@ const BranchLogin = ({closeMenu}) => {
 
   const [loginData, setLoginData] = useState({
     email: "",
+    fileNo:"",
     password: "",
   });
 
@@ -33,12 +34,16 @@ const handleLogin = async (e) => {
   e.preventDefault();
 
   if (
-    !loginData.email ||
-    !loginData.password
-  ) {
-    alert("Please fill all fields");
-    return;
-  }
+  (
+    loginType === "Patient"
+      ? !loginData.fileNo
+      : !loginData.email
+  ) ||
+  !loginData.password
+) {
+  alert("Please fill all fields");
+  return;
+}
 
   // ADMIN LOGIN
 if (loginType === "Admin") {
@@ -253,8 +258,8 @@ navigate("/deshboard-admin");
   if (loginType === "Patient") {
 
     if (
-      loginData.email ===
-        "patient@gmail.com" &&
+      loginData.fileNo ==="P001"&&
+         
       loginData.password ===
         "123456"
     ) {
@@ -276,6 +281,7 @@ const handleLoginTypeChange = (e) => {
 
   setLoginData({
     email: "",
+    fileNo:"",
     password: "",
   });
 
@@ -343,17 +349,39 @@ const handleLoginTypeChange = (e) => {
 
         <form onSubmit={handleLogin}>
 
-          <div className="input-group-login">
-            <label>Email</label>
+        <div className="input-group-login">
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              value={loginData.email}
-              onChange={handleChange}
-            />
-          </div>
+  <label>
+    {loginType === "Patient"
+      ? "File Number"
+      : "Email"}
+  </label>
+
+  <input
+    type={
+      loginType === "Patient"
+        ? "text"
+        : "email"
+    }
+    name={
+      loginType === "Patient"
+        ? "fileNo"
+        : "email"
+    }
+    placeholder={
+      loginType === "Patient"
+        ? "Enter Your File Number"
+        : "Enter Email"
+    }
+    value={
+      loginType === "Patient"
+        ? loginData.fileNo
+        : loginData.email
+    }
+    onChange={handleChange}
+  />
+
+</div>
 
           <div className="input-group-login">
             <label>Password</label>
