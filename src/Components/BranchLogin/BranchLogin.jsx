@@ -1,3 +1,5 @@
+              
+
 import React, { useState } from "react";
 import "./BranchLogin.css";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +12,7 @@ const BranchLogin = ({closeMenu}) => {
     
     const [loginType, setLoginType] = useState("Admin");
   
-  const [showLogin, setShowLogin] = useState(false);
+ 
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -278,34 +280,10 @@ const handleLoginTypeChange = (e) => {
   });
 
 };
-  return (
-    <>
-      {/* Navbar Button */}
-
-   <button
-  className="btn"
-  onClick={() => {
-    closeMenu && closeMenu();
-    setShowLogin(true);
-  }}
->
-  Login
-</button>
-      
-      
-                     {/* Login Modal */}
-
-     {showLogin && (
-  <div className="login-overlay">
+ return (
+  <div className="login-page">
 
     <div className="modern-login-card">
-
-      <button
-        className="close-btn-login"
-        onClick={() => setShowLogin(false)}
-      >
-        ×
-      </button>
 
       <div className="login-header">
         <img
@@ -328,8 +306,6 @@ const handleLoginTypeChange = (e) => {
         <span>
           Choose how you want to sign in
         </span>
-
-        {/* RADIO BUTTONS SAME */}
 
         <div className="radio-group-login">
 
@@ -368,7 +344,6 @@ const handleLoginTypeChange = (e) => {
         <form onSubmit={handleLogin}>
 
           <div className="input-group-login">
-
             <label>Email</label>
 
             <input
@@ -378,11 +353,9 @@ const handleLoginTypeChange = (e) => {
               value={loginData.email}
               onChange={handleChange}
             />
-
           </div>
 
           <div className="input-group-login">
-
             <label>Password</label>
 
             <input
@@ -392,7 +365,6 @@ const handleLoginTypeChange = (e) => {
               value={loginData.password}
               onChange={handleChange}
             />
-
           </div>
 
           <button
@@ -400,9 +372,7 @@ const handleLoginTypeChange = (e) => {
             className="signin-btn"
             disabled={loading}
           >
-            {loading
-              ? "Loading..."
-              : "Sign In"}
+            {loading ? "Loading..." : "Sign In"}
           </button>
 
         </form>
@@ -412,9 +382,7 @@ const handleLoginTypeChange = (e) => {
     </div>
 
   </div>
-)}
-    </>
-  );
+);
 };
 
 export default BranchLogin;

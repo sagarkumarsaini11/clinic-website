@@ -14,60 +14,18 @@ const location = useLocation();
 
 const clinicData = location.state?.clinic;
 const isEdit = location.state?.isEdit;
-const [clinicName, setClinicName] =  useState( clinicData?.name || "");
-   
-  
-
-
-const [clinicAddress, setClinicAddress] =
-  useState(
-    clinicData?.address || ""
-  );
-
-const [phoneNo, setPhoneNo] =
-  useState(
-    clinicData?.phone || ""
-  );
-
-const [email, setEmail] =
-  useState(
-    clinicData?.email || ""
-  );
-
-const [doctorName, setDoctorName] =
-  useState(
-    clinicData?.doctor_name || ""
-  );
-
-const [registrationNo, setRegistrationNo] =
-  useState(
-    clinicData?.state_council_registration_no || ""
-  );
-
-const [gstin, setGstin] =
-  useState(
-    clinicData?.gstin || ""
-  );
-
-  const [regCouncilName, setRegCouncilName] =
-  useState(
-    clinicData?.reg_council_name || ""
-  );
-
-const [doctorDegree, setDoctorDegree] =
-  useState(
-    clinicData?.doctor_degree || ""
-  );
-
-const [password, setPassword] =
-  useState(
-    clinicData?.password || ""
-  );
-
-const [confirmPassword, setConfirmPassword] =
-  useState(
-    clinicData?.password || ""
-  );
+const [clinicName, setClinicName] =  useState( clinicData?.name || ""); 
+const [clinicAddress, setClinicAddress] = useState( clinicData?.address || "");
+const [phoneNo, setPhoneNo] = useState(clinicData?.phone || "");
+const [email, setEmail] =useState(clinicData?.email || "");
+const [doctorName, setDoctorName] = useState(clinicData?.doctor_name || "");
+const [registrationNo, setRegistrationNo] = useState( clinicData?.state_council_registration_no || "");
+const [gstin, setGstin] =useState( clinicData?.gstin || "");
+const [regCouncilName, setRegCouncilName] = useState( clinicData?.reg_council_name || "");
+const [doctorDegree, setDoctorDegree] = useState(  clinicData?.doctor_degree || "");
+const [password, setPassword] = useState(clinicData?.password || ""  );
+const [confirmPassword, setConfirmPassword] = useState( clinicData?.password || "" );
+ 
 const [showPassword, setShowPassword] = useState(false);
 
 const [showConfirmPassword, setShowConfirmPassword] = useState(false);

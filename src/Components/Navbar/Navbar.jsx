@@ -4,8 +4,12 @@ import logo from "../../assets/logo.png";
 import menu_icon from "../../assets/menu-icon.png";
 import { Link } from "react-scroll";
 import BranchLogin from "../BranchLogin/BranchLogin";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
+
   const menuRef = useRef(null);
 
        // Sticky Navbar
@@ -23,15 +27,15 @@ const Navbar = () => {
 
   const [mobileMenu, setMobileMenu] = useState(false);
 
-  const toggleMenu = () => {
-    setMobileMenu(!mobileMenu);
-  };
+  const toggleMenu = () => {    setMobileMenu(!mobileMenu);};
+
+  
 
   // Close Sidebar After Click
 
-  const closeMenu = () => {
-    setMobileMenu(false);
-  };
+  const closeMenu = () => {setMobileMenu(false);  };
+    
+
 
 
   useEffect(() => {
@@ -91,17 +95,24 @@ const Navbar = () => {
         <li>
           <Link to="gallery" smooth={true} offset={-100} duration={500} onClick={closeMenu}> Clinic Photos</Link>
         </li>   
-
+                       {/* contact button */}
         <li>
           <Link  to="contact" smooth={true} offset={-100}  duration={500}  className="btn"  onClick={closeMenu}> Contact Us</Link>
-          
         </li>   
-          
-       
 
-      <li>
-  <BranchLogin closeMenu={closeMenu} />
+              {/* login btn */}
+       <li>
+  <button
+    className="btn"
+    onClick={() => {
+      closeMenu();
+      navigate("/login");
+    }}
+  >
+    Login
+  </button>
 </li>
+    
 
       </ul>
      
