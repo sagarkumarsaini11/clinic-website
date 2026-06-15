@@ -27,6 +27,7 @@ import FeatureSection from './Components/FeatureSection/FeatureSection'
 import TreatmentSection from './Components/TreatmentSection/TreatmentSection'
 import Dashboard from './Components/Dashboard/Dashboard'
 import ClinicSuspended from './Components/Clinic-suspended/ClinicSuspended'
+import SettingForm from './Components/SettingForm/SettingForm'
 
 
 
@@ -45,7 +46,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
-   
+    <SettingForm/> 
 
   
     </div>
