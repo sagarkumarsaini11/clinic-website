@@ -3,7 +3,6 @@ import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
 import "./AddClinic.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
-import SidebarAdmin from "../Sidebar/SibarAdmin";
 import { useLocation } from "react-router-dom";
 
 
@@ -246,7 +245,7 @@ navigate(
 
   return (
 <>
-{/* <SidebarAdmin/> */}
+
     <div className="container-add-clinic">
 
       <h1 className="heading-add-clinic">
