@@ -47,69 +47,37 @@ const [formData, setFormData] = useState({
   // X-Ray
   cervicalSpine:"",
   lumbarSpine: "",
-  thoracicSpine: "",
-  wholeSpine: "",
-  xrayOther: "",
+
 
   // Pathology
   cbc: "",
   esr: "",
   crp: "",
-  uricAcid: "",
-  raFactor: "",
-  anaElisa: "",
-  hlaB27: "",
-  rbs: "",
-  hbA1c: "",
-  vitaminD25Hydroxy: "",
-  vitaminB12: "",
-  urineExamination: "",
-  electrolyteProfile: "",
-  tft: "",
-  lft: "",
-  kft: "",
-  lipidProfile: "",
-  pathologyOther: "",
+ //discount
+ discount10Sessions:"",
+ discount20Sessions:"",
 
   // Standard Modalities
 thermoTherapy: "",
 therapeuticUltrasound: "",
 tens: "",
-ift: "",
-rct: "",
-nmes: "",
-traction: "",
-cpm: "",
-electroMassage: "",
-paraffinWax: "",
-irrBulb: "",
+
 
 // Advance Modalities
 pemf: "",
 terahertz: "",
-shockwave: "",
-laserTherapy: "",
-pmst: "",
+
 
 // Therapeutic Services
 romExercises: "",
 stretchingExercises: "",
 strengtheningExercises: "",
-functionalMobility: "",
-injuryPrevention: "",
-spineCurveRestoration: "",
-scoliosisCorrection: "",
-deformityCorrection: "",
-facialExercises: "",
-postureBalanceGait: "",
-mfrIastmJoint: "",
+
 
 // Additional Services
 cuppingTherapy: "",
 kinesioTaping: "",
-splintingSupportive: "",
-coldCompression: "",
-personalizedHomeTreatment: "",
+
 });
 
 //popup
@@ -118,19 +86,56 @@ const openPopup = (section) => {
   setShowPopup(true);
 };
 
+//Add servies function
 const addService = () => {
+if (
+  editingService &&
+  editingService.isDefault
+) {
+  setFormData((prev) => ({
+    ...prev,
+    [editingService.chargeName]:
+      newService.charges,
+  }));
+
+  setEditingService(null);
+
+  setNewService({
+    serviceName: "",
+    charges: "",
+  });
+
+  setShowPopup(false);
+
+  return;
+}
+
   if (!newService.serviceName) return;
 
-  setCustomServices((prev) => ({
-    ...prev,
-    [currentSection]: [
-      ...prev[currentSection],
+  const updated = { ...customServices };
+
+  if (editingService) {
+    updated[
+      editingService.section
+    ][editingService.index] = {
+      serviceName: newService.serviceName,
+      charges: newService.charges,
+    };
+
+    setCustomServices(updated);
+
+    setEditingService(null);
+  } else {
+    updated[currentSection] = [
+      ...updated[currentSection],
       {
         serviceName: newService.serviceName,
         charges: newService.charges,
       },
-    ],
-  }));
+    ];
+
+    setCustomServices(updated);
+  }
 
   setNewService({
     serviceName: "",
@@ -140,6 +145,7 @@ const addService = () => {
   setShowPopup(false);
 };
 
+//remove services
 const removeService = (section, index) => {
   const updated = [...customServices[section]];
   updated.splice(index, 1);
@@ -149,27 +155,29 @@ const removeService = (section, index) => {
     [section]: updated,
   }));
 };
+
+
 //edit services
-const editService = (
-  section,
-  index
-) => {
+const editService = (section, index) => {
+  setCurrentSection(section);
+
+  setNewService({
+    serviceName:
+      customServices[section][index].serviceName,
+    charges:
+      customServices[section][index].charges,
+  });
+
   setEditingService({
     section,
     index,
   });
 
-  setEditData({
-    serviceName:
-      customServices[section][index]
-        .serviceName,
-
-    charges:
-      customServices[section][index]
-        .charges,
-  });
+  setShowPopup(true);
 };
 
+
+//Update service
 const updateService = () => {
   const updated = {
     ...customServices,
@@ -189,13 +197,18 @@ const updateService = () => {
 
   setEditingService(null);
 };
-//handle change
 
+
+//handle change
 const handleChange = (e) => {
   const { name, value, checked, type } = e.target;
 
-  // Charge fields validation
-  if (name.includes("Charge")) {
+  // Charges & Discount validation
+  if (
+    name.includes("Charge") ||
+    name === "discount10Sessions" ||
+    name === "discount20Sessions"
+  ) {
     if (
       value === "" ||
       /^\d*\.?\d{0,2}$/.test(value)
@@ -217,19 +230,16 @@ const handleChange = (e) => {
   }));
 };
 
+
+//SERIVES ROW
 const ServiceRow = ({
   checkboxName,
   chargeName,
   label,
 }) => (
   <div className="service-row">
-    <label>
-      <input
-        type="checkbox"
-        name={checkboxName}
-        checked={formData[checkboxName]}
-        onChange={handleChange}
-      />
+
+    <label className="service-label">
       {label}
     </label>
 
@@ -241,10 +251,45 @@ const ServiceRow = ({
       value={formData[chargeName] || ""}
       onChange={handleChange}
     />
+
+    <div className="service-actions">
+
+      <FaEdit
+        className="edit-service"
+        onClick={() => {
+          setNewService({
+            serviceName: label,
+            charges:
+              formData[chargeName] || "",
+          });
+
+          setEditingService({
+            checkboxName,
+            chargeName,
+            isDefault: true,
+          });
+
+          setShowPopup(true);
+        }}
+      />
+
+      <FaTimes
+        className="delete-service"
+        onClick={() => {
+          setFormData((prev) => ({
+            ...prev,
+            [checkboxName]: false,
+            [chargeName]: "",
+          }));
+        }}
+      />
+
+    </div>
+
   </div>
 );
-//handle submit
 
+//handle submit
   const handleSubmit = (e) => {
   e.preventDefault();
 
@@ -269,7 +314,7 @@ const ServiceRow = ({
     
     <div className="prescription-container">
       
-<FaTimes
+{/* <FaTimes
   className="close-icon-prescription"
   onClick={() =>
     navigate("/homepage", {
@@ -278,7 +323,7 @@ const ServiceRow = ({
       },
     })
   }
-/>
+/> */}
       <h1>SETTING THERAPY PRESCRIPTION</h1>
         
        <form onSubmit={handleSubmit}>
@@ -311,27 +356,89 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-   <div className="service-actions">
+  <div className="service-actions">
 
   <FaEdit
     className="edit-service"
     onClick={() =>
-      editService(
-        "xray",
-        index
-      )
+      editService("xray", index)
     }
   />
 
   <FaTimes
     className="delete-service"
     onClick={() =>
-      removeService(
-        "xray",
-        index
-      )
+      removeService("xray", index)
     }
   />
+
+
+
+{showPopup && (
+  <div className="popup-overlay">
+    <div className="popup-box">
+
+      <h3>
+        {editingService
+          ? "Edit Service"
+          : "Add Service"}
+      </h3>
+
+      <input
+        type="text"
+        placeholder="Service Name"
+        value={newService.serviceName}
+        onChange={(e) =>
+          setNewService({
+            ...newService,
+            serviceName: e.target.value,
+          })
+        }
+      />
+
+      <input
+        type="text"
+        placeholder="Charges"
+        value={newService.charges}
+        onChange={(e) =>
+          setNewService({
+            ...newService,
+            charges: e.target.value,
+          })
+        }
+      />
+
+      <div className="popup-btns">
+
+        <button
+          type="button"
+          onClick={addService}
+        >
+          {editingService
+            ? "Update"
+            : "Add"}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setShowPopup(false);
+            setEditingService(null);
+
+            setNewService({
+              serviceName: "",
+              charges: "",
+            });
+          }}
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
 
 </div>
   </div>
@@ -351,26 +458,7 @@ const ServiceRow = ({
   label="Lumbar Spine - AP./Lat. View"
 />
   
-      <ServiceRow
-  checkboxName="lumbarSpine"
-  chargeName="lumbarSpineCharge"
-  label="Lumbar Spine - AP./Lat. View"
-/>  
-  
 
-      <ServiceRow
-  checkboxName="wholeSpine"
-  chargeName="wholeSpineCharge"
-  label="Whole Spine - AP./Lat. View"
-/>
-
-   
-  
-        <ServiceRow
-  checkboxName="xrayOther"
-  chargeName="xrayOtherCharge"
-  label="Other"
-/> 
          <hr />
     
                      {/* X-RAY & CT SCAN CALL */}
@@ -399,12 +487,23 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-    <FaTimes
-      className="delete-service"
-      onClick={() =>
-        removeService("pathology", index)
-      }
-    />
+  <div className="service-actions">
+
+  <FaEdit
+    className="edit-service"
+    onClick={() =>
+      editService("pathology", index)
+    }
+  />
+
+  <FaTimes
+    className="delete-service"
+    onClick={() =>
+      removeService("pathology", index)
+    }
+  />
+
+</div>
   </div>
 ))}
 
@@ -429,101 +528,6 @@ const ServiceRow = ({
 />
   
 
-       <ServiceRow
-  checkboxName="uricAcid"
-  chargeName="uricAcidCharge"
-  label="Uric Acid"
-/>
-   
-     <ServiceRow
-  checkboxName="raFactor"
-  chargeName="raFactorCharge"
-  label="RA Factor"
-/> 
-   
-
-   <ServiceRow
-  checkboxName="anaElisa"
-  chargeName="anaElisaCharge"
-  label="ANA Elisa"
-/> 
-  
-    
-    <ServiceRow
-  checkboxName="hlaB27"
-  chargeName="hlaB27Charge"
-  label="HLA B27"
-/>   
-   
-
-   <ServiceRow
-  checkboxName="rbs"
-  chargeName="rbsCharge"
-  label="RBS"
-/>  
-   
-  
-      <ServiceRow
-  checkboxName="hbA1c"
-  chargeName="hbA1cCharge"
-  label="HbA1c"
-/>
-   
-      <ServiceRow
-  checkboxName="vitaminD25Hydroxy"
-  chargeName="vitaminD25HydroxyCharge"
-  label="Vitamin D25 Hydroxy"
-/>
-  
-     <ServiceRow
-  checkboxName="vitaminB12"
-  chargeName="vitaminB12Charge"
-  label="Vitamin B12"
-/>
-
-      <ServiceRow
-  checkboxName="urineExamination"
-  chargeName="urineExaminationCharge"
-  label="Urine Examination"
-/>  
-  
-      <ServiceRow
-  checkboxName="electrolyteProfile"
-  chargeName="electrolyteProfileCharge"
-  label="Electrolyte Profile"
-/>  
-   
-     <ServiceRow
-  checkboxName="tft"
-  chargeName="tftCharge"
-  label="TFT (Thyroid)"
-/>
-
-
-     <ServiceRow
-  checkboxName="lft"
-  chargeName="lftCharge"
-  label="LFT (Liver)"
-/>  
-  
-    <ServiceRow
-  checkboxName="kft"
-  chargeName="kftCharge"
-  label="KFT (Kidney)"
-/>
-  
-  <ServiceRow
-  checkboxName="lipidProfile"
-  chargeName="lipidProfileCharge"
-  label="Lipid Profile"/>  
-
-   
-
-     <ServiceRow
-  checkboxName="pathologyOther"
-  chargeName="pathologyOtherCharge"
-  label="Other"/>
-   
     
 <hr />
   
@@ -575,55 +579,52 @@ const ServiceRow = ({
              
               {/*  Customized Home Treatment Plan */}
 
-            <div className="field">
-              <label> Customized Home Treatment Plan</label>
-                <textarea rows="3" name="customizedHomeTreatmentPlan" value={formData.customizedHomeTreatmentPlan} onChange={handleChange} />
-             </div>  
+           <div className="field">
+  <label>Customized Home Treatment Plan</label>
+
+  <input type="text" placeholder="Enter Customized Home Treatment Plan"
+    name="customizedHomeTreatmentPlan" value={formData.customizedHomeTreatmentPlan}
+    onChange={handleChange}/>
+  </div>  
+
 
             <p className="note">  Charges vary according to patient condition. </p>
+            <div className="field">
+  <label>
+    Discount on 10 Sessions (%)
+  </label>
+
+  <input
+    type="text"
+    placeholder="Enter Discount %"
+    name="discount10Sessions"
+    value={formData.discount10Sessions}
+    onChange={handleChange}
+  />
+</div>
+
+<div className="field">
+  <label>
+    Discount on 20 Sessions (%)
+  </label>
+
+  <input
+    type="text"
+    placeholder="Enter Discount %"
+    name="discount20Sessions"
+    value={formData.discount20Sessions}
+    onChange={handleChange}
+  />
+</div>
       </div>
+              
+            
+
               
                           {/* RIGHT SIDE */}
 
           <div className="right-side">
 
-                    {/* NAME */}
-          
-
-                 {/* AGE */}
-           
-
-                {/* GENDER */}
-           
-            
-                   {/* ADDRESS */}
-          
-                
-                 {/*DATE & TIME */}
-             
-             
-                    {/* C/CO*/}
-            
-
-                    {/* OTHER DETAILS */}
-                  
-           
-
-                    {/* EXAMINATION */}
-              
-            
-
-                    {/*IN Inv  */}
-           
-            
-                    {/*DIAGNOSIS  */}
-                    
-         
-                  
-                    {/*ADVICE  */}
-
-           
-                 
                     {/*Physiotherapy Rx CHECKBOX  */}
 
        <div className="heading-row">
@@ -654,12 +655,23 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-    <FaTimes
-      className="delete-service"
-      onClick={() =>
-        removeService("standard", index)
-      }
-    />
+  <div className="service-actions">
+
+  <FaEdit
+    className="edit-service"
+    onClick={() =>
+      editService("standard", index)
+    }
+  />
+
+  <FaTimes
+    className="delete-service"
+    onClick={() =>
+      removeService("standard", index)
+    }
+  />
+
+</div>
   </div>
 ))}
 
@@ -681,55 +693,7 @@ const ServiceRow = ({
   label="Nerve Stimulation (TENS)"
 /> 
 
-       <ServiceRow
-  checkboxName="ift"
-  chargeName="iftCharge"
-  label="Interferential Therapy (IFT)"
-/> 
-  
 
-      <ServiceRow
-  checkboxName="rct"
-  chargeName="rctCharge"
-  label="Russian Current Therapy (RCT)"
-/> 
-    
-     <ServiceRow
-  checkboxName="nmes"
-  chargeName="nmesCharge"
-  label="Muscular Stimulation (NMES)"
-/>  
-  
-     <ServiceRow
-  checkboxName="traction"
-  chargeName="tractionCharge"
-  label="Traction Cervical / Lumbar / Knee"
-/>   
-     
-     <ServiceRow
-  checkboxName="cpm"
-  chargeName="cpmCharge"
-  label="Continuous Passive Motion (CPM) - Knee"
-/>
-    
-         <ServiceRow
-  checkboxName="electroMassage"
-  chargeName="electroMassageCharge"
-  label="Electro Massage - Thera Gun / G-10"
-/> 
-
-        <ServiceRow
-  checkboxName="paraffinWax"
-  chargeName="paraffinWaxCharge"
-  label="Paraffin Wax Therapy"
-/>
- 
-    
-        <ServiceRow
-  checkboxName="irrBulb"
-  chargeName="irrBulbCharge"
-  label="IRR Bulb Therapy"
-/>
          </div>
     
                          {/* Advance Modalities */}
@@ -744,7 +708,7 @@ const ServiceRow = ({
   />
 </div>
 
-{/* ADVANCED MAP */}
+                       {/* ADVANCED MAP */}
 {customServices.advance.map((item, index) => (
   <div className="custom-service" key={index}>
     <label>
@@ -754,12 +718,23 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-    <FaTimes
-      className="delete-service"
-      onClick={() =>
-        removeService("advance", index)
-      }
-    />
+   <div className="service-actions">
+
+  <FaEdit
+    className="edit-service"
+    onClick={() =>
+      editService("advance", index)
+    }
+  />
+
+  <FaTimes
+    className="delete-service"
+    onClick={() =>
+      removeService("advance", index)
+    }
+  />
+
+</div>
   </div>
 ))}
 
@@ -775,24 +750,7 @@ const ServiceRow = ({
   chargeName="terahertzCharge"
   label="Terahertz Therapy (THz)"
 /> 
-    
-         <ServiceRow
-  checkboxName="shockwave"
-  chargeName="shockwaveCharge"
-  label="Shockwave Therapy (ESWT)"
-/>
-    
-       <ServiceRow
-  checkboxName="laserTherapy"
-  chargeName="laserTherapyCharge"
-  label="LASER Therapy - Class III (LLLT)"
-/>   
-  
-       <ServiceRow
-  checkboxName="pmst"
-  chargeName="pmstCharge"
-  label="Physio Magneto (PMST with NRIS)"
-/>    
+   
   </div>   
     
                        {/* Therapeutic CHECKBOX*/}
@@ -806,7 +764,7 @@ const ServiceRow = ({
     onClick={() => openPopup("therapeutic")}
   />
 </div>
-{/* THERAP. MAP */}
+                {/* THERAP. MAP */}
 {customServices.therapeutic.map((item, index) => (
   <div className="custom-service" key={index}>
     <label>
@@ -816,12 +774,23 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-    <FaTimes
-      className="delete-service"
-      onClick={() =>
-        removeService("therapeutic", index)
-      }
-    />
+   <div className="service-actions">
+
+  <FaEdit
+    className="edit-service"
+    onClick={() =>
+      editService("therapeutic", index)
+    }
+  />
+
+  <FaTimes
+    className="delete-service"
+    onClick={() =>
+      removeService("therapeutic", index)
+    }
+  />
+
+</div>
   </div>
 ))}
       <ServiceRow
@@ -842,54 +811,7 @@ const ServiceRow = ({
   label="Strengthening Exercises"
 /> 
      
-    <ServiceRow
-  checkboxName="functionalMobility"
-  chargeName="functionalMobilityCharge"
-  label="Functional Mobility Training"
-/> 
-  
-    <ServiceRow
-  checkboxName="injuryPrevention"
-  chargeName="injuryPreventionCharge"
-  label="Injury Prevention Training"
-/>  
-  
-       <ServiceRow
-  checkboxName="spineCurveRestoration"
-  chargeName="spineCurveRestorationCharge"
-  label="Spine Curve Restoration"
-/>
-    
-    <ServiceRow
-  checkboxName="scoliosisCorrection"
-  chargeName="scoliosisCorrectionCharge"
-  label="Scoliosis Correction"
-/>
-  
-   <ServiceRow
-  checkboxName="deformityCorrection"
-  chargeName="deformityCorrectionCharge"
-  label="Deformity Correction"
-/>  
 
-
-       <ServiceRow
-  checkboxName="facialExercises"
-  chargeName="facialExercisesCharge"
-  label="Facial Exercises"
-/>
-    
-       <ServiceRow
-  checkboxName="postureBalanceGait"
-  chargeName="postureBalanceGaitCharge"
-  label="Posture / Balance / Gait Training"
-/>  
-     
-     <ServiceRow
-  checkboxName="mfrIastmJoint"
-  chargeName="mfrIastmJointCharge"
-  label="MFR / IASTM / Joint Mobilization"
-/>
    </div> 
   
                      {/* Add On CHECKBOX*/}
@@ -898,12 +820,12 @@ const ServiceRow = ({
             <div className="heading-row">
   <h4>Additional Add-On Services</h4>
 
-  <FaPlus
-    className="plus-icon"
-    onClick={() => openPopup("addon")}
-  />
-</div>
-{/* ADD ON MAP */}
+  <FaPlus  className="plus-icon"  onClick={() => openPopup("addon")} />
+  </div>
+  
+ 
+
+                    {/* ADD ON MAP */}
 {customServices.addon.map((item, index) => (
   <div className="custom-service" key={index}>
     <label>
@@ -913,44 +835,33 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-    <FaTimes
-      className="delete-service"
-      onClick={() =>
-        removeService("addon", index)
-      }
-    />
+    <div className="service-actions">
+
+  <FaEdit
+    className="edit-service"
+    onClick={() =>
+      editService("addon", index)
+    }
+  />
+
+  <FaTimes
+    className="delete-service"
+    onClick={() =>
+      removeService("addon", index)
+    }
+  />
+
+</div>
   </div>
 ))}
 
-    <ServiceRow
-  checkboxName="cuppingTherapy"
-  chargeName="cuppingTherapyCharge"
-  label="Cupping Therapy - Dry / Wet / Massage"
-/> 
+    <ServiceRow checkboxName="cuppingTherapy"  chargeName="cuppingTherapyCharge"
+  label="Cupping Therapy - Dry / Wet / Massage"/>
 
-       <ServiceRow
-  checkboxName="kinesioTaping"
-  chargeName="kinesioTapingCharge"
-  label="Kinesio Taping / Pain Patch"
-/>  
 
-       <ServiceRow
-  checkboxName="splintingSupportive"
-  chargeName="splintingSupportiveCharge"
-  label="Splinting Supportive / Corrective"
-/>   
-    
-    <ServiceRow
-  checkboxName="coldCompression"
-  chargeName="coldCompressionCharge"
-  label="Cold Compression Therapy (Cryotherapy)"
-/> 
-     
-    <ServiceRow
-  checkboxName="personalizedHomeTreatment"
-  chargeName="personalizedHomeTreatmentCharge"
-  label="Personalized Home Treatment Plan"
-/>
+       <ServiceRow  checkboxName="kinesioTaping" chargeName="kinesioTapingCharge"
+      label="Kinesio Taping / Pain Patch"/> 
+
      </div>
 </div>  
    
@@ -981,12 +892,16 @@ const ServiceRow = ({
            </div>
        </form>
 
-       {/* show popup  */}
-       {showPopup && (
+                                   {/* show popup  */}
+{showPopup && (
   <div className="popup-overlay">
     <div className="popup-box">
 
-      <h3>Add Service</h3>
+      <h3>
+        {editingService
+          ? "Edit Service"
+          : "Add Service"}
+      </h3>
 
       <input
         type="text"
@@ -1018,74 +933,25 @@ const ServiceRow = ({
           type="button"
           onClick={addService}
         >
-          Add
+          {editingService
+            ? "Update"
+            : "Add"}
         </button>
 
         <button
           type="button"
-          onClick={() =>
-            setShowPopup(false)
-          }
-        >
-          Remove
-        </button>
+          onClick={() => {
+            setShowPopup(false);
+            setEditingService(null);
 
-        {/* //edit function */}
-        {editingService && (
-  <div className="popup-overlay">
-    <div className="popup-box">
-
-      <h3>Edit Service</h3>
-
-      <input
-        type="text"
-        value={editData.serviceName}
-        onChange={(e) =>
-          setEditData({
-            ...editData,
-            serviceName:
-              e.target.value,
-          })
-        }
-      />
-
-      <input
-        type="text"
-        value={editData.charges}
-        onChange={(e) =>
-          setEditData({
-            ...editData,
-            charges:
-              e.target.value,
-          })
-        }
-      />
-
-      <div className="popup-btns">
-
-        <button
-          type="button"
-          onClick={updateService}
-        >
-          Update
-        </button>
-
-        <button
-          type="button"
-          onClick={() =>
-            setEditingService(
-              null
-            )
-          }
+            setNewService({
+              serviceName: "",
+              charges: "",
+            });
+          }}
         >
           Cancel
         </button>
-
-      </div>
-
-    </div>
-  </div>
-)}
 
       </div>
 

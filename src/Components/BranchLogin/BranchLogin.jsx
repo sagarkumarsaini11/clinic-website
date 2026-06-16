@@ -10,7 +10,7 @@ const BranchLogin = ({closeMenu}) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     
-    const [loginType, setLoginType] = useState("Admin");
+    const [loginType, setLoginType] = useState("AdminClinic");
   
  
 
@@ -45,8 +45,10 @@ const handleLogin = async (e) => {
   return;
 }
 
-  // ADMIN LOGIN
-if (loginType === "Admin") {
+  // ADMIN Clinic LOGIN
+// ADMIN + CLINIC LOGIN
+
+if (loginType === "AdminClinic") {
 
   try {
 
@@ -57,150 +59,39 @@ if (loginType === "Admin") {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type":
+            "application/json",
         },
         body: JSON.stringify({
           email: loginData.email,
-          password: loginData.password,
+          password:
+            loginData.password,
         }),
       }
     );
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
-    console.log("Login Response:", data);
-
-    // const newData = data.data
-
-    // console.log("token", data.data.accessToken)
+    console.log(
+      "Login Response:",
+      data
+    );
 
     if (!response.ok) {
 
       alert(
-        data.message || "Login Failed"
+        data.message ||
+        "Login Failed"
       );
 
       return;
     }
 
-// Get expiry date from API
-
-const expiryDate = new Date(
-  data.data.refreshExpiresAt
-);
-
-// Store Access Token
-
-Cookies.set(
-  "token",
-  data.data.accessToken,
-  {
-    expires: expiryDate,
-    secure: true,
-    sameSite: "Lax",
-  }
-);
-
-localStorage
-
-// Store Refresh Token
-
-Cookies.set(
-  "refreshToken",
-  data.data.refreshToken,
-  {
-    expires: expiryDate,
-    secure: true,
-    sameSite: "Lax",
-  }
-);
-
-// Store User Data
-
-Cookies.set(
-  "user",
-  JSON.stringify(
-    data.data.user
-  ),
-  {
-    expires: expiryDate,
-    secure: true,
-    sameSite: "Lax",
-  }
-);
-
-console.log(
-  "Token Cookie:",
-  Cookies.get("token")
-);
-
-console.log(
-  "User Cookie:",
-  Cookies.get("user")
-);
-
-console.log(
-  "Expiry Date:",
-  expiryDate
-);
-
-navigate("/deshboard-admin");
-
-  } catch (error) {
-
-    console.log(error);
-
-    alert("Server Error");
-
-  } finally {
-
-    setLoading(false);
-
-  }
-
-  return;
-}
-
-
-
-  // CLINIC LOGIN
-
- if (loginType === "Clinic") {
-
-  try {
-
-    setLoading(true);
-
-    const response = await fetch(
-      "https://clinic-backend-5ucx.onrender.com/api/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    console.log("Clinic Login Response:", data);
-
-    if (!response.ok) {
-
-      alert(
-        data.message || "Clinic Login Failed"
+    const expiryDate =
+      new Date(
+        data.data.refreshExpiresAt
       );
-
-      return;
-    }
-
-    const expiryDate = new Date(
-      data.data.refreshExpiresAt
-    );
 
     Cookies.set(
       "token",
@@ -224,7 +115,9 @@ navigate("/deshboard-admin");
 
     Cookies.set(
       "user",
-      JSON.stringify(data.data.user),
+      JSON.stringify(
+        data.data.user
+      ),
       {
         expires: expiryDate,
         secure: true,
@@ -232,12 +125,28 @@ navigate("/deshboard-admin");
       }
     );
 
+    const role =
+      data.data.user.role;
+
     console.log(
-      "Clinic Token:",
-      Cookies.get("token")
+      "Logged User Role:",
+      role
     );
 
-    navigate("/homepage");
+    if (
+      role?.toLowerCase() ===
+      "admin"
+    ) {
+
+      navigate(
+        "/dashboard-admin"
+      );
+
+    } else {
+
+      navigate("/homepage");
+
+    }
 
   } catch (error) {
 
@@ -315,35 +224,27 @@ const handleLoginTypeChange = (e) => {
 
         <div className="radio-group-login">
 
-          <label>
-            <input
-              type="radio"
-              value="Admin"
-              checked={loginType === "Admin"}
-              onChange={handleLoginTypeChange}
-            />
-            Admin
-          </label>
+        <label>
+  <input
+    type="radio"
+    value="AdminClinic"
+    checked={
+      loginType === "AdminClinic"
+    }
+    onChange={handleLoginTypeChange}
+  />
+  Admin / Clinic
+</label>
 
-          <label>
-            <input
-              type="radio"
-              value="Clinic"
-              checked={loginType === "Clinic"}
-              onChange={handleLoginTypeChange}
-            />
-            Clinic
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              value="Patient"
-              checked={loginType === "Patient"}
-              onChange={handleLoginTypeChange}
-            />
-            Patient
-          </label>
+<label>
+  <input
+    type="radio"
+    value="Patient"
+    checked={loginType === "Patient"}
+    onChange={handleLoginTypeChange}
+  />
+  Patient
+</label>
 
         </div>
 

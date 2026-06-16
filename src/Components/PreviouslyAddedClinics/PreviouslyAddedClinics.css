@@ -28,13 +28,13 @@
 
   font-size: 24px;
   font-weight: bold;
-  color: #212EA0;
+  color: #134e4a;
 }
 
 /* Add Button */
 
 .top-add-btn-clinic{
-  background:#212EA0;
+  background:#134e4a;
   color:#fff;
 
   border:none;
@@ -51,7 +51,7 @@
 }
 
 .top-add-btn-clinic:hover{
-  background:#212EA0;
+  background:#134e4a;
 }
 
 /* Empty Text */
@@ -81,7 +81,7 @@
 .clinic-title{
   font-size:22px;
   font-weight:bold;
-  color:#212EA0;
+  color:#134e4a;
   margin-bottom:12px;
 }
 
@@ -198,7 +198,7 @@
 }
 
 .clinic-table th{
-  background:#212EA0;
+  background:#134e4a;
   color:#fff;
   padding:12px;
 }
@@ -290,7 +290,7 @@
 .image-title{
   font-size:11px;
   font-weight:600;
-  color:#212EA0;
+  color:#134e4a;
   margin-bottom:4px;
   text-align:center;
 }
@@ -343,6 +343,7 @@
 @media(max-width:768px){
 
   .header-clinic{
+    margin-top: 60px;
     flex-direction:column;
     gap:15px;
   }
@@ -377,6 +378,7 @@
   }
 
   .heading-clinic{
+  
     font-size:20px;
   }
 

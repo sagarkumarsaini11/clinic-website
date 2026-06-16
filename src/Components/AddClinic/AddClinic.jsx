@@ -246,10 +246,14 @@ navigate(
 
   return (
 <>
-<SidebarAdmin/>
+{/* <SidebarAdmin/> */}
     <div className="container-add-clinic">
 
-      <h1 className="heading-add-clinic"> ADD NEW CLINIC</h1>
+      <h1 className="heading-add-clinic">
+  {isEdit
+    ? "UPDATE CLINIC"
+    : "ADD NEW CLINIC"}
+</h1>
        
                       {/* Add Clinic Form */}
 

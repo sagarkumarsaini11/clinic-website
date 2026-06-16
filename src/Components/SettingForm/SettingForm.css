@@ -125,10 +125,10 @@ table td{
   background:#0043ce;
 }
 
-/* Cross Icon */
+
 
 /* Cross Icon */
-
+/* 
 .close-icon-prescription{
 
   top: 85px;
@@ -158,7 +158,7 @@ table td{
   color: #dc3545;
 
   transform: scale(1.1);
-}
+} */
 /* Heading Row */
 
 .heading-row{
@@ -335,6 +335,7 @@ table td{
 .delete-service:hover{
   transform:scale(1.1);
 }
+
 
 /* Tablet */
 

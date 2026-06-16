@@ -316,6 +316,9 @@ const handleMarkAttendance = () => {
               }}>Service Category</button>
                <button  onClick={() => { navigate("/sub-category");   setShowSidebar(false);
               }}>Service Sub Category</button>
+
+               <button  onClick={() => { navigate("/setting-clinics");   setShowSidebar(false);
+              }}>Settings </button>
            
             <button>  Download Report</button>
              <button> New Query</button>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, BrowserRouter} from 'react-router-dom'
+import { Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar'
 import Hero from './Components/Hero/Hero'
 import Facilities from './Components/Facilities/Facilities'
@@ -20,7 +20,7 @@ import PatientAttendance from './Components/PatientAttendance/PatientAttendance'
 import ServiceCategory from './Components/ServiceCategory/ServiceCategory'
 import ServicesSubCategory from './Components/ServicesSubCategory/ServicesSubCategory'
 import Services from './Components/Services/Services'
-import Admin from './Components/Admin/Admin'
+
 import AddClinic from './Components/AddClinic/AddClinic'
 import PreviouslyAddedClinics from './Components/PreviouslyAddedClinics/PreviouslyAddedClinics'
 import FeatureSection from './Components/FeatureSection/FeatureSection'
@@ -28,6 +28,9 @@ import TreatmentSection from './Components/TreatmentSection/TreatmentSection'
 import Dashboard from './Components/Dashboard/Dashboard'
 import ClinicSuspended from './Components/Clinic-suspended/ClinicSuspended'
 import SettingForm from './Components/SettingForm/SettingForm'
+import Sidebar1 from './Components/Sidebar1/Sidebar1'
+import Layout from './Layout'
+
 
 
 
@@ -46,7 +49,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
-    <SettingForm/> 
+   
 
   
     </div>
@@ -57,6 +60,8 @@ function App () {
   return(
   
    <Routes>
+               
+
              {/* main website */}
              <Route path="/" element={<Website/>}/>
 
@@ -65,6 +70,10 @@ function App () {
 
                {/*Homepage After login*/}
                <Route path="/homepage" element={<HomePage/>}/>
+
+
+
+             {/* Other routes */}
 
                {/*prescription form*/}
                <Route path="/prescription" element={<PrescriptionForm/>}/>
@@ -92,24 +101,35 @@ function App () {
                <Route path="/services" element={<Services/>}/>
 
                
-                               {/* Admin panel*/}
-               <Route path="/adminpanel" element={<Admin/>}/>
+            
 
-                          
+                          {/* Routes WITH Fixed Sidebar */}
+            <Route element={<Layout />}>
 
-                                    {/* Admin Add-Clinic*/}
+               
+
+                     {/* Admin Add-Clinic*/}
                <Route path="/add-clinic" element={<AddClinic/>}/>
 
                        {/*Previously Add-Clinic*/}
                <Route path="/running-clinic" element={<PreviouslyAddedClinics/>}/>
 
                                {/*Deshboard Admin*/}
-               <Route path="/deshboard-admin" element={<Dashboard/>}/>
+               <Route path="/dashboard-admin" element={<Dashboard/>}/>
 
                                {/*Suspended Clinics*/}
                <Route path="/suspended-clinic" element={ <ClinicSuspended/>}/>
+ </Route>
+ 
+                                  {/*Setting Clinics*/}
+               <Route path="/setting-clinics" element={ <SettingForm/> }/>
+            
+       {/*Sidebar-admin Clinics*/}
+               <Route path="/sidebar-admin" element={<Sidebar1/> }/>
+              
+            
    </Routes>
-  
+ 
   )
 }
     

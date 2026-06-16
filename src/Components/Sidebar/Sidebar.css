@@ -1,4 +1,4 @@
-/* NAVBAR */
+/* NAVBAR
 
 .navbar{
   width:100%;
@@ -29,7 +29,7 @@
   margin:0;
 }
 
-/* MENU BUTTON */
+/* MENU BUTTON
 
 .menu-btn{
   background:none;
@@ -42,7 +42,7 @@
   cursor:pointer;
 }
 
-/* NOTIFICATION */
+/* NOTIFICATION 
 
 .notification{
   position:relative;
@@ -69,7 +69,7 @@
   justify-content:center;
 }
 
-/* OVERLAY */
+/* OVERLAY 
 
 .sidebar-overlay{
   position:fixed;
@@ -85,7 +85,7 @@
   z-index:3000;
 }
 
-/* SIDEBAR */
+/* SIDEBAR 
 
 
 
@@ -99,11 +99,11 @@
 
   animation:slideIn .3s ease;
 
-  overflow-y:auto;   /* Scroll Enable */
+  overflow-y:auto;   /* Scroll Enable 
   overflow-x:hidden;
 }
 
-/* Scrollbar */
+/* Scrollbar 
 
 .sidebar::-webkit-scrollbar{
   width:6px;
@@ -157,7 +157,7 @@
   }
 }
 
-/* MOBILE */
+/* MOBILE 
 @media(max-width:768px){
 
   .sidebar{
@@ -202,4 +202,4 @@
   .sidebar{
     width:220px;
   }
-}
+}  */

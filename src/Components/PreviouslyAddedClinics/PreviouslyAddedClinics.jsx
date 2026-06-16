@@ -249,7 +249,7 @@ const handleSave = async () => {
 
       <div className="header-clinic">
 
-        <h1 className="heading-clinic">  ADDED CLINICS</h1>
+        <h1 className="heading-clinic">  RUNNING CLINICS</h1>
         
         
            {/* Button add clinic */}
