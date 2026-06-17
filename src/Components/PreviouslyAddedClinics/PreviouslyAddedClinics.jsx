@@ -1,4 +1,4 @@
-import React,{ useState,useEffect,} from "react";
+import React,{ useState,useEffect,useRef} from "react";
 import "./PreviouslyAddedClinics.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -13,6 +13,13 @@ const [loading, setLoading] =useState(true);
 const [clinics, setClinics] = useState([]);
 const [editingClinic, setEditingClinic] = useState(null);
 const [editData, setEditData] =useState({});
+
+
+const tableRef = useRef(null);
+
+const [isDown, setIsDown] = useState(false);
+const [startX, setStartX] = useState(0);
+const [scrollLeft, setScrollLeft] = useState(0);
   
 //Suspend Function
 // const [statusMap, setStatusMap] = useState({});
@@ -241,6 +248,45 @@ const handleSave = async () => {
 //   );
 // };
 
+//mouse drag function
+const handleMouseDown = (e) => {
+
+  setIsDown(true);
+
+  setStartX(
+    e.pageX - tableRef.current.offsetLeft
+  );
+
+  setScrollLeft(
+    tableRef.current.scrollLeft
+  );
+};
+
+const handleMouseLeave = () => {
+  setIsDown(false);
+};
+
+const handleMouseUp = () => {
+  setIsDown(false);
+};
+
+const handleMouseMove = (e) => {
+
+  if (!isDown) return;
+
+  e.preventDefault();
+
+  const x =
+    e.pageX -
+    tableRef.current.offsetLeft;
+
+  const walk =
+    (x - startX) * 2;
+
+  tableRef.current.scrollLeft =
+    scrollLeft - walk;
+};
+
   return (
 
     <div className="container-clinic">
@@ -265,7 +311,10 @@ const handleSave = async () => {
   <p className="empty-text-clinic">  No Clinics Added </p>
   ) : (
 
-  <div className="table-container-clinic">
+            <div className="table-container-clinic"
+          ref={tableRef}
+            onMouseDown={handleMouseDown}  onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}  onMouseMove={handleMouseMove}>
 
     <table className="clinic-table">
 

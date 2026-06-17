@@ -20,29 +20,41 @@ const [email, setEmail] =useState(clinicData?.email || "");
 const [doctorName, setDoctorName] = useState(clinicData?.doctor_name || "");
 const [registrationNo, setRegistrationNo] = useState( clinicData?.state_council_registration_no || "");
 const [gstin, setGstin] =useState( clinicData?.gstin || "");
+const [doctorDegree, setDoctorDegree] = useState( clinicData?.doctor_degree || "");
 const [regCouncilName, setRegCouncilName] = useState( clinicData?.reg_council_name || "");
-const [doctorDegree, setDoctorDegree] = useState(  clinicData?.doctor_degree || "");
-const [password, setPassword] = useState(clinicData?.password || ""  );
-const [confirmPassword, setConfirmPassword] = useState( clinicData?.password || "" );
- 
+const [password, setPassword] = useState(  clinicData?.password || "");
+const [confirmPassword, setConfirmPassword] = useState( clinicData?.password || "");
 const [showPassword, setShowPassword] = useState(false);
 
 const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [logoFile, setLogoFile] = useState(null);
-  const [headerFile, setHeaderFile] = useState(null);
-  const [footerFile, setFooterFile] = useState(null);
-  const [idCardFile, setIdCardFile] = useState(null);
+const [logoFile, setLogoFile] = useState(null);
+const [headerFile, setHeaderFile] = useState(null);
+const [footerFile, setFooterFile] = useState(null);
+const [idCardFile, setIdCardFile] = useState(null);
+
+const [logoPreview, setLogoPreview] = useState(  clinicData?.logo_file || "");
+const [headerPreview, setHeaderPreview] = useState(clinicData?.letterhead_header_file || "");
+const [footerPreview, setFooterPreview] = useState(clinicData?.letterhead_footer_file || "");
+const [idCardPreview, setIdCardPreview] = useState(clinicData?.id_card_background_file || "");
+  
 
   //Image change
 
-const handleImageChange = (e, setter) => {
- 
-  const file =
-    e.target.files[0];
+const handleImageChange = (
+  e,
+  setter,
+  setPreview
+) => {
+
+  const file = e.target.files[0];
 
   if (!file) return;
 
   setter(file);
+
+  setPreview(
+    URL.createObjectURL(file)
+  );
 };
  
 
@@ -52,17 +64,35 @@ const handleSubmit = async (e) => {
 
   e.preventDefault();
 
-  if (
-    !clinicName ||
-    !clinicAddress ||
-    !phoneNo ||
-    !email ||
-    !doctorName ||
-    !registrationNo
-  ) {
-    alert("Please Fill All Fields");
-    return;
-  }
+ if (
+  !clinicName ||
+  !clinicAddress ||
+  !phoneNo ||
+  !email ||
+  !doctorName ||
+  !doctorDegree ||
+  !regCouncilName ||
+  !registrationNo ||
+  !password ||
+  !confirmPassword
+) {
+  alert("Please Fill All Fields");
+  return;
+}
+
+if (password.length < 6) {
+  alert(
+    "Password must be at least 6 characters"
+  );
+  return;
+}
+
+if (password !== confirmPassword) {
+  alert(
+    "Confirm Password does not match"
+  );
+  return;
+}
 
   try {
 
@@ -102,6 +132,26 @@ const handleSubmit = async (e) => {
       "gstin",
       gstin
     );
+
+    formData.append(
+  "doctorDegree",
+  doctorDegree
+);
+
+formData.append(
+  "regCouncilName",
+  regCouncilName
+);
+
+formData.append(
+  "password",
+  password
+);
+
+formData.append(
+  "confirmPassword",
+  confirmPassword
+);
 
     // Images
 
@@ -185,6 +235,54 @@ if (isEdit) {
     gstin
   );
 
+formData.append(
+  "doctorDegree",
+  doctorDegree
+);
+
+formData.append(
+  "regCouncilName",
+  regCouncilName
+);
+
+formData.append(
+  "password",
+  password
+);
+
+formData.append(
+  "confirmPassword",
+  confirmPassword
+);
+
+if (logoFile) {
+  formData.append(
+    "logoFile",
+    logoFile
+  );
+}
+
+if (headerFile) {
+  formData.append(
+    "headerFile",
+    headerFile
+  );
+}
+
+if (footerFile) {
+  formData.append(
+    "footerFile",
+    footerFile
+  );
+}
+
+if (idCardFile) {
+  formData.append(
+    "idCardFile",
+    idCardFile
+  );
+}
+
   response = await fetch(
     `https://clinic-backend-5ucx.onrender.com/api/clinics/${clinicData.id}`,
     {
@@ -232,7 +330,7 @@ if (isEdit) {
 );
 
 navigate(
-  "/previously-added-clinics"
+  "/running-clinic"
 );
 
   } catch (error) {
@@ -240,6 +338,49 @@ navigate(
     console.log(error);
 
     alert("Server Error");
+  }
+};
+
+//arrow key handle
+const handleArrowKey = (e) => {
+
+  if (
+    e.key !== "ArrowDown" &&
+    e.key !== "ArrowUp"
+  ) return;
+
+  const form =
+    e.target.form;
+
+  const elements = Array.from(
+    form.querySelectorAll(
+      "input, select, textarea"
+    )
+  );
+
+  const index =
+    elements.indexOf(
+      e.target
+    );
+
+  if (e.key === "ArrowDown") {
+
+    e.preventDefault();
+
+    elements[
+      index + 1
+    ]?.focus();
+
+  }
+
+  if (e.key === "ArrowUp") {
+
+    e.preventDefault();
+
+    elements[
+      index - 1
+    ]?.focus();
+
   }
 };
 
@@ -256,7 +397,10 @@ navigate(
        
                       {/* Add Clinic Form */}
 
-      <form onSubmit={handleSubmit}>
+      <form
+  onSubmit={handleSubmit}
+  onKeyDown={handleArrowKey}
+>
             
              {/*  Clinic Name*/}
 
@@ -372,16 +516,27 @@ navigate(
         <label className="label-add-clinic"> Upload Logo </label>
         <input type="file"
            accept="image/*"
-         onChange={(e)=>handleImageChange(e,setLogoFile)}/>
+         onChange={(e)=>handleImageChange(e,setLogoFile, setLogoPreview)}/>
          
-   {logoFile && (
-               <div className="image-preview-box">
+{logoPreview && (
+  <div className="image-preview-box">
 
-    <img  src={URL.createObjectURL(logoFile)} alt=""
-      className="preview-image-add-clinic"/>
-    <button type="button" className="remove-image-btn"
-      onClick={() =>  setLogoFile(null) }>
-     <FaTrash /> Remove  </button>
+    <img
+      src={logoPreview}
+      alt=""
+      className="preview-image-add-clinic"
+    />
+
+    <button
+      type="button"
+      className="remove-image-btn"
+      onClick={() => {
+        setLogoFile(null);
+        setLogoPreview("");
+      }}
+    >
+      <FaTrash /> Remove
+    </button>
 
   </div>
 )}
@@ -390,30 +545,86 @@ navigate(
 
         <label className="label-add-clinic"> Upload Letter Header </label>
         <input  type="file" accept="image/*"
-         onChange={(e)=>handleImageChange(e,setHeaderFile)} />
-          {headerFile && (
-    
-        <img src={URL.createObjectURL(headerFile)} alt=""
-        className="preview-image-add-clinic" />)}
+         onChange={(e)=>handleImageChange(e,setHeaderFile, setHeaderPreview)} />
+          {headerPreview && (
+  <div className="image-preview-box">
+
+    <img
+      src={headerPreview}
+      alt="Header"
+      className="preview-image-add-clinic"
+    />
+
+    <button
+      type="button"
+      className="remove-image-btn"
+      onClick={() => {
+        setHeaderFile(null);
+        setHeaderPreview("");
+      }}
+    >
+      <FaTrash /> Remove
+    </button>
+
+  </div>
+)}
 
                {/* Footer file */}
 
         <label className="label-add-clinic"> Upload Letter Footer </label>
         <input type="file" accept="image/*"
-          onChange={(e)=>handleImageChange(e,setFooterFile)} />
+          onChange={(e)=>handleImageChange(e,setFooterFile,setFooterPreview)} />
          
-       {footerFile && (
-       <img     src={URL.createObjectURL(footerFile)} alt=""
-        className="preview-image-add-clinic"/>)}
+      {footerPreview && (
+  <div className="image-preview-box">
+
+    <img
+      src={footerPreview}
+      alt="Footer"
+      className="preview-image-add-clinic"
+    />
+
+    <button
+      type="button"
+      className="remove-image-btn"
+      onClick={() => {
+        setFooterFile(null);
+        setFooterPreview("");
+      }}
+    >
+      <FaTrash /> Remove
+    </button>
+
+  </div>
+)}
 
                      {/* ID Card */}
         <label className="label-add-clinic">  Upload ID Card </label>
         <input type="file"  accept="image/*" 
-          onChange={(e)=>handleImageChange(e,setIdCardFile)}/>
+          onChange={(e)=>handleImageChange(e,setIdCardFile,setIdCardPreview)}/>
 
-        {idCardFile && (
-         <img  src={URL.createObjectURL(idCardFile)} alt=""
-            className="preview-image-add-clinic"/>)}
+       {idCardPreview && (
+  <div className="image-preview-box">
+
+    <img
+      src={idCardPreview}
+      alt="ID Card"
+      className="preview-image-add-clinic"
+    />
+
+    <button
+      type="button"
+      className="remove-image-btn"
+      onClick={() => {
+        setIdCardFile(null);
+        setIdCardPreview("");
+      }}
+    >
+      <FaTrash /> Remove
+    </button>
+
+  </div>
+)}
    
   
                 {/*Submit button*/}
