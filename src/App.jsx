@@ -15,7 +15,6 @@ import AddPatientForm from './Components/AddPatientForm/AddPatientForm'
 import PrescriptionForm from './Components/PrescriptionForm/PrescriptionForm'
 import Recharge from './Components/Recharge/Recharge'
 import OpenPatientList from './Components/OpenPatientList/OpenPatientList'
-import Sidebar from './Components/Sidebar/Sidebar'
 import PatientAttendance from './Components/PatientAttendance/PatientAttendance'
 import ServiceCategory from './Components/ServiceCategory/ServiceCategory'
 import ServicesSubCategory from './Components/ServicesSubCategory/ServicesSubCategory'
@@ -30,7 +29,8 @@ import ClinicSuspended from './Components/Clinic-suspended/ClinicSuspended'
 import SettingForm from './Components/SettingForm/SettingForm'
 import Sidebar1 from './Components/Sidebar1/Sidebar1'
 import Layout from './Layout'
-
+import ClinicSidebar from './Components/ClinicSidebar/ClinicSidebar'
+import LayoutClinic from './LayoutClinic'
 
 
 
@@ -49,7 +49,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
-   
+  
 
   
     </div>
@@ -68,18 +68,23 @@ function App () {
               {/* Login */}
               <Route path="/login" element={<BranchLogin/>}/>
 
-               {/*Homepage After login*/}
-               <Route path="/homepage" element={<HomePage/>}/>
-
-
+            
+                 
+<Route element={<LayoutClinic />}>
+  <Route path="/homepage" element={<HomePage />} />
+  <Route path="/addpatient" element={<AddPatientForm />} />
+  <Route path="/services" element={<Services />} />
+  <Route path="/category" element={<ServiceCategory />} />
+  <Route path="/sub-category" element={<ServicesSubCategory />} />
+  <Route path="/setting-clinics" element={<SettingForm />} />
+</Route>
 
              {/* Other routes */}
 
                {/*prescription form*/}
                <Route path="/prescription" element={<PrescriptionForm/>}/>
 
-                 {/*prescription form*/}
-               <Route path="/addpatient" element={<AddPatientForm/>}/>
+              
 
                      {/*Recharge form*/}
                <Route path="/recharge" element={<Recharge/>}/>
@@ -90,18 +95,7 @@ function App () {
                            {/* Patientn Attendance*/}
                <Route path="/attendance" element={<PatientAttendance/>}/>
 
-                              {/* Services Category*/}
-               <Route path="/category" element={<ServiceCategory/>}/>
 
-                              {/* Services Sub-Category*/}
-               <Route path="/sub-category" element={<ServicesSubCategory/>}/>
-
-               
-                              {/* Services*/}
-               <Route path="/services" element={<Services/>}/>
-
-               
-            
 
                           {/* Routes WITH Fixed Sidebar */}
             <Route element={<Layout />}>
@@ -121,11 +115,13 @@ function App () {
                <Route path="/suspended-clinic" element={ <ClinicSuspended/>}/>
  </Route>
  
-                                  {/*Setting Clinics*/}
-               <Route path="/setting-clinics" element={ <SettingForm/> }/>
+             
             
-       {/*Sidebar-admin Clinics*/}
+                {/*Sidebar-admin Clinics*/}
                <Route path="/sidebar-admin" element={<Sidebar1/> }/>
+
+                      {/*Sidebar-admin Clinics*/}
+               <Route path="/sidebar-clinic" element={  <ClinicSidebar/>}/>
               
             
    </Routes>

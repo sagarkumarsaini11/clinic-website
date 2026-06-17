@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./PatientAttendance.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
+
 import { FaTimes } from "react-icons/fa";
 
 export default function PatientAttendance() {
@@ -33,7 +33,7 @@ const location = useLocation();
 
   return (
     <>
-    <Sidebar/>
+   
     <div className="attendance-container">
 
       <div className="attendance-card">

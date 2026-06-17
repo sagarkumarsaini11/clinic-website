@@ -144,7 +144,7 @@ if (loginType === "AdminClinic") {
 
     } else {
 
-      navigate("/homepage");
+      navigate("/sidebar-clinic");
 
     }
 

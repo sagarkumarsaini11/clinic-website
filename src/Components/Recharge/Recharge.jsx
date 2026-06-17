@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Recharge.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
+
 import { FaTimes } from "react-icons/fa";
 const Recharge = () => {
 
@@ -126,7 +126,7 @@ console.log(
 
   return (
 <>
-     <Sidebar/>
+    
      
     <div className="recharge-container">
   

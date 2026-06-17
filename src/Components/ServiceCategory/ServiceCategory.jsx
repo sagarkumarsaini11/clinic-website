@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ServiceCategory.css";
-import Sidebar from "../Sidebar/Sidebar";
+
 import Cookies from "js-cookie";
 
 const BASE_URL =
@@ -316,7 +316,7 @@ const handleStatusChange = async (
 };
 
   return (<>
-  <Sidebar/>
+  
     <div className="service-page-category">
 
       <div className="service-card-category">

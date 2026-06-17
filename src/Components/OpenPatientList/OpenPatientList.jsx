@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./OpenPatientList.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
+
 import { FaTimes } from "react-icons/fa";
 
 export default function OpenPatientList() {
@@ -111,7 +111,7 @@ const location = useLocation();
 
   return (
     <>
-    <Sidebar/>
+    
     <div className="patient-file-page">
       <div className="patient-file-card">
 

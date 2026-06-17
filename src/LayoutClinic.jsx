@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
-import Sidebar1 from "./Components/Sidebar1/Sidebar1";
+import ClinicSidebar from "./Components/ClinicSidebar/ClinicSidebar";
+
 
 const Layout = () => {
   return (
-    <div className="app-layout">
+    <div className="app-layout-clinic">
 
       {/* Fixed Sidebar */}
-   <Sidebar1/>
+   <ClinicSidebar/>
 
       {/* Page Content */}
-      <div className="main-content-sidebar1-admin">
+      <div className="main-content-sidebar1-clinic">
         <Outlet />
       </div>
 

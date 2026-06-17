@@ -1,10 +1,12 @@
 .service-page{
+ 
   max-width:1200px;
   margin:auto;
   padding:20px;
 }
 
 .service-form{
+   margin-top: 30px;
   background:#fff;
   padding:25px;
   border-radius:12px;

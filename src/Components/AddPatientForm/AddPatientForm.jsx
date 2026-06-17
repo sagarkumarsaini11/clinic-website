@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./AddPatientForm.css";
-import {  FaBell,  FaBars,} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 
@@ -250,46 +249,6 @@ if (
    
 
     <div className="page-wrapper-addpatient">
-
-      {/* HEADER */}
-
-      <div className="header-addpatient">
-
-        <button  className="menu-btn-addpatient" onClick={() => setShowSidebar(true)}><FaBars />
-         </button>
-         
-        <h2>Add Patient</h2>   
-
-        <div className="notification-addpatient">
-
-          <FaBell size={22} />
-
-          <span className="badge-addpatient"> 3 </span>
-           
-        </div> 
-      </div>
-      
-                          {/* SIDEBAR */}
-
-      {showSidebar && (
-
-        <div   className="sidebar-overlay-addpatient" onClick={() =>  setShowSidebar(false) }>
-       <div  className="sidebar-addpatient"  onClick={(e) => e.stopPropagation()}>
-              
-               <h2>MENU</h2>
-  
-            <button  onClick={() => {  navigate("/homepage");setShowSidebar(false);}}> Homepage
-             </button>
-  
-            <button onClick={() =>   setShowSidebar(false)}> Add New Patient </button>
-
-            <button> Time Table  </button>
-           <button> Download Report</button>
-            <button> New Query</button>
-          </div>
-
-        </div>
-      )}
 
                       {/* FORM */}
 

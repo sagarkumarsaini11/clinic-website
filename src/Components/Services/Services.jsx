@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Services.css";
-import Sidebar from "../Sidebar/Sidebar";
+
 import Cookies from "js-cookie";
 
 const SERVICE_API =
@@ -419,7 +419,7 @@ const handleStatusChange =
 
 
   return (<>
-    <Sidebar/>
+    
     <div className="service-page">
 
       <div className="service-form">

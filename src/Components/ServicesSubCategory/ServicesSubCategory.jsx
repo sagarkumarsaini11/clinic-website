@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ServicesSubCategory.css";
-import Sidebar from "../Sidebar/Sidebar";
+
 import Cookies from "js-cookie";
 
 
@@ -404,7 +404,7 @@ const handleStatusChange = async (
 
   return (<>
 
-  <Sidebar/>
+
     <div className="sub-page">
 
       <div className="sub-form-card">
