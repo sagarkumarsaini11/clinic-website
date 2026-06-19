@@ -117,7 +117,7 @@ const ClinicSidebar = () => {
           }
         />
 
-        <h3 className="admin-title">
+        <h3 className="clinic-title">
           Clinic Panel
         </h3>
 
