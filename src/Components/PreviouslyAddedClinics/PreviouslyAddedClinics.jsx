@@ -26,22 +26,17 @@ const [scrollLeft, setScrollLeft] = useState(0);
 //API CALL
 
 useEffect(() => {
-
   const fetchClinics = async () => {
-
     try {
+      setLoading(true);
 
-          const token = Cookies.get("token");
+      const token = Cookies.get("token");
 
-    console.log("TOKEN:", token);
-
-    if (!token) {
-
-      console.log("No token found in cookies" );
-        
-      return;
-
-    }
+      if (!token) {
+        console.log("No token found");
+        setLoading(false);
+        return;
+      }
 
       const response = await fetch(
         "https://clinic-backend-5ucx.onrender.com/api/clinics",
@@ -55,60 +50,30 @@ useEffect(() => {
 
       const data = await response.json();
 
-      console.log("API RESPONSE");
-      console.log (data);
-      console.log(
-        JSON.stringify(
-          data,
-          null,
-          2
-        )
-      );
-
-
-      console.log(
-        "Clinic List:",
-        data
-      );
+      console.log("API RESPONSE:", data);
 
       if (response.ok) {
-
         if (Array.isArray(data)) {
-
           setClinics(data);
-
         } else if (data.data) {
-
           setClinics(data.data);
-
         } else if (data.clinics) {
-
           setClinics(data.clinics);
-
+        } else {
+          setClinics([]);
         }
-
       } else {
-
-        console.log(
-          "API Error:",
-          data
-        );
-
+        setClinics([]);
       }
-
     } catch (error) {
-
-      console.log(
-        "Fetch Error:",
-        error
-      );
-
+      console.log("Fetch Error:", error);
+      setClinics([]);
+    } finally {
+      setLoading(false);
     }
-
   };
 
   fetchClinics();
-
 }, []);
 
   // IMAGE PREVIEW
@@ -306,9 +271,11 @@ const handleMouseMove = (e) => {
           
                  {/* Clinic List */}
 
-{clinics.length === 0 ? (
-
-  <p className="empty-text-clinic">  No Clinics Added </p>
+{loading ? (
+  <p className="loading-text-clinic"> Loading Clinics... </p>
+   ) : clinics.length === 0 ? (
+  <p className="empty-text-clinic"> No Clinics Added</p>
+   
   ) : (
 
             <div className="table-container-clinic"
@@ -322,6 +289,7 @@ const handleMouseMove = (e) => {
         <tr>
           <th>S.No</th>
           <th>Clinic Name</th>
+          <th>Address</th>
           <th>Doctor</th>
           <th>Phone no</th>
           <th>Email</th>
@@ -362,6 +330,22 @@ const handleMouseMove = (e) => {
 
 )}
 
+</td>
+           {/* Address */}
+           <td>
+  {editingClinic === item.id ? (
+    <input
+      value={editData.address || ""}
+      onChange={(e) =>
+        setEditData({
+          ...editData,
+          address: e.target.value,
+        })
+      }
+    />
+  ) : (
+    item.address
+  )}
 </td>
                       {/* Doctor name */}
          <td>

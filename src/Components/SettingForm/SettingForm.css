@@ -128,7 +128,32 @@ table td{
 }
 
 
+.popup-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
 
+.charges-input {
+  flex: 2;
+}
+
+.price-code-input {
+  flex: 1;
+  max-width: 120px;
+}
+
+.service-price-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.service-price-info small {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+}
 /* Cross Icon */
 /* 
 .close-icon-prescription{

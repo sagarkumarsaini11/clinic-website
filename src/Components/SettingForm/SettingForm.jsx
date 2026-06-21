@@ -15,6 +15,7 @@ const [currentSection, setCurrentSection] = useState("");
 const [newService, setNewService] = useState({
   serviceName: "",
   charges: "",
+  priceCode:"",
 });
 
 const [customServices, setCustomServices] = useState({
@@ -32,6 +33,8 @@ const [editingService, setEditingService] =
 const [editData, setEditData] = useState({
   serviceName: "",
   charges: "",
+  priceCode:"",
+
 });
 
 
@@ -103,6 +106,7 @@ if (
   setNewService({
     serviceName: "",
     charges: "",
+    priceCode:"",
   });
 
   setShowPopup(false);
@@ -120,6 +124,7 @@ if (
     ][editingService.index] = {
       serviceName: newService.serviceName,
       charges: newService.charges,
+      priceCode: newService.priceCode, 
     };
 
     setCustomServices(updated);
@@ -131,6 +136,7 @@ if (
       {
         serviceName: newService.serviceName,
         charges: newService.charges,
+         priceCode: newService.priceCode, 
       },
     ];
 
@@ -140,6 +146,7 @@ if (
   setNewService({
     serviceName: "",
     charges: "",
+    priceCode:"",
   });
 
   setShowPopup(false);
@@ -161,12 +168,14 @@ const removeService = (section, index) => {
 const editService = (section, index) => {
   setCurrentSection(section);
 
-  setNewService({
-    serviceName:
-      customServices[section][index].serviceName,
-    charges:
-      customServices[section][index].charges,
-  });
+ setNewService({
+  serviceName:
+    customServices[section][index].serviceName,
+  charges:
+    customServices[section][index].charges,
+  priceCode:
+    customServices[section][index].priceCode || "",
+});
 
   setEditingService({
     section,
@@ -183,15 +192,13 @@ const updateService = () => {
     ...customServices,
   };
 
-  updated[
-    editingService.section
-  ][editingService.index] = {
-    serviceName:
-      editData.serviceName,
-
-    charges:
-      editData.charges,
-  };
+updated[
+  editingService.section
+][editingService.index] = {
+  serviceName: newService.serviceName,
+  charges: newService.charges,
+  priceCode: newService.priceCode,
+};
 
   setCustomServices(updated);
 
@@ -235,6 +242,7 @@ const handleChange = (e) => {
 const ServiceRow = ({
   checkboxName,
   chargeName,
+  priceCodeName,
   label,
 }) => (
   <div className="service-row">
@@ -243,14 +251,27 @@ const ServiceRow = ({
       {label}
     </label>
 
-    <input
-      type="text"
-      className="charge-input"
-      placeholder="₹ Charges"
-      name={chargeName}
-      value={formData[chargeName] || ""}
-      onChange={handleChange}
-    />
+    <div className="service-inputs">
+
+      <input
+        type="text"
+        className="charge-input"
+        placeholder="₹ Charges"
+        name={chargeName}
+        value={formData[chargeName] || ""}
+        onChange={handleChange}
+      />
+
+      <input
+        type="text"
+        className="pricecode-input"
+        placeholder="Code"
+        name={priceCodeName}
+        value={formData[priceCodeName] || ""}
+        onChange={handleChange}
+      />
+
+    </div>
 
     <div className="service-actions">
 
@@ -261,11 +282,14 @@ const ServiceRow = ({
             serviceName: label,
             charges:
               formData[chargeName] || "",
+            priceCode:
+              formData[priceCodeName] || "",
           });
 
           setEditingService({
             checkboxName,
             chargeName,
+            priceCodeName,
             isDefault: true,
           });
 
@@ -280,14 +304,17 @@ const ServiceRow = ({
             ...prev,
             [checkboxName]: false,
             [chargeName]: "",
+            [priceCodeName]: "",
           }));
         }}
       />
+      
 
     </div>
 
   </div>
 );
+
 
 //handle submit
   const handleSubmit = (e) => {
@@ -354,7 +381,7 @@ const ServiceRow = ({
       {item.serviceName}
     </label>
 
-    <span>₹ {item.charges}</span>
+    <span>₹{item.charges}</span>
 
   <div className="service-actions">
 
@@ -447,14 +474,15 @@ const ServiceRow = ({
 <ServiceRow
   checkboxName="cervicalSpine"
   chargeName="cervicalSpineCharge"
+  priceCodeName="cervicalSpinePriceCode"
   label="Cervical Spine - AP./Lat. View"
- 
-/> 
+/>
    
 
          <ServiceRow
   checkboxName="lumbarSpine"
   chargeName="lumbarSpineCharge"
+  priceCodeName="lumbarSpinePriceCode"
   label="Lumbar Spine - AP./Lat. View"
 />
   
@@ -477,7 +505,7 @@ const ServiceRow = ({
   />
 </div>
 
-{/* PATHOLOGY MAP */}
+                   {/* PATHOLOGY MAP */}
 {customServices.pathology.map((item, index) => (
   <div className="custom-service" key={index}>
     <label>
@@ -510,6 +538,7 @@ const ServiceRow = ({
            <ServiceRow
   checkboxName="cbc"
   chargeName="cbcCharge"
+  priceCodeName="cbcPriceCode"
   label="CBC"
 />
    
@@ -517,6 +546,7 @@ const ServiceRow = ({
           <ServiceRow
   checkboxName="esr"
   chargeName="esrCharge"
+  priceCodeName="esrPriceCode"
   label="ESR"
 />
    
@@ -524,6 +554,7 @@ const ServiceRow = ({
       <ServiceRow
   checkboxName="crp"
   chargeName="crpCharge"
+  priceCodeName="crpPriceCode"
   label="CRP"
 />
   
@@ -645,7 +676,7 @@ const ServiceRow = ({
   />
 </div>
 
-{/* STANDARD MAP */}
+                {/* STANDARD MAP */}
 {customServices.standard.map((item, index) => (
   <div className="custom-service" key={index}>
     <label>
@@ -678,18 +709,21 @@ const ServiceRow = ({
     <ServiceRow
   checkboxName="thermoTherapy"
   chargeName="thermoTherapyCharge"
+  priceCodeName="thermoTherapyPriceCode"
   label="ThermoTherapy Hot / Cold"
 />
      
     <ServiceRow
   checkboxName="therapeuticUltrasound"
   chargeName="therapeuticUltrasoundCharge"
+  priceCodeName="therapeuticUltrasoundPriceCode"
   label="Therapeutic Ultrasound (US)"
 /> 
 
       <ServiceRow
   checkboxName="tens"
   chargeName="tensCharge"
+  priceCodeName="tensPriceCode"
   label="Nerve Stimulation (TENS)"
 /> 
 
@@ -741,6 +775,7 @@ const ServiceRow = ({
        <ServiceRow
   checkboxName="pemf"
   chargeName="pemfCharge"
+  priceCodeName="pemfPriceCode"
   label="Pulsed Electro Magnetic Field (PEMF)"
 />
  
@@ -748,6 +783,7 @@ const ServiceRow = ({
          <ServiceRow
   checkboxName="terahertz"
   chargeName="terahertzCharge"
+  priceCodeName="terahertzPriceCode"
   label="Terahertz Therapy (THz)"
 /> 
    
@@ -796,18 +832,21 @@ const ServiceRow = ({
       <ServiceRow
   checkboxName="romExercises"
   chargeName="romExercisesCharge"
+  priceCodeName="romExercisesPriceCode"
   label="ROM Exercises"
 />   
   
        <ServiceRow
   checkboxName="stretchingExercises"
   chargeName="stretchingExercisesCharge"
+  priceCodeName="stretchingExercisesPriceCode"
   label="Stretching Exercises"
 /> 
     
         <ServiceRow
   checkboxName="strengtheningExercises"
   chargeName="strengtheningExercisesCharge"
+  priceCodeName="stretchingExercisesPriceCode"
   label="Strengthening Exercises"
 /> 
      
@@ -833,7 +872,10 @@ const ServiceRow = ({
       {item.serviceName}
     </label>
 
-    <span>₹ {item.charges}</span>
+   <div className="service-price-info">
+  <span>₹ {item.charges}</span>
+  <small>Code: {item.priceCode}</small>
+</div>
 
     <div className="service-actions">
 
@@ -856,10 +898,12 @@ const ServiceRow = ({
 ))}
 
     <ServiceRow checkboxName="cuppingTherapy"  chargeName="cuppingTherapyCharge"
+    priceCodeName="cuppingTherapyPriceCode"
   label="Cupping Therapy - Dry / Wet / Massage"/>
 
 
        <ServiceRow  checkboxName="kinesioTaping" chargeName="kinesioTapingCharge"
+       priceCodeName="kinesioTapingPriceCode"
       label="Kinesio Taping / Pain Patch"/> 
 
      </div>
@@ -915,17 +959,35 @@ const ServiceRow = ({
         }
       />
 
-      <input
-        type="text"
-        placeholder="Charges"
-        value={newService.charges}
-        onChange={(e) =>
-          setNewService({
-            ...newService,
-            charges: e.target.value,
-          })
-        }
-      />
+    <div className="popup-row">
+
+  <input
+    type="text"
+    placeholder="Charges"
+    className="charges-input"
+    value={newService.charges}
+    onChange={(e) =>
+      setNewService({
+        ...newService,
+        charges: e.target.value,
+      })
+    }
+  />
+
+  <input
+    type="text"
+    placeholder="Price Code"
+    className="price-code-input"
+    value={newService.priceCode}
+    onChange={(e) =>
+      setNewService({
+        ...newService,
+        priceCode: e.target.value,
+      })
+    }
+  />
+
+</div>
 
       <div className="popup-btns">
 

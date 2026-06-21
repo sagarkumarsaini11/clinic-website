@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
 import "./AddClinic.css";
 import { useNavigate } from "react-router-dom";
@@ -12,21 +12,36 @@ const navigate = useNavigate();
 const location = useLocation();
 
 const clinicData = location.state?.clinic;
-const isEdit = location.state?.isEdit;
+const isEdit = location.state?.isEdit || false;
 
-const [clinicName, setClinicName] = useState(clinicData?.clinicName || "");
-const [address, setAddress] = useState(clinicData?.address || "");
-const [phone, setPhone] = useState(  clinicData?.phone || "");
-const [email, setEmail] =useState(clinicData?.email || "");
-const [doctorName, setDoctorName] = useState(clinicData?.doctor_name || "");
-const [registrationNo, setRegistrationNo] = useState( clinicData?.state_council_registration_no || "");
-const [gstin, setGstin] =useState( clinicData?.gstin || "");
-const [doctorDegree, setDoctorDegree] = useState( clinicData?.doctor_degree || "");
-const [regCouncilName, setRegCouncilName] = useState( clinicData?.reg_council_name || "");
-const [password, setPassword] = useState(  clinicData?.password || "");
-const [confirmPassword, setConfirmPassword] = useState( clinicData?.password || "");
+const [clinicName, setClinicName] = useState(clinicData?.name || "");
+
+const [clinicAddress, setClinicAddress] = useState( clinicData?.address || "");
+ 
+const [phoneNo, setPhoneNo] = useState(  clinicData?.phone || "");
+
+const [email, setEmail] = useState( clinicData?.email || "");
+
+const [doctorName, setDoctorName] = useState(  clinicData?.doctor_name || "");
+
+const [doctorDegree, setDoctorDegree] = useState(clinicData?.doctor_degree || "");
+
+const [regCouncilName, setRegCouncilName] = useState(clinicData?.reg_council_name || "");
+
+const [registrationNo, setRegistrationNo] = useState(clinicData?.state_council_registration_no || ""
+);
+  
+
+const [gstin, setGstin] = useState(
+  clinicData?.gstin || ""
+);
+
+const [password, setPassword] = useState("");
+
+const [confirmPassword, setConfirmPassword] = useState("");
+
+
 const [showPassword, setShowPassword] = useState(false);
-
 const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 const [logoFile, setLogoFile] = useState(null);
 const [headerFile, setHeaderFile] = useState(null);
@@ -38,6 +53,37 @@ const [headerPreview, setHeaderPreview] = useState(clinicData?.letterhead_header
 const [footerPreview, setFooterPreview] = useState(clinicData?.letterhead_footer_file || "");
 const [idCardPreview, setIdCardPreview] = useState(clinicData?.id_card_background_file || "");
   
+// useEffect
+useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
+  if (!isEdit) {
+    setClinicName("");
+    setClinicAddress("");
+    setPhoneNo("");
+    setEmail("");
+    setDoctorName("");
+    setDoctorDegree("");
+    setRegCouncilName("");
+    setRegistrationNo("");
+    setGstin("");
+    setPassword("");
+    setConfirmPassword("");
+
+    setLogoFile(null);
+    setHeaderFile(null);
+    setFooterFile(null);
+    setIdCardFile(null);
+
+    setLogoPreview("");
+    setHeaderPreview("");
+    setFooterPreview("");
+    setIdCardPreview("");
+  }
+}, [location.key]);
 
   //Image change
 
@@ -67,8 +113,8 @@ const handleSubmit = async (e) => {
 
  if (
   !clinicName ||
-  !address ||
-  !phone ||
+  !clinicAddress ||
+  !phoneNo ||
   !email ||
   !doctorName ||
   !doctorDegree ||
@@ -101,9 +147,9 @@ if (password !== confirmPassword) {
 
     formData.append("clinicName",clinicName);
 
-    formData.append("address", address );
+    formData.append("clinicAddress", clinicAddress );
   
-    formData.append("phone",phone);
+    formData.append("phoneNo",phoneNo);
 
     formData.append("email", email  );
 
@@ -161,9 +207,9 @@ if (isEdit) {
 
 formData.append( "clinicName",clinicName  );
  
-formData.append( "address", address );
+formData.append( "clinicAddress", clinicAddress );
 
-formData.append("phone",phone);
+formData.append("phoneNo",phoneNo);
 
 formData.append("email",email);
 
@@ -334,16 +380,16 @@ const handleArrowKey = (e) => {
 
         <label className="label-add-clinic">Clinic Address</label>
         <input  className="input-add-clinic"
-          value={address}
-        onChange={(e)=>setAddress(e.target.value)}
+          value={clinicAddress}
+        onChange={(e)=>setClinicAddress(e.target.value)}
           placeholder="Enter Address"/>
           
-                {/*  Phone no*/}
+                {/*  phoneNo no*/}
 
         <label className="label-add-clinic"> Phone No</label>
         <input   className="input-add-clinic"
-        value={phone}
-        onChange={(e)=>setPhone(e.target.value)}
+        value={phoneNo}
+        onChange={(e)=>setPhoneNo(e.target.value)}
           placeholder="Enter Phone No" />
           
         

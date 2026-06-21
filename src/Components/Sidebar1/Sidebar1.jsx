@@ -245,20 +245,21 @@ useEffect(() => {
   </NavLink>
 
 
- <NavLink
+<NavLink
   to="/add-clinic"
-  onClick={() =>
-    setSidebarOpen(false)
-  }
+  state={{ isEdit: false }}
+  onClick={() => setSidebarOpen(false)}
   className={({ isActive }) =>
     isActive
       ? "menu-btn-sidebar1-admin active"
       : "menu-btn-sidebar1-admin"
   }
 >
-    <FaPlusCircle />
-    Add Clinic
-  </NavLink>
+  <FaPlusCircle />
+  Add Clinic
+</NavLink>
+
+
 
 <NavLink
   to="/running-clinic"
