@@ -13,9 +13,10 @@ const location = useLocation();
 
 const clinicData = location.state?.clinic;
 const isEdit = location.state?.isEdit;
-const [clinicName, setClinicName] =  useState( clinicData?.name || ""); 
-const [clinicAddress, setClinicAddress] = useState( clinicData?.address || "");
-const [phoneNo, setPhoneNo] = useState(clinicData?.phone || "");
+
+const [clinicName, setClinicName] = useState(clinicData?.clinicName || "");
+const [address, setAddress] = useState(clinicData?.address || "");
+const [phone, setPhone] = useState(  clinicData?.phone || "");
 const [email, setEmail] =useState(clinicData?.email || "");
 const [doctorName, setDoctorName] = useState(clinicData?.doctor_name || "");
 const [registrationNo, setRegistrationNo] = useState( clinicData?.state_council_registration_no || "");
@@ -66,8 +67,8 @@ const handleSubmit = async (e) => {
 
  if (
   !clinicName ||
-  !clinicAddress ||
-  !phoneNo ||
+  !address ||
+  !phone ||
   !email ||
   !doctorName ||
   !doctorDegree ||
@@ -98,90 +99,48 @@ if (password !== confirmPassword) {
 
     const formData = new FormData();
 
-    formData.append(
-      "clinicName",
-      clinicName
-    );
+    formData.append("clinicName",clinicName);
 
-    formData.append(
-      "clinicAddress",
-      clinicAddress
-    );
+    formData.append("address", address );
+  
+    formData.append("phone",phone);
 
-    formData.append(
-      "PhoneNo",
-      phoneNo
-    );
+    formData.append("email", email  );
 
-    formData.append(
-      "email",
-      email
-    );
+    formData.append("doctorName",doctorName );
 
-    formData.append(
-      "doctorName",
-      doctorName
-    );
+    formData.append("registrationNo",registrationNo );
+  
+    formData.append("gstin",gstin );
 
-    formData.append(
-      "registrationNo",
-      registrationNo
-    );
+    formData.append("doctorDegree",doctorDegree);
 
-    formData.append(
-      "gstin",
-      gstin
-    );
+    formData.append("regCouncilName",regCouncilName);
 
-    formData.append(
-  "doctorDegree",
-  doctorDegree
-);
+    formData.append("password",password);
 
-formData.append(
-  "regCouncilName",
-  regCouncilName
-);
-
-formData.append(
-  "password",
-  password
-);
-
-formData.append(
-  "confirmPassword",
-  confirmPassword
-);
-
+    formData.append("confirmPassword", confirmPassword);
+  
     // Images
 
     if (logoFile) {
-      formData.append(
-        "logoFile",
-        logoFile
-      );
-    }
-
+      formData.append("logoFile",logoFile);
+    }    
+        
     if (headerFile) {
-      formData.append(
-        "headerFile",
-        headerFile
-      );
+       formData.append("headerFile", headerFile);  
     }
 
     if (footerFile) {
-      formData.append(
-        "footerFile",
-        footerFile
-      );
+      formData.append("footerFile",footerFile);  
     }
 
     if (idCardFile) {
-      formData.append(
-        "idCardFile",
-        idCardFile
-      );
-    }
+      formData.append( "idCardFile",idCardFile);
+     }   
+        
+      
+   
 
    const token = Cookies.get("token");
    console.log ("Token:",token);
@@ -200,88 +159,49 @@ if (isEdit) {
 
   const formData = new FormData();
 
-  formData.append(
-    "clinicName",
-    clinicName
-  );
+formData.append( "clinicName",clinicName  );
+ 
+formData.append( "address", address );
 
-  formData.append(
-    "clinicAddress",
-    clinicAddress
-  );
+formData.append("phone",phone);
 
-  formData.append(
-    "PhoneNo",
-    phoneNo
-  );
+formData.append("email",email);
 
-  formData.append(
-    "email",
-    email
-  );
+formData.append("doctorName",doctorName);
 
-  formData.append(
-    "doctorName",
-    doctorName
-  );
+formData.append( "registrationNo",registrationNo);
 
-  formData.append(
-    "registrationNo",
-    registrationNo
-  );
+formData.append("gstin",gstin );
 
-  formData.append(
-    "gstin",
-    gstin
-  );
+formData.append( "doctorDegree",doctorDegree);
 
-formData.append(
-  "doctorDegree",
-  doctorDegree
-);
+formData.append(  "regCouncilName", regCouncilName);
 
-formData.append(
-  "regCouncilName",
-  regCouncilName
-);
+formData.append("password",password);
 
-formData.append(
-  "password",
-  password
-);
-
-formData.append(
-  "confirmPassword",
-  confirmPassword
-);
+formData.append("confirmPassword",confirmPassword);
+  
+  
+//Images
 
 if (logoFile) {
-  formData.append(
-    "logoFile",
-    logoFile
-  );
+  formData.append( "logoFile",logoFile  );
 }
 
 if (headerFile) {
-  formData.append(
-    "headerFile",
-    headerFile
-  );
+  formData.append( "headerFile",headerFile  );
 }
-
+     
 if (footerFile) {
-  formData.append(
-    "footerFile",
-    footerFile
-  );
+  formData.append("footerFile",footerFile  );
 }
 
 if (idCardFile) {
-  formData.append(
-    "idCardFile",
-    idCardFile
-  );
+  formData.append("idCardFile",idCardFile  );
 }
+    
+    
+
 
   response = await fetch(
     `https://clinic-backend-5ucx.onrender.com/api/clinics/${clinicData.id}`,
@@ -397,10 +317,10 @@ const handleArrowKey = (e) => {
        
                       {/* Add Clinic Form */}
 
-      <form
-  onSubmit={handleSubmit}
-  onKeyDown={handleArrowKey}
->
+      <form  onSubmit={handleSubmit} onKeyDown={handleArrowKey}>
+
+ 
+
             
              {/*  Clinic Name*/}
 
@@ -414,16 +334,16 @@ const handleArrowKey = (e) => {
 
         <label className="label-add-clinic">Clinic Address</label>
         <input  className="input-add-clinic"
-          value={clinicAddress}
-        onChange={(e)=>setClinicAddress(e.target.value)}
+          value={address}
+        onChange={(e)=>setAddress(e.target.value)}
           placeholder="Enter Address"/>
           
                 {/*  Phone no*/}
 
         <label className="label-add-clinic"> Phone No</label>
         <input   className="input-add-clinic"
-        value={phoneNo}
-        onChange={(e)=>setPhoneNo(e.target.value)}
+        value={phone}
+        onChange={(e)=>setPhone(e.target.value)}
           placeholder="Enter Phone No" />
           
         
@@ -628,17 +548,27 @@ const handleArrowKey = (e) => {
    
   
                 {/*Submit button*/}
-        <div className="button-row">
+<div className="button-row">
 
-       <button type="submit"  className="submit-button-add-clinic">
-           {isEdit
-           ? "Update Clinic"
-            : "Submit"}
-       </button>
+  <button type="submit" className="submit-button-add-clinic" >
+   {isEdit ? "Update Clinic" : "Submit"}
+    </button>
+ 
+    
+ 
 
-  <button   type="button"  className="delete-form-btn"> Delete </button>
+  {isEdit && (
+    <>
+      <button type="button" className="delete-form-btn" >
+       Delete
+       </button> 
 
-  <button type="button" className="suspend-form-btn">Suspend</button>
+      <button type="button" className="suspend-form-btn">
+        Suspend
+      </button> 
+
+    </>
+  )}
 
 </div>
         
