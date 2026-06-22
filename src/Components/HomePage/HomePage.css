@@ -400,6 +400,33 @@ cursor: pointer;
 
 
 /* MOBILE */
+/* Tablet View */
+@media (min-width: 481px) and (max-width: 768px) {
+
+  .patient-card{
+    width: 90%;
+    max-width: 700px;
+  }
+
+  .feature-row{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    justify-items: center;
+  }
+
+  .feature-card{
+    width: 100%;
+    max-width: 220px;
+    min-height: 120px;
+  }
+
+  .stats-row{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+  }
+}
 
 @media(max-width:768px){
 
@@ -433,17 +460,6 @@ cursor: pointer;
 /* Mobile */
 
 @media(max-width:768px){
-
-  .feature-row{
-    flex-direction:column;
-  }
-
-  .stats-row{
-    flex-direction:column;
-    gap:20px;
-    text-align:center;
-  }
-
   .header h2{
     font-size:22px;
   }
@@ -453,11 +469,7 @@ cursor: pointer;
   }
 }
 
-@media (max-width: 768px) {
-  .feature-card {
-    width: 45%;
-  }
-}
+
 
 @media (max-width: 480px) {
   .feature-card {

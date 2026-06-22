@@ -271,7 +271,7 @@ background: linear-gradient(
    MOBILE VIEW
 ========================= */
 
-@media screen and (max-width:768px){
+@media screen and (max-width:1400px){
 
   .mobile-menu-icon{
     display:block;
@@ -330,7 +330,7 @@ background: linear-gradient(
   border-radius:20px;
 }
 
-@media screen and (max-width:768px){
+@media screen and (max-width:1400px){
 
   .app-layout-clinic{
     display:block;
@@ -369,7 +369,7 @@ background: linear-gradient(
   }
 }
 
-@media screen and (max-width:768px){
+@media screen and (max-width:1400px){
 
   .sidebar1-clinic{
     transform:translateX(-100%);
