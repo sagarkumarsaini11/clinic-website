@@ -252,7 +252,7 @@ const handleSubmit = async (e) => {
 
                <div className="input-group">
 
-             <select  name="appointmentTime"  value={formData.appointmentTime}  onChange={handleChange} >
+             <select  name="appointmentTime"  value={formData.appointmentTime}  onChange={handleChange} className="input-group-time" >
 
 
           <option value="">Select Time Slot</option>
