@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import "./SettingForm.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -99,6 +101,9 @@ if (
     ...prev,
     [editingService.chargeName]:
       newService.charges,
+
+    [editingService.priceCodeName]:
+      newService.priceCode,
   }));
 
   setEditingService(null);
@@ -106,11 +111,10 @@ if (
   setNewService({
     serviceName: "",
     charges: "",
-    priceCode:"",
+    priceCode: "",
   });
 
   setShowPopup(false);
-
   return;
 }
 
@@ -399,73 +403,6 @@ const ServiceRow = ({
     }
   />
 
-
-
-{showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-box">
-
-      <h3>
-        {editingService
-          ? "Edit Service"
-          : "Add Service"}
-      </h3>
-
-      <input
-        type="text"
-        placeholder="Service Name"
-        value={newService.serviceName}
-        onChange={(e) =>
-          setNewService({
-            ...newService,
-            serviceName: e.target.value,
-          })
-        }
-      />
-
-      <input
-        type="text"
-        placeholder="Charges"
-        value={newService.charges}
-        onChange={(e) =>
-          setNewService({
-            ...newService,
-            charges: e.target.value,
-          })
-        }
-      />
-
-      <div className="popup-btns">
-
-        <button
-          type="button"
-          onClick={addService}
-        >
-          {editingService
-            ? "Update"
-            : "Add"}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            setShowPopup(false);
-            setEditingService(null);
-
-            setNewService({
-              serviceName: "",
-              charges: "",
-            });
-          }}
-        >
-          Cancel
-        </button>
-
-      </div>
-
-    </div>
-  </div>
-)}
 
 </div>
   </div>
@@ -929,7 +866,7 @@ const ServiceRow = ({
             placeholder="Treatment duration mentioned above is approximate & subject to change."/>
           </div>
 
-            <button  type="submit"  className="save-btn" >
+            <button  type="submit"  className="save-btn-setting" >
             Save Prescription
              </button>
            </div>   
@@ -964,7 +901,7 @@ const ServiceRow = ({
   <input
     type="text"
     placeholder="Charges"
-    className="charges-input"
+    className="charges-input-popup"
     value={newService.charges}
     onChange={(e) =>
       setNewService({

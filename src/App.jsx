@@ -35,6 +35,7 @@ import LayoutClinic from './LayoutClinic'
 
 
 
+
 function Website() {
   return (
    
@@ -76,7 +77,7 @@ function App () {
   <Route path="/services" element={<Services />} />
   <Route path="/category" element={<ServiceCategory />} />
   <Route path="/sub-category" element={<ServicesSubCategory />} />
-  <Route path="/setting-clinics" element={<SettingForm />} />
+  <Route path="/setting-clinics" element={<SettingForm/>} />
 </Route>
 
              {/* Other routes */}
