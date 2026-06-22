@@ -308,7 +308,7 @@
    MOBILE VIEW
 ========================= */
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 780px){
 
     .appointment-container{
 
@@ -474,4 +474,5 @@
 
         font-size: 14px;
     }
+  
 }
