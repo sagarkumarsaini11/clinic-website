@@ -51,6 +51,7 @@ const ClinicSidebar = () => {
     }
   }, [navigate]);
 
+//when click outside then sidebar is close
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -73,6 +74,7 @@ const ClinicSidebar = () => {
       );
   }, []);
 
+  //sidebar for mobile view
   useEffect(() => {
     const handleSidebarOutside = (event) => {
       if (
@@ -96,6 +98,8 @@ const ClinicSidebar = () => {
       );
   }, []);
 
+  //logout function
+
   const handleLogout = () => {
     Cookies.remove("token");
     Cookies.remove("refreshToken");
@@ -104,106 +108,76 @@ const ClinicSidebar = () => {
     navigate("/");
   };
 
+  //menu close after clicking 
+const handleMenuClick = () => {
+  setSidebarOpen(false);
+};
+
   return (
     <>
       {/* TOP NAVBAR */}
 
       <div className="top-navbar-sidebar1-clinic">
 
-        <FaBars
-          className="mobile-menu-icon"
-          onClick={() =>
-            setSidebarOpen(!sidebarOpen)
-          }
-        />
+        <FaBars  className="mobile-menu-icon"
+          onClick={() => setSidebarOpen(!sidebarOpen)} />
 
-        <h3 className="clinic-title">
-          Clinic Panel
-        </h3>
-
-        <div
-          className="profile-wrapper"
-          ref={dropdownRef}
-        >
+        <h3 className="clinic-title">Clinic Panel </h3>
+          
+       
+                 {/* profile */}
+        <div className="profile-wrapper" ref={dropdownRef}>
           <FaUserCircle
             className="profile-icon-sidebar1-clinic"
             onClick={(e) => {
               e.stopPropagation();
-              setShowProfile(!showProfile);
-            }}
-          />
-
+              setShowProfile(!showProfile); }}/>
+           
+          {/* show profile data */}
           {showProfile && (
             <div className="profile-dropdown">
 
               <div className="profile-info">
 
-                <h4>
-                  {user?.name || "No Name"}
-                </h4>
+                <h4> {user?.name || "No Name"}</h4>
+                <p>{user?.email || "No Email"}</p>
+                <p> Mobile : {user?.mobile}</p>
+                <p>Role : {user?.role}</p>
+                <p> ID : {user?.id} </p>
+              </div>   
+                <hr />
 
-                <p>
-                  {user?.email || "No Email"}
-                </p>
-
-                <p>
-                  Mobile : {user?.mobile}
-                </p>
-
-                <p>
-                  Role : {user?.role}
-                </p>
-
-                <p>
-                  ID : {user?.id}
-                </p>
-
-              </div>
-
-              <hr />
-
+                    {/* profile button */}
               <button
-                onClick={() =>
-                  navigate("/clinic-profile")
-                }
-              >
-                <FaUserCircle />
-                Profile
-              </button>
+                onClick={() =>navigate("/clinic-profile")}>
+                <FaUserCircle /> Profile  
+               </button>  
 
-              <button
-                onClick={() =>
-                  navigate("/change-password")
-                }
-              >
-                <FaKey />
-                Change Password
-              </button>
+              <button onClick={() => navigate("/change-password") }>
+                <FaKey /> Change Password 
+               </button>
+             
 
-              <button
-                onClick={handleLogout}
-              >
-                <FaSignOutAlt />
-                Logout
+              <button onClick={handleLogout} >
+               <FaSignOutAlt />Logout
               </button>
+ 
 
             </div>
           )}
         </div>
       </div>
 
-      {/* MOBILE OVERLAY */}
+                       {/* MOBILE OVERLAY */}
 
       {sidebarOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={() =>
-            setSidebarOpen(false)
-          }
-        />
-      )}
+        <div  className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}/>
+       )} 
+           
 
-      {/* SIDEBAR */}
+
+                         {/* SIDEBAR */}
 
       <div
         ref={sidebarRef}
@@ -229,102 +203,117 @@ const ClinicSidebar = () => {
         </div>
 
         <nav className="navbar-sidebar1-clinic">
+            
+             {/* Homepage submenu */}
+         <NavLink to="/homepage"
+        onClick={handleMenuClick}
+        className={({ isActive }) =>isActive
+       ? "menu-btn-sidebar1-clinic active"
+       : "menu-btn-sidebar1-clinic"
+       }>
+       <FaHome /> Homepage</NavLink>
+ 
 
-          <NavLink
-            to="/homepage"
-            className={({ isActive }) =>
-              isActive
-                ? "menu-btn-sidebar1-clinic active"
-                : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaHome />
-            Homepage
-          </NavLink>
-
+               {/* Add Patient submenu */}
           <NavLink
             to="/addpatient"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaUserPlus />
-            Add New Patient
-          </NavLink>
+            }>
+          
+            <FaUserPlus />Add New Patient</NavLink>
+            
+          
+           
 
+
+                {/* Serivce submenu */}
           <NavLink
             to="/services"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaClipboardList />
-            Services
-          </NavLink>
+            }>
+          
+            <FaClipboardList /> Services</NavLink>
+           
+          
+               
 
+                {/* Service-Category submenu */}
           <NavLink
             to="/category"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaClipboardList />
-            Service Category
-          </NavLink>
-
+            }>
+          
+            <FaClipboardList />Service Category</NavLink>
+            
+          
+                
+                 {/* Service-SubCategory submenu */}
           <NavLink
             to="/sub-category"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaClipboardList />
-            Service Sub Category
-          </NavLink>
-
+            }>
+          
+            <FaClipboardList />Service Sub Category </NavLink>
+            
+         
+          
+           {/* Setting submenu */}
           <NavLink
             to="/setting-clinics"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaCog />
-            Settings
-          </NavLink>
+            } >
+         
+            <FaCog />Settings</NavLink>
+            
+          
 
+                    {/* Download submenu */}
           <NavLink
             to="/download-report"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaFileDownload />
-            Download Report
-          </NavLink>
+            }>
+          
+            <FaFileDownload />Download Report</NavLink>
+            
+          
 
+             {/* New Query  submenu */}
           <NavLink
             to="/new-query"
+            onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            }
-          >
-            <FaQuestionCircle />
-            New Query
-          </NavLink>
+            }>
+          
+            <FaQuestionCircle /> New Query</NavLink>
+           
+          
 
         </nav>
       </div>

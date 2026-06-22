@@ -249,17 +249,17 @@ const ServiceRow = ({
   priceCodeName,
   label,
 }) => (
-  <div className="service-row">
+  <div className="service-row-setting">
 
-    <label className="service-label">
+    <label className="service-label-setting">
       {label}
     </label>
 
-    <div className="service-inputs">
+    <div className="service-inputs-setting">
 
       <input
         type="text"
-        className="charge-input"
+        className="charge-input-setting"
         placeholder="₹ Charges"
         name={chargeName}
         value={formData[chargeName] || ""}
@@ -268,7 +268,7 @@ const ServiceRow = ({
 
       <input
         type="text"
-        className="pricecode-input"
+        className="pricecode-input-setting"
         placeholder="Code"
         name={priceCodeName}
         value={formData[priceCodeName] || ""}
@@ -277,10 +277,10 @@ const ServiceRow = ({
 
     </div>
 
-    <div className="service-actions">
+    <div className="service-actions-setting">
 
       <FaEdit
-        className="edit-service"
+        className="edit-service-setting"
         onClick={() => {
           setNewService({
             serviceName: label,
@@ -302,7 +302,7 @@ const ServiceRow = ({
       />
 
       <FaTimes
-        className="delete-service"
+        className="delete-service-setting"
         onClick={() => {
           setFormData((prev) => ({
             ...prev,
@@ -343,10 +343,10 @@ const ServiceRow = ({
     <>
    
     
-    <div className="prescription-container">
+    <div className="prescription-container-setting">
       
 {/* <FaTimes
-  className="close-icon-prescription"
+  className="close-icon-prescription-setting"
   onClick={() =>
     navigate("/homepage", {
       state: {
@@ -358,20 +358,20 @@ const ServiceRow = ({
       <h1>SETTING THERAPY PRESCRIPTION</h1>
         
        <form onSubmit={handleSubmit}>
-       <div className="top-section">
+       <div className="top-section-setting">
 
                            {/* LEFT SIDE */}
 
-          <div className="left-side">
+          <div className="left-side-setting">
             <h3>Inv. Req.</h3>
 
                        {/* X-RAY */}
 
-           <div className="heading-row">
+           <div className="heading-row-setting">
   <h4>X-Ray</h4>
 
   <FaPlus
-    className="plus-icon"
+    className="plus-icon-setting"
     onClick={() => openPopup("xray")}
   />
 </div>
@@ -379,7 +379,7 @@ const ServiceRow = ({
             {/* X_RAY MAP */}
 
 {customServices.xray.map((item, index) => (
-  <div className="custom-service" key={index}>
+  <div className="custom-service-setting" key={index}>
     <label>
       <input type="checkbox" />
       {item.serviceName}
@@ -387,17 +387,17 @@ const ServiceRow = ({
 
     <span>₹{item.charges}</span>
 
-  <div className="service-actions">
+  <div className="service-actions-setting">
 
   <FaEdit
-    className="edit-service"
+    className="edit-service-setting"
     onClick={() =>
       editService("xray", index)
     }
   />
 
   <FaTimes
-    className="delete-service"
+    className="delete-service-setting"
     onClick={() =>
       removeService("xray", index)
     }
@@ -433,18 +433,18 @@ const ServiceRow = ({
              
                        {/* Pathology Checkbox */}
 
-               <div className="heading-row">
+               <div className="heading-row-setting">
   <h4>Pathology</h4>
 
   <FaPlus
-    className="plus-icon"
+    className="plus-icon-setting"
     onClick={() => openPopup("pathology")}
   />
 </div>
 
                    {/* PATHOLOGY MAP */}
 {customServices.pathology.map((item, index) => (
-  <div className="custom-service" key={index}>
+  <div className="custom-service-setting" key={index}>
     <label>
       <input type="checkbox" />
       {item.serviceName}
@@ -452,17 +452,17 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-  <div className="service-actions">
+  <div className="service-actions-setting">
 
   <FaEdit
-    className="edit-service"
+    className="edit-service-setting"
     onClick={() =>
       editService("pathology", index)
     }
   />
 
   <FaTimes
-    className="delete-service"
+    className="delete-service-setting"
     onClick={() =>
       removeService("pathology", index)
     }
@@ -539,7 +539,7 @@ const ServiceRow = ({
 
              {/* Standard Physio at Home */}
 
-            <div className="field">
+            <div className="field-setting">
               <label>Standard Physio at Home</label>
               <input type="text" placeholder="750"  name="standardPhysioAtHome" value={formData.standardPhysioAtHome} onChange={handleChange}  />
                </div> 
@@ -547,7 +547,7 @@ const ServiceRow = ({
              
               {/*  Customized Home Treatment Plan */}
 
-           <div className="field">
+           <div className="field-setting">
   <label>Customized Home Treatment Plan</label>
 
   <input type="text" placeholder="Enter Customized Home Treatment Plan"
@@ -556,8 +556,8 @@ const ServiceRow = ({
   </div>  
 
 
-            <p className="note">  Charges vary according to patient condition. </p>
-            <div className="field">
+            <p className="note-setting">  Charges vary according to patient condition. </p>
+            <div className="field-setting">
   <label>
     Discount on 10 Sessions (%)
   </label>
@@ -571,7 +571,7 @@ const ServiceRow = ({
   />
 </div>
 
-<div className="field">
+<div className="field-setting">
   <label>
     Discount on 20 Sessions (%)
   </label>
@@ -591,31 +591,31 @@ const ServiceRow = ({
               
                           {/* RIGHT SIDE */}
 
-          <div className="right-side">
+          <div className="right-side-setting">
 
                     {/*Physiotherapy Rx CHECKBOX  */}
 
-       <div className="heading-row">
+       <div className="heading-row-setting">
       <h4>Pathology RX</h4>
        </div>
 
-            <div className="checkbox-sections">
+            <div className="checkbox-sections-setting">
 
                         {/* Standard Modalities */}
 
             <div>
-      <div className="heading-row">
+      <div className="heading-row-setting">
   <h4>Standard Treatment Modalities</h4>
 
   <FaPlus
-    className="plus-icon"
+    className="plus-icon-setting"
     onClick={() => openPopup("standard")}
   />
 </div>
 
                 {/* STANDARD MAP */}
 {customServices.standard.map((item, index) => (
-  <div className="custom-service" key={index}>
+  <div className="custom-service-setting" key={index}>
     <label>
       <input type="checkbox" />
       {item.serviceName}
@@ -623,17 +623,17 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-  <div className="service-actions">
+  <div className="service-actions-setting">
 
   <FaEdit
-    className="edit-service"
+    className="edit-service-setting"
     onClick={() =>
       editService("standard", index)
     }
   />
 
   <FaTimes
-    className="delete-service"
+    className="delete-service-setting"
     onClick={() =>
       removeService("standard", index)
     }
@@ -670,18 +670,18 @@ const ServiceRow = ({
                          {/* Advance Modalities */}
 
            <div>
-           <div className="heading-row">
+           <div className="heading-row-setting">
   <h4>Advance Treatment Modalities</h4>
 
   <FaPlus
-    className="plus-icon"
+    className="plus-icon-setting"
     onClick={() => openPopup("advance")}
   />
 </div>
 
                        {/* ADVANCED MAP */}
 {customServices.advance.map((item, index) => (
-  <div className="custom-service" key={index}>
+  <div className="custom-service-setting" key={index}>
     <label>
       <input type="checkbox" />
       {item.serviceName}
@@ -689,17 +689,17 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-   <div className="service-actions">
+   <div className="service-actions-setting">
 
   <FaEdit
-    className="edit-service"
+    className="edit-service-setting"
     onClick={() =>
       editService("advance", index)
     }
   />
 
   <FaTimes
-    className="delete-service"
+    className="delete-service-setting"
     onClick={() =>
       removeService("advance", index)
     }
@@ -729,17 +729,17 @@ const ServiceRow = ({
                        {/* Therapeutic CHECKBOX*/}
 
               <div>
-        <div className="heading-row">
+        <div className="heading-row-setting">
   <h4>Therapeutic Services</h4>
 
   <FaPlus
-    className="plus-icon"
+    className="plus-icon-setting"
     onClick={() => openPopup("therapeutic")}
   />
 </div>
                 {/* THERAP. MAP */}
 {customServices.therapeutic.map((item, index) => (
-  <div className="custom-service" key={index}>
+  <div className="custom-service-setting" key={index}>
     <label>
       <input type="checkbox" />
       {item.serviceName}
@@ -747,17 +747,17 @@ const ServiceRow = ({
 
     <span>₹ {item.charges}</span>
 
-   <div className="service-actions">
+   <div className="service-actions-setting">
 
   <FaEdit
-    className="edit-service"
+    className="edit-service-setting"
     onClick={() =>
       editService("therapeutic", index)
     }
   />
 
   <FaTimes
-    className="delete-service"
+    className="delete-service-setting"
     onClick={() =>
       removeService("therapeutic", index)
     }
@@ -780,12 +780,12 @@ const ServiceRow = ({
   label="Stretching Exercises"
 /> 
     
-        <ServiceRow
+ <ServiceRow
   checkboxName="strengtheningExercises"
   chargeName="strengtheningExercisesCharge"
-  priceCodeName="stretchingExercisesPriceCode"
+  priceCodeName="strengtheningExercisesPriceCode"
   label="Strengthening Exercises"
-/> 
+/>
      
 
    </div> 
@@ -793,38 +793,38 @@ const ServiceRow = ({
                      {/* Add On CHECKBOX*/}
 
            <div>
-            <div className="heading-row">
+            <div className="heading-row-setting">
   <h4>Additional Add-On Services</h4>
 
-  <FaPlus  className="plus-icon"  onClick={() => openPopup("addon")} />
+  <FaPlus  className="plus-icon-setting"  onClick={() => openPopup("addon")} />
   </div>
   
  
 
                     {/* ADD ON MAP */}
 {customServices.addon.map((item, index) => (
-  <div className="custom-service" key={index}>
+  <div className="custom-service-setting" key={index}>
     <label>
       <input type="checkbox" />
       {item.serviceName}
     </label>
 
-   <div className="service-price-info">
+   <div className="service-price-info-setting">
   <span>₹ {item.charges}</span>
   <small>Code: {item.priceCode}</small>
 </div>
 
-    <div className="service-actions">
+    <div className="service-actions-setting">
 
   <FaEdit
-    className="edit-service"
+    className="edit-service-setting"
     onClick={() =>
       editService("addon", index)
     }
   />
 
   <FaTimes
-    className="delete-service"
+    className="delete-service-setting"
     onClick={() =>
       removeService("addon", index)
     }
@@ -848,7 +848,7 @@ const ServiceRow = ({
    
                         {/*Frequency Input*/}
 
-            <div className="bottom-box">
+            <div className="bottom-box-setting">
               <div>
                 <label> Frequency  </label>
                 <input placeholder="5-6 times/week" name="frequency" value={formData.frequency} onChange={handleChange} />
@@ -860,7 +860,7 @@ const ServiceRow = ({
               </div>   
             </div>   
             
-            <div className="field">
+            <div className="field-setting">
               <label> Treatment Duration Note </label>
            <textarea rows="2" name="treatmentDurationNote" value={formData.treatmentDurationNote}  onChange={handleChange}
             placeholder="Treatment duration mentioned above is approximate & subject to change."/>
@@ -875,8 +875,8 @@ const ServiceRow = ({
 
                                    {/* show popup  */}
 {showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-box">
+  <div className="popup-overlay-setting">
+    <div className="popup-box-setting">
 
       <h3>
         {editingService
@@ -896,12 +896,12 @@ const ServiceRow = ({
         }
       />
 
-    <div className="popup-row">
+    <div className="popup-row-setting">
 
   <input
     type="text"
     placeholder="Charges"
-    className="charges-input-popup"
+    className="charges-input-popup-setting"
     value={newService.charges}
     onChange={(e) =>
       setNewService({
@@ -914,7 +914,7 @@ const ServiceRow = ({
   <input
     type="text"
     placeholder="Price Code"
-    className="price-code-input"
+    className="price-code-input-setting"
     value={newService.priceCode}
     onChange={(e) =>
       setNewService({
@@ -926,7 +926,7 @@ const ServiceRow = ({
 
 </div>
 
-      <div className="popup-btns">
+      <div className="popup-btns-setting">
 
         <button
           type="button"

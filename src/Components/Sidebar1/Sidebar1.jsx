@@ -132,81 +132,57 @@ useEffect(() => {
     className="mobile-menu-icon"
     onClick={() => setSidebarOpen( !sidebarOpen ) } />
 
-        <h3 className="admin-title">
-          Admin Panel
-        </h3>
+        <h3 className="admin-title"> Admin Panel</h3>
+         
+        
+                    {/* profile */}
+        <div className="profile-wrapper" ref={dropdownRef}>
+ 
+ 
 
-        <div
-  className="profile-wrapper"
-  ref={dropdownRef}
->
 
-         <FaUserCircle
-  className="profile-icon-sidebar1-admin"
-  onClick={(e) => {
-    e.stopPropagation();
-    setShowProfile(!showProfile);
-  }}
-/>
+         <FaUserCircle className="profile-icon-sidebar1-admin"
+         onClick={(e) => {  e.stopPropagation();
+          setShowProfile(!showProfile);}}/>
+   
+  
 
+          {/* profile data */}
           {showProfile && (
             <div className="profile-dropdown">
 
               <div className="profile-info">
 
-                <h4>
-                  {user?.name || "No Name"}
-                </h4>
-
-                <p>
-                  {user?.email || "No Email"}
-                </p>
-
-                <p>
-                  Role : {user?.role}
-                </p>
-
-                <p>
-                  ID : {user?.id}
-                </p>
+                <h4> {user?.name || "No Name"}</h4>
+                <p> {user?.email || "No Email"} </p>
+                <p> Role : {user?.role}</p>
+                <p>ID : {user?.id}</p>
 
               </div>
 
               <hr />
-
+                          {/* Profile button */}
               <button>
-                <FaUserCircle />
-                Profile
-              </button>
-
+                <FaUserCircle />Profile</button>
+                
               <button>
-                <FaKey />
-                Change Password
-              </button>
-
-              <button
-                onClick={handleLogout}
-              >
-                <FaSignOutAlt />
-                Logout
-              </button>
-
-            </div>
+                <FaKey />Change Password</button>
+                
+              <button onClick={handleLogout}>
+                <FaSignOutAlt /> Logout</button>
+                 </div>
           )}
 
         </div>
       </div>
-      {/* MOBILE VIEW */}
+              
+                              {/* Sidebar in  MOBILE VIEW */}
       {sidebarOpen && (
-  <div
-    className="sidebar-overlay"
-    onClick={() =>
-      setSidebarOpen(false)
-    }
-  />
-)}
-
-      {/* SIDEBAR */}
+       <div  className="sidebar-overlay"
+         onClick={() =>  setSidebarOpen(false)}/>
+        )}
+    
+                  {/* SIDEBAR */}
 
       <div  ref={sidebarRef}  className={`sidebar1-admin ${
      sidebarOpen ? "sidebar-open": "sidebar-close"}`}>
@@ -214,37 +190,34 @@ useEffect(() => {
 
         <div className="logo-section-sidebar1-admin">
 
-          <img
-            src="/logo.png"
-            alt="Logo"
-            className="logo-sidebar-sidebar1-admin"
-          />
-
+          <img  src="/logo.png"
+           alt="Logo"
+            className="logo-sidebar-sidebar1-admin" />
+          
           <div className="logo-text-sidebar1-admin">
             <h2>Krishna</h2>
             <p>ADVANCE PHYSIO</p>
           </div>
-
         </div>
-
+                  
+                  {/* submenu */}
        <nav className="navbar-sidebar1-admin">
+                
+                 {/* Dashboard */}
+     <NavLink  to="/dashboard-admin"
+     onClick={() => setSidebarOpen(false) }
 
-<NavLink
-  to="/dashboard-admin"
-  onClick={() =>
-    setSidebarOpen(false)
-  }
-  className={({ isActive }) =>
-    isActive
+       className={({ isActive }) =>
+        isActive
       ? "menu-btn-sidebar1-admin active"
       : "menu-btn-sidebar1-admin"
-  }
->
-    <FaThLarge />
-    Dashboard
-  </NavLink>
+  }>
 
+    <FaThLarge />  Dashboard </NavLink>
+  
+ 
 
+           {/* Add clinic */}
 <NavLink
   to="/add-clinic"
   state={{ isEdit: false }}
@@ -253,14 +226,14 @@ useEffect(() => {
     isActive
       ? "menu-btn-sidebar1-admin active"
       : "menu-btn-sidebar1-admin"
-  }
->
+  }>
+
   <FaPlusCircle />
   Add Clinic
 </NavLink>
 
 
-
+          {/* Running clinic */}
 <NavLink
   to="/running-clinic"
   onClick={() =>
@@ -275,7 +248,8 @@ useEffect(() => {
     <FaHospital />
     Running Clinic
   </NavLink>
-
+ 
+           {/* Suspended clinic */}
 <NavLink
   to="/suspended-clinic"
   onClick={() =>
@@ -291,6 +265,7 @@ useEffect(() => {
     Suspended Clinic
   </NavLink>
 
+           {/* Financal -report */}
 <NavLink
   to="/financial-report"
   onClick={() =>
