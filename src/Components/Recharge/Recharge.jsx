@@ -136,8 +136,7 @@ console.log(
         openPatientPopup: true,
       },
     })
-  }
-/>
+  }/>
 
         <h2> Select Services / Packages</h2>
          
