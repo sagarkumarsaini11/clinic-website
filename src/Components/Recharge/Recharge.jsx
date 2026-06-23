@@ -10,7 +10,7 @@ const location = useLocation();
 
 const [rechargeData, setRechargeData] = useState({
   package: "",
-  homePhysioPackage: "",
+  
   exercisePlan: false,
   additionalSessions: "",
   amountPaid: "",
@@ -56,20 +56,20 @@ const calculateTotal = () => {
   }
 
 
-// Home Physiotherapy Package
+// // Home Physiotherapy Package
 
-if (rechargeData.homePhysioPackage) {
+// if (rechargeData.homePhysioPackage) {
 
-  const match =
-    rechargeData.homePhysioPackage.match(
-      /₹(\d+)/
-    );
+//   const match =
+//     rechargeData.homePhysioPackage.match(
+//       /₹(\d+)/
+//     );
 
-  if (match) {
-    total += Number(match[1]);
-  }
+//   if (match) {
+//     total += Number(match[1]);
+//   }
 
-}
+// }
 
   // Exercise Plan
   if (rechargeData.exercisePlan) {
@@ -89,7 +89,6 @@ const handleSubmit = (e) => {
 
   if (
     !rechargeData.package &&
-!rechargeData.homePhysioPackage &&
     !rechargeData.exercisePlan
   ) {
     alert("Please select at least one service");
@@ -215,10 +214,10 @@ console.log(
   <label>
     <input
       type="radio"
-      name="homePhysioPackage"
+      name="package"
       value="1 Session - ₹600"
       checked={
-        rechargeData.homePhysioPackage ===
+        rechargeData.package ===
         "1 Session - ₹600"
       }
       onChange={handleChange}
@@ -232,10 +231,10 @@ console.log(
   <label>
     <input
       type="radio"
-      name="homePhysioPackage"
+      name="package"
       value="5 Sessions - ₹3000"
       checked={
-        rechargeData.homePhysioPackage ===
+        rechargeData.package===
         "5 Sessions - ₹3000"
       }
       onChange={handleChange}
@@ -249,10 +248,10 @@ console.log(
   <label>
     <input
       type="radio"
-      name="homePhysioPackage"
+      name="package"
       value="20 Sessions - ₹12000"
       checked={
-        rechargeData.homePhysioPackage ===
+        rechargeData.package ===
         "20 Sessions - ₹12000"
       }
       onChange={handleChange}
