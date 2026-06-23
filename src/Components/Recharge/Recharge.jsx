@@ -10,8 +10,6 @@ const location = useLocation();
 
 const [rechargeData, setRechargeData] = useState({
   package: "",
-  
-  exercisePlan: false,
   additionalSessions: "",
   amountPaid: "",
 });
@@ -25,14 +23,14 @@ const handlePackageSelect = (e) => {
   }));
 };
 
-const handleCheckboxChange = (e) => {
-  const { name, checked } = e.target;
+// const handleCheckboxChange = (e) => {
+//   const { name, checked } = e.target;
 
-  setRechargeData((prev) => ({
-    ...prev,
-    [name]: checked,
-  }));
-};
+//   setRechargeData((prev) => ({
+//     ...prev,
+//     [name]: checked,
+//   }));
+// };
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -72,14 +70,14 @@ const calculateTotal = () => {
 // }
 
   // Exercise Plan
-  if (rechargeData.exercisePlan) {
-    total += 4500;
-  }
+  // if (rechargeData.exercisePlan) {
+  //   total += 4500;
+  // }
 
   // Additional Sessions
-  if (rechargeData.additionalSessions) {
-    total += Number(rechargeData.additionalSessions) * 250;
-  }
+  // if (rechargeData.additionalSessions) {
+  //   total += Number(rechargeData.additionalSessions) * 250;
+  // }
 
   return total;
 };
@@ -88,9 +86,8 @@ const handleSubmit = (e) => {
   e.preventDefault();
 
   if (
-    !rechargeData.package &&
-    !rechargeData.exercisePlan
-  ) {
+    !rechargeData.package)
+   {
     alert("Please select at least one service");
     return;
   }
@@ -116,8 +113,8 @@ console.log(
 
   setRechargeData({
     package: "",
-    homePhysio: false,
-    exercisePlan: false,
+    // homePhysio: false,
+    // exercisePlan: false,
     additionalSessions: "",
     amountPaid: "",
   });
@@ -266,13 +263,24 @@ console.log(
 
           {/* Exercise Plan */}
 
-     <div className="single-package exercise-package">
-      <label>
-       <input   type="checkbox"   name="exercisePlan" checked={rechargeData.exercisePlan} onChange={handleCheckboxChange}/>
-       <span>Customized Exercise Plan</span>
-          <b>₹4500</b>
-           </label>
-       </div>
+   <div className="single-package exercise-package">
+  <label>
+    <input
+      type="radio"
+      name="package"
+      value="Customized Exercise Plan - ₹4500"
+      checked={
+        rechargeData.package ===
+        "Customized Exercise Plan - ₹4500"
+      }
+      onChange={handlePackageSelect}
+    />
+
+    <span>Customized Exercise Plan</span>
+
+    <b>₹4500</b>
+  </label>
+</div>
     
 
                        {/* Additional Sessions */}
@@ -283,7 +291,7 @@ console.log(
           <input type="text"  name="additionalSessions"  value={rechargeData.additionalSessions} onChange={(e) => setRechargeData({
            ...rechargeData,
         additionalSessions: e.target.value, })}  placeholder="Enter No. of Sessions"/>
-          <p>₹250 Per Session</p>
+          
         </div>
 
                  {/* Total Amount */}
