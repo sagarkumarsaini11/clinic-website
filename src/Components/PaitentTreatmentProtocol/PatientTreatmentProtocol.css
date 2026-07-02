@@ -40,7 +40,7 @@
 /*   LEFT PANEL */
 
 .left-panel-patient-protocol{
-    width:40%;
+    width:100%;
     background:#fff;
     border-radius:10px;
     padding:20px;
@@ -83,17 +83,6 @@
     border-bottom:none;
 }
 
-/*  RIGHT PANEL */
-
-.right-panel-patient-protocol{
-    width:60%;
-    background:#fff;
-    border-radius:10px;
-    padding:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-    overflow-y:auto;
-    max-height:90vh;
-}
 
 .header-patient-protocol{
     display:flex;
@@ -102,79 +91,34 @@
     margin-bottom:20px;
 }
 
-.add-template-btn-patient-protocol{
-    border:none;
+.heading-plus-icon-patient-protocol{
+    width:40px;
+    height:40px;
     background:#16227c;
     color:#fff;
-    padding:10px 18px;
-    border-radius:6px;
+    border-radius:50%;
+    padding:10px;
     cursor:pointer;
-    font-size:15px;
     transition:.3s;
 }
 
-.add-template-btn-patient-protocol:hover{
+.heading-plus-icon-patient-protocol:hover{
     background:#0d6efd;
+    
 }
 
-.empty-text-patient-protocol{
-    text-align:center;
-    color:#777;
-    margin-top:50px;
-    font-size:16px;
-}
-
-/* TEMPLATE CARD*/
-
-.template-card-patient-protocol{
-    border:1px solid #ddd;
-    border-radius:8px;
+/* search box */
+.search-input-patient-protocol{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    outline:none;
     margin-bottom:15px;
-    overflow:hidden;
 }
 
-.template-header-patient-protocol{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px;
-    background:#fafafa;
-}
-
-.template-name-patient-protocol{
-    font-size:17px;
-    font-weight:600;
-}
-
-.template-icons-patient-protocol{
-    display:flex;
-    gap:15px;
-}
-
-.plus-icon-patient-protocol{
-    color:#16227c;
-    cursor:pointer;
-    font-size:18px;
-}
-
-.delete-icon-patient-protocol{
-    color:red;
-    cursor:pointer;
-    font-size:18px;
-}
-
-.plus-icon-patient-protocol:hover,
-.delete-icon-patient-protocol:hover{
-    transform:scale(1.15);
-}
-
-.selected-list-patient-protocol{
-    list-style:disc;
-    padding:15px 35px;
-}
-
-.selected-list-patient-protocol li{
-    padding:5px 0;
+.search-input-patient-protocol:focus{
+    border-color:#16227c;
 }
 
 /*  POPUP */
@@ -256,7 +200,7 @@
 }
 
 .popup-menu-list-patient-protocol{
-    max-height:420px;
+    max-height:400px;
     overflow-y:auto;
     padding-right:5px;
 }
@@ -303,20 +247,18 @@
 /* SCROLLBAR */
 
 .left-panel-patient-protocol::-webkit-scrollbar,
-.right-panel-patient-protocol::-webkit-scrollbar,
 .popup-menu-list-patient-protocol::-webkit-scrollbar{
     width:6px;
+   
 }
 
 .left-panel-patient-protocol::-webkit-scrollbar-thumb,
-.right-panel-patient-protocol::-webkit-scrollbar-thumb,
 .popup-menu-list-patient-protocol::-webkit-scrollbar-thumb{
     background:#bdbdbd;
     border-radius:10px;
 }
 
 .left-panel-patient-protocol::-webkit-scrollbar-track,
-.right-panel-patient-protocol::-webkit-scrollbar-track,
 .popup-menu-list-patient-protocol::-webkit-scrollbar-track{
     background:#f2f2f2;
 }
@@ -329,8 +271,8 @@
     flex-direction:column;
 }
 
-.left-panel-patient-protocol,
-.right-panel-patient-protocol{
+.left-panel-patient-protocol
+{
     width:100%;
     max-height:none;
 }
@@ -355,8 +297,7 @@
     gap:15px;
 }
 
-.left-panel-patient-protocol,
-.right-panel-patient-protocol{
+.left-panel-patient-protocol{
     width:100%;
     max-height:500px;
 }
@@ -395,8 +336,7 @@
     gap:12px;
 }
 
-.left-panel-patient-protocol,
-.right-panel-patient-protocol{
+.left-panel-patient-protocol{
     width:100%;
     padding:15px;
     max-height:none;
@@ -494,8 +434,7 @@
     gap:10px;
 }
 
-.left-panel-patient-protocol,
-.right-panel-patient-protocol{
+.left-panel-patient-protocol{
     padding:12px;
     border-radius:8px;
 }

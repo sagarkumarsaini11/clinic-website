@@ -198,7 +198,7 @@ const handleDeleteSubMenu = (menuId, index) => {
           <h2>Treatment protocol</h2>
 
           <button  className="add-btn-menu-setting"
-           onClick={() => setShowPopup(true)}> + Add Menu
+           onClick={() => setShowPopup(true)}> + Add 
           </button> 
           </div> 
            
@@ -216,29 +216,19 @@ const handleDeleteSubMenu = (menuId, index) => {
             <ul className="submenu-list-menu-setting">
               {menu.subMenus.map((sub, index) => (
                <li
-  key={index}
-  className="submenu-item-menu-setting"
->
-  <span>{sub}</span>
+            key={index} className="submenu-item-menu-setting">
+              <span>{sub}</span>
 
-  <div className="submenu-action-menu-setting">
+            <div className="submenu-action-menu-setting">
 
-    <FaEdit
-      className="submenu-icon-menu-setting"
-      onClick={() =>
-        handleEditSubMenu(menu.id, index, sub)
-      }
-    />
+         <FaEdit  className="submenu-icon-menu-setting"
+         onClick={() => handleEditSubMenu(menu.id, index, sub)}/>
 
-    <FaTrash
-      className="submenu-icon-menu-setting delete-menu-setting"
-      onClick={() =>
-        handleDeleteSubMenu(menu.id, index)
-      }
-    />
-
-  </div>
-</li>
+         <FaTrash
+         className="submenu-icon-menu-setting delete-menu-setting"
+         onClick={() =>  handleDeleteSubMenu(menu.id, index)} />
+       </div>
+       </li>
               ))}
             </ul>
 
@@ -254,7 +244,7 @@ const handleDeleteSubMenu = (menuId, index) => {
   <div className="popup-overlay-menu-setting">
     <div className="popup-box-menu-setting">
 
-      <h3>Add Menu</h3>
+      <h3>Add </h3>
 
       <input
         className="input-menu-setting"
@@ -273,7 +263,7 @@ const handleDeleteSubMenu = (menuId, index) => {
 
         <button  className="save-btn-menu-setting"
          onClick={handleAddMenu}>
-           Add
+           Add Menu
          </button>
       </div>
 
@@ -287,7 +277,6 @@ const handleDeleteSubMenu = (menuId, index) => {
         <div className="popup-overlay-menu-setting">
 
           <div className="popup-box-menu-setting">
-
             <h3>Add Sub Menu</h3>
 
             <input
@@ -328,27 +317,20 @@ const handleDeleteSubMenu = (menuId, index) => {
       <input
         className="input-menu-setting"
         value={editSubName}
-        onChange={(e) =>
-          setEditSubName(e.target.value)
-        }
-      />
-
+        onChange={(e) => setEditSubName(e.target.value)}/>
+         
+    
       <div className="popup-btn-group-menu-setting">
-
-        <button
-          className="cancel-btn-menu-setting"
-          onClick={() => setEditSubPopup(false)}
-        >
-          Cancel
-        </button>
-
-        <button
-          className="save-btn-menu-setting"
-          onClick={handleUpdateSubMenu}
-        >
+        <button  className="cancel-btn-menu-setting"
+         onClick={() => setEditSubPopup(false)} >
+         Cancel
+       </button>
+          
+        <button className="save-btn-menu-setting"
+          onClick={handleUpdateSubMenu}>
           Update
-        </button>
-
+         </button>
+        
       </div>
 
     </div>
@@ -362,13 +344,11 @@ const handleDeleteSubMenu = (menuId, index) => {
 
         <h2>Template Setting</h2>
 
-        <button
-            className="add-btn-menu-setting"
-            onClick={() => setShowTemplatePopup(true)}
-        >
-            + Add New Template
+        <button  className="add-btn-menu-setting"
+            onClick={() => setShowTemplatePopup(true)}>
+           + Add New Template
         </button>
-
+          
     </div>
 
     {templates.map((template) => (
@@ -388,12 +368,9 @@ const handleDeleteSubMenu = (menuId, index) => {
                         className="menu-plus-icon-menu-setting"
                         onClick={() => handleOpenSubMenuList(template.id)}  />
 
-                    <button
+                    <FaTrash
                         className="delete-btn-menu-setting"
-                        onClick={() => handleDeleteTemplate(template.id)}>🗑
-                    </button>       
-                        
-                    
+                        onClick={() => handleDeleteTemplate(template.id)}/>
                 </div>
 
             </div>
@@ -410,14 +387,13 @@ const handleDeleteSubMenu = (menuId, index) => {
     >
       <span>{sub}</span>
 
-      <button
+      <FaTrash
         className="delete-submenu-btn-menu-setting"
         onClick={() =>
           handleDeleteSubTemplate(template.id, index)
         }
-      >
-        🗑
-      </button>
+      />
+        
     </li>
   ))}
 </ul>

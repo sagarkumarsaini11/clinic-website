@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import {
   FaPlus,
-  FaTrash,
   FaTimes,
   FaChevronDown,
   FaChevronRight,
+  FaArrowLeft,
 } from "react-icons/fa";
 import "./PatientTreatmentProtocol.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 export default function PatientTreatmentProtocol() {
+  const navigate = useNavigate();
 
-   const navigate = useNavigate();
-  const location = useLocation();
-
+  
   // Treatment Protocol Menu Data
-
+ 
   const treatmentMenus = [
     {
       id: 1,
@@ -66,302 +66,100 @@ export default function PatientTreatmentProtocol() {
     },
   ];
 
+  
   // States
-
-  const [templates, setTemplates] = useState([]);
-  const [showTemplatePopup, setShowTemplatePopup] = useState(false);
-  const [templateName, setTemplateName] =useState("");
-  const [showMenuPopup, setShowMenuPopup] = useState(false);
-  const [selectedTemplateId, setSelectedTemplateId] =  useState(null);
-  const [expandedMenu, setExpandedMenu] = useState(null);
    
+  const [showMenuPopup, setShowMenuPopup] = useState(false);
+  const [expandedMenu, setExpandedMenu] =  useState(null);
+  const [searchText, setSearchText] =  useState("");
 
-  // Add Template
 
-  const handleAddTemplate = () => {
+  // Filter Menu
 
-    if (!templateName.trim()) return;
+  const filteredMenus = treatmentMenus.filter(
+    (menu) => {
+      if (searchText === "") return true;
 
-    const newTemplate = {
-      id: Date.now(),
-      name: templateName,
-      selectedItems: [],
-    };
+      const menuMatch = menu.title
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
 
-    setTemplates([...templates, newTemplate]);
+      const subMenuMatch = menu.subMenus.some(
+        (sub) =>
+          sub
+            .toLowerCase()
+            .includes(searchText.toLowerCase())
+      );
 
-    setTemplateName("");
-
-    setShowTemplatePopup(false);
-  };
-
-  // Delete Template
-
-  const handleDeleteTemplate = (id) => {
-
-    setTemplates(
-      templates.filter((item) => item.id !== id)
-     ); };
-
-  // Open Menu Popup
-
-  const handleOpenMenuPopup = (id) => {
-
-    setSelectedTemplateId(id);
-
-    setShowMenuPopup(true);
-
-  };
-
-  // Add Sub Menu
-
-  const handleAddSubMenu = (submenu) => {
-
-    const updatedTemplates = templates.map((template) => {
-
-      if (template.id === selectedTemplateId) {
-
-        if (
-          template.selectedItems.includes(submenu)
-        ) {
-          return template;
-        }
-
-        return {
-          ...template,
-          selectedItems: [
-            ...template.selectedItems,
-            submenu,
-          ],
-        };
-      }
-
-      return template;
-    });
-
-    setTemplates(updatedTemplates);
-
-    setShowMenuPopup(false);
-  };
-
-         // JSX
+      return menuMatch || subMenuMatch;
+    }
+  );
 
   return (
-
     <div className="protocol-page-patient-protocol">
 
-      <FaTimes
+      <FaArrowLeft
         className="close-icon-patient-protocol"
-        onClick={() =>
-          navigate("/homepage", {
-            state: {
-              openPatientPopup: true,
-            },
-          })
-        }
+        onClick={() => navigate("/homepage")}
       />
 
-                 {/* LEFT PANEL */}
-    
+      {/*LEFT PANEL*/}
+      
       <div className="left-panel-patient-protocol">
-
-        <h2 className="heading-patient-protocol">
-          Treatment Protocol
-        </h2>
-
-        {
-
-          treatmentMenus.map((menu) => (
-
-            <div
-              key={menu.id}
-              className="menu-card-patient-protocol"
-            >
-
-              <div className="menu-title-patient-protocol">
-
-                {menu.title}
-
-              </div>
-
-              <ul className="submenu-list-patient-protocol">
-
-                {
-
-                  menu.subMenus.map((submenu, index) => (
-
-                    <li
-                      key={index}
-                      className="submenu-item-patient-protocol"
-                    >
-                      {submenu}
-                    </li>
-
-                  ))
-
-                }
-
-              </ul>
-
-            </div>
-
-          ))
-
-        }
-
-      </div>
-
-                {/* RIGHT PANEL*/}
-       
-      <div className="right-panel-patient-protocol">
 
         <div className="header-patient-protocol">
 
-          <h2 className="heading-patient-protocol">Template Setting </h2>
-            
-         
+          <h2 className="heading-patient-protocol">
+            Treatment Protocol
+          </h2>
 
-          <button
-            className="add-template-btn-patient-protocol"
-            onClick={() => setShowTemplatePopup(true)}
-             > + Add Template
-          </button>  
+          <FaPlus
+            className="heading-plus-icon-patient-protocol"
+            onClick={() => {
+              setShowMenuPopup(true);
+              setSearchText("");
+              setExpandedMenu(null);
+            }}
+          />
+
         </div>
 
-        {
+        {treatmentMenus.map((menu) => (
 
-          templates.length === 0 && (
+          <div
+            key={menu.id}
+            className="menu-card-patient-protocol"
+          >
 
-            <div className="empty-text-patient-protocol"> No Template Added</div>
-          )
-           }  
-        {
-
-          templates.map((template) => (
-
-            <div
-              key={template.id} className="template-card-patient-protocol">
-              <div className="template-header-patient-protocol">
-
-                <span className="template-name-patient-protocol">
-
-                  {template.name}
-
-                </span>
-
-                <div className="template-icons-patient-protocol">
-
-                  <FaPlus
-                    className="plus-icon-patient-protocol"
-                    onClick={() =>
-                      handleOpenMenuPopup(
-                        template.id
-                      )
-                    }
-                  />
-
-                  <FaTrash
-                    className="delete-icon-patient-protocol"
-                    onClick={() =>
-                      handleDeleteTemplate(
-                        template.id
-                      )
-                    }
-                  />
-
-                </div>
-
-              </div>
-
-              {
-
-                template.selectedItems.length > 0 && (
-
-                  <ul className="selected-list-patient-protocol">
-
-                    {
-
-                      template.selectedItems.map(
-                        (item, index) => (
-
-                          <li key={index}>
-
-                            {item}
-
-                          </li>
-
-                        )
-                      )
-
-                    }
-
-                  </ul>
-
-                )
-
-              }
-
+            <div className="menu-title-patient-protocol">
+              {menu.title}
             </div>
 
-          ))
+            <ul className="submenu-list-patient-protocol">
 
-        }
+              {menu.subMenus.map((submenu, index) => (
 
-      </div>
+                <li
+                  key={index}
+                  className="submenu-item-patient-protocol"
+                >
+                  {submenu}
+                </li>
 
-                 {/* ADD TEMPLATE POPUP*/}
-       
-      {
+              ))}
 
-        showTemplatePopup && (
-
-          <div className="popup-overlay-patient-protocol">
-
-            <div className="popup-box-patient-protocol">
-
-              <div className="popup-header-patient-protocol">
-
-                <h3>Add Template</h3>
-
-                <FaTimes
-                  className="close-icon-patient-protocol"
-                  onClick={() =>
-                    setShowTemplatePopup(false)
-                  }
-                />
-
-              </div>
-
-              <input
-                type="text"
-                placeholder="Add Template"
-                value={templateName}
-                className="input-patient-protocol"
-                onChange={(e) =>
-                  setTemplateName(
-                    e.target.value
-                  )
-                }
-              />
-
-              <button
-                className="save-btn-patient-protocol"
-                onClick={handleAddTemplate}
-              >
-                Add
-              </button>
-
-            </div>
+            </ul>
 
           </div>
 
-        )
+        ))}
 
-      }
+      </div>
 
-      {/*  MENU / SUBMENU POPUP*/}
-
+      {/*MENU POPUP*/}
+      
       {showMenuPopup && (
+
         <div className="popup-overlay-patient-protocol">
 
           <div className="popup-box-patient-protocol popup-menu-box-patient-protocol">
@@ -372,20 +170,30 @@ export default function PatientTreatmentProtocol() {
 
               <FaTimes
                 className="close-icon-patient-protocol"
-                onClick={() => setShowMenuPopup(false)}
+                onClick={() =>
+                  setShowMenuPopup(false)
+                }
               />
 
             </div>
 
+            <input
+              type="text"
+              placeholder="Search Menu..."
+              className="search-input-patient-protocol"
+              value={searchText}
+              onChange={(e) =>
+                setSearchText(e.target.value)
+              }
+            />
+
             <div className="popup-menu-list-patient-protocol">
 
-              {treatmentMenus.map((menu) => (
+              {filteredMenus.map((menu) => (
 
-                <div
-                  key={menu.id}
-                  className="popup-menu-card-patient-protocol"
-                >
-
+                <div key={menu.id}
+                  className="popup-menu-card-patient-protocol">
+                 
                   <div
                     className="popup-menu-title-patient-protocol"
                     onClick={() =>
@@ -415,19 +223,28 @@ export default function PatientTreatmentProtocol() {
 
                     <div className="popup-submenu-patient-protocol">
 
-                      {menu.subMenus.map((submenu, index) => (
+                      {menu.subMenus
+                        .filter((submenu) =>
+                          submenu
+                            .toLowerCase()
+                            .includes(
+                              searchText.toLowerCase()
+                            )
+                        )
+                        .map((submenu, index) => (
 
-                        <div
-                          key={index}
-                          className="popup-submenu-item-patient-protocol"
-                          onClick={() =>
-                            handleAddSubMenu(submenu)
-                          }
-                        >
-                          {submenu}
-                        </div>
+                          <div
+                            key={index}
+                            className="popup-submenu-item-patient-protocol"
+                            onClick={() => {
+                              console.log(submenu);
+                              setShowMenuPopup(false);
+                            }}
+                          >
+                            {submenu}
+                          </div>
 
-                      ))}
+                        ))}
 
                     </div>
 
@@ -442,6 +259,7 @@ export default function PatientTreatmentProtocol() {
           </div>
 
         </div>
+
       )}
 
     </div>
