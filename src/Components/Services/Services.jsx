@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Services.css";
-
 import Cookies from "js-cookie";
 
 const SERVICE_API =

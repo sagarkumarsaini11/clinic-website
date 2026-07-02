@@ -10,10 +10,11 @@ body{
 }
 
 .prescription-container{
+ 
   position: relative;
   width:95%;
   max-width:1500px;
-  margin:20px auto;
+  margin:60px auto;
   background:#fff;
   padding:20px;
   border-radius:10px;
@@ -125,7 +126,7 @@ table td{
   background:#0043ce;
 }
 
-/* Cross Icon */
+
 
 /* Cross Icon */
 

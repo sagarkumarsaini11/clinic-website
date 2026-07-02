@@ -330,6 +330,92 @@ background: linear-gradient(
   border-radius:20px;
 }
 
+/* ===========================
+   SETTINGS DROPDOWN
+=========================== */
+
+.settings-dropdown{
+  position:relative;
+  width: 260px;
+ 
+}
+
+.settings-btn{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+}
+
+.settings-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.dropdown-arrow{
+  font-size:14px;
+  transition:.3s;
+}
+
+.rotate-arrow{
+  transform:rotate(180deg);
+}
+
+.settings-submenu{
+
+  background:rgba(255,255,255,.08);
+
+  margin-top:4px;
+
+  margin-left:20px;
+
+  border-left:2px solid rgba(255,255,255,.3);
+
+  border-radius:8px;
+
+  overflow:hidden;
+}
+
+.submenu-link{
+
+  display:block;
+
+  text-decoration:none;
+
+  color:#fff;
+
+  padding:12px 18px;
+
+  font-size:14px;
+
+  transition:.3s;
+}
+
+.submenu-link:hover{
+
+  background:rgba(255,255,255,.15);
+
+  
+}
+
+.submenu-link.active{
+
+  background:#1e40af;
+
+  font-weight:600;
+}
+
+@media(max-width:1400px){
+
+.settings-submenu{
+
+margin-left:15px;
+
+}
+
+}
+
 @media screen and (max-width:1400px){
 
   .app-layout-clinic{

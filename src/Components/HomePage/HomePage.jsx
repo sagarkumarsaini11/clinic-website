@@ -307,21 +307,13 @@ const handleMarkAttendance = () => {
 
       <td>{item.age}</td>
 
-      <td>
-        {item.gender || item.sex}
-      </td>
-
-      <td>
-        {item.mobile}
-      </td>
-
-      <td>
-        {item.address}
-      </td>
-
-      <td>
-        {item.problem}
-      </td>
+      <td> {item.gender || item.sex}</td>
+      
+      <td> {item.mobile}</td>
+      
+      <td> {item.address}</td>
+      
+      <td>{item.problem}</td>
 
       <td>
 
@@ -442,7 +434,7 @@ const handleMarkAttendance = () => {
                 <p>Prescription</p>
               </div>
 
-              <div className="feature-card">
+              <div className="feature-card" onClick={() =>  navigate("/treatment-protocol")}>
                 <FaClipboardList size={35} />
                 <p>  Treatment Protocol</p>
              </div>   

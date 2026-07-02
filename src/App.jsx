@@ -31,6 +31,9 @@ import Sidebar1 from './Components/Sidebar1/Sidebar1'
 import Layout from './Layout'
 import ClinicSidebar from './Components/ClinicSidebar/ClinicSidebar'
 import LayoutClinic from './LayoutClinic'
+import MenuSetting from './Components/MenuSetting/MenuSetting'
+import PatientTreatmentProtocol from './Components/PaitentTreatmentProtocol/PatientTreatmentProtocol'
+
 
 
 
@@ -50,6 +53,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
+     
   
 
   
@@ -70,7 +74,8 @@ function App () {
               <Route path="/login" element={<BranchLogin/>}/>
 
             
-                 
+            {/* Routes WITH Fixed Sidebar  Clinic*/}   
+
 <Route element={<LayoutClinic />}>
   <Route path="/homepage" element={<HomePage />} />
   <Route path="/addpatient" element={<AddPatientForm />} />
@@ -78,31 +83,22 @@ function App () {
   <Route path="/category" element={<ServiceCategory />} />
   <Route path="/sub-category" element={<ServicesSubCategory />} />
   <Route path="/setting-clinics" element={<SettingForm/>} />
+    <Route path="/menu-settings" element={<MenuSetting/>} />
+               {/*Recharge form*/}
+   <Route path="/recharge" element={<Recharge/>}/>
+                 {/*Open Patientn File */}
+  <Route path="/openpatientlist" element={<OpenPatientList/>}/>
+                  {/* Patientn Attendance*/}
+  <Route path="/attendance" element={<PatientAttendance/>}/>
+               {/* Patientn Treatment Protocol*/}
+   <Route path="/treatment-protocol" element={<PatientTreatmentProtocol/> }/>
+                {/*prescription form*/}
+    <Route path="/prescription" element={<PrescriptionForm/>}/>
 </Route>
 
-             {/* Other routes */}
-
-               {/*prescription form*/}
-               <Route path="/prescription" element={<PrescriptionForm/>}/>
-
-              
-
-                     {/*Recharge form*/}
-               <Route path="/recharge" element={<Recharge/>}/>
-
-                       {/*Open Patientn File */}
-               <Route path="/openpatientlist" element={<OpenPatientList/>}/>
-
-                           {/* Patientn Attendance*/}
-               <Route path="/attendance" element={<PatientAttendance/>}/>
-
-
-
-                          {/* Routes WITH Fixed Sidebar */}
+             
+                          {/* Routes WITH Fixed Sidebar  Admin*/}
             <Route element={<Layout />}>
-
-               
-
                      {/* Admin Add-Clinic*/}
                <Route path="/add-clinic" element={<AddClinic/>}/>
 

@@ -13,6 +13,9 @@ import {
   FaClipboardList,
   FaFileDownload,
   FaQuestionCircle,
+  FaNotesMedical,
+  FaFolder,
+  FaChevronDown,
 } from "react-icons/fa";
 
 import "./ClinicSidebar.css";
@@ -22,6 +25,7 @@ const ClinicSidebar = () => {
 
   const [showProfile, setShowProfile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSettingMenu, setShowSettingMenu] = useState(false);
 
   const dropdownRef = useRef(null);
   const sidebarRef = useRef(null);
@@ -255,7 +259,7 @@ const handleMenuClick = () => {
                 : "menu-btn-sidebar1-clinic"
             }>
           
-            <FaClipboardList />Service Category</NavLink>
+            <FaFolder />Service Category</NavLink>
             
           
                 
@@ -270,20 +274,69 @@ const handleMenuClick = () => {
             }>
           
             <FaClipboardList />Service Sub Category </NavLink>
-            
-         
-          
-           {/* Setting submenu */}
+
+                  {/* Menu Settings
           <NavLink
-            to="/setting-clinics"
+            to="/menu-settings"
             onClick={handleMenuClick}
             className={({ isActive }) =>
               isActive
                 ? "menu-btn-sidebar1-clinic active"
                 : "menu-btn-sidebar1-clinic"
-            } >
+            }>
+          
+           <FaNotesMedical/>Treatment protocol </NavLink> */}
+            
          
-            <FaCog />Settings</NavLink>
+          
+           {/* Setting submenu */}
+         <div
+  className="settings-dropdown"
+  onMouseEnter={() => setShowSettingMenu(true)}
+  onMouseLeave={() => setShowSettingMenu(false)}
+>
+  <div className="menu-btn-sidebar1-clinic settings-btn">
+    <span className="settings-left">
+      <FaCog /> Settings
+    </span>
+
+    <FaChevronDown
+      className={`dropdown-arrow ${
+        showSettingMenu ? "rotate-arrow" : ""
+      }`}
+    />
+  </div>
+
+  {showSettingMenu && (
+    <div className="settings-submenu">
+
+      <NavLink
+        to="/setting-clinics"
+        onClick={handleMenuClick}
+        className={({ isActive }) =>
+          isActive
+            ? "submenu-link active"
+            : "submenu-link"
+        }
+      >
+        Prescription
+      </NavLink>
+
+      <NavLink
+        to="/menu-settings"
+        onClick={handleMenuClick}
+        className={({ isActive }) =>
+          isActive
+            ? "submenu-link active"
+            : "submenu-link"
+        }
+      >
+        Treatment Protocol
+      </NavLink>
+
+    </div>
+  )}
+</div>
             
           
 

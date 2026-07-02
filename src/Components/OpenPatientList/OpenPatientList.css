@@ -5,6 +5,7 @@
 }
 
 .patient-file-page{
+  margin-top: 60px;
   min-height:100vh;
   background:#f4f7ff;
   padding:30px;
