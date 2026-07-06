@@ -37,10 +37,6 @@ import RechargeHistory from './Components/RechargeHistory/RechargeHistory'
 import PrescriptionSettingForm from './Components/PrescriptionSettingForm/PrescriptionSettingForm'
 
 
-
-
-
-
 function Website() {
   return (
    
@@ -55,10 +51,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
-     
-  
 
-  
     </div>
    )    
 };

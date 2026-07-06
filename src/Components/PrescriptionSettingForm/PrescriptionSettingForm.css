@@ -37,6 +37,34 @@
   gap: 15px;
 }
 
+
+/* =========================================================
+   INVESTIGATIONS MAIN HEADING
+========================================================= */
+
+.investigations-main-heading-settings-form {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 12px 15px;
+  background: #f4f4f4;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+}
+
+.investigations-main-title-settings-form {
+  margin: 0;
+  padding: 0;
+  color: #222222;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   LEFT SECTION BOX
+========================================================= */
+
 .section-box-settings-form {
   width: 100%;
   background: #ffffff;
@@ -65,6 +93,11 @@
   font-weight: 700;
   line-height: 1.35;
 }
+
+
+/* =========================================================
+   COMMON HEADER ICON
+========================================================= */
 
 .icon-settings-form {
   flex-shrink: 0;
@@ -95,17 +128,18 @@
 
 .service-row-settings-form {
   width: 100%;
-  min-height: 40px;
+  min-height: 42px;
   display: grid;
-  grid-template-columns: 25px minmax(0, 1fr) 80px 78px 28px 28px;
+  grid-template-columns:
+    30px
+    minmax(0, 1fr)
+    32px
+    32px;
   align-items: center;
-  gap: 5px;
-  padding: 5px 8px;
+  gap: 8px;
+  padding: 5px 10px;
   border-bottom: 1px solid #eeeeee;
   background: #ffffff;
-  transition:
-    background 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 .service-row-settings-form:last-child {
@@ -113,8 +147,13 @@
 }
 
 .service-row-settings-form:hover {
-  background: #f9fbfd;
+  background: #fafcff;
 }
+
+
+/* =========================================================
+   LEFT DRAG HANDLE
+========================================================= */
 
 .drag-handle-settings-form {
   width: 25px;
@@ -131,28 +170,26 @@
   cursor: grabbing;
 }
 
+
+/* =========================================================
+   LEFT SERVICE NAME
+========================================================= */
+
 .service-name-settings-form {
   min-width: 0;
   color: #333333;
   font-size: 12px;
+  font-weight: 500;
   line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.service-charges-settings-form {
-  color: #333333;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.service-type-settings-form {
-  color: #666666;
-  font-size: 10px;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
+
+/* =========================================================
+   LEFT EDIT DELETE ICON
+========================================================= */
 
 .icon-small-settings-form {
   color: #0876d1;
@@ -175,6 +212,7 @@
 .delete-settings-form:hover {
   color: #b42331;
 }
+
 
 
 /* =========================================================
@@ -211,91 +249,7 @@
 }
 
 
-/* =========================================================
-   ON SITE CHARGES TABLE
-========================================================= */
 
-.charges-table-settings-form {
-  width: 100%;
-  padding: 8px 10px 12px;
-}
-
-.charges-table-header-settings-form {
-  width: 100%;
-  min-height: 36px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 130px;
-  align-items: center;
-  background: #f1f3f5;
-  border: 1px solid #dfe3e7;
-}
-
-.charges-header-item-settings-form {
-  padding: 8px 10px;
-  color: #333333;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.charges-header-item-settings-form:last-child {
-  border-left: 1px solid #dfe3e7;
-}
-
-.charges-table-row-settings-form {
-  width: 100%;
-  min-height: 42px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 130px;
-  align-items: center;
-  border-right: 1px solid #e1e5e9;
-  border-bottom: 1px solid #e1e5e9;
-  border-left: 1px solid #e1e5e9;
-  background: #ffffff;
-}
-
-.charges-table-row-settings-form:hover {
-  background: #fafcff;
-}
-
-.charges-service-name-settings-form {
-  min-width: 0;
-  padding: 7px 10px;
-  color: #333333;
-  font-size: 12px;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.charges-input-wrapper-settings-form {
-  min-height: 41px;
-  display: flex;
-  align-items: center;
-  padding: 5px 7px;
-  border-left: 1px solid #e1e5e9;
-}
-
-.rupee-symbol-settings-form {
-  margin-right: 5px;
-  color: #555555;
-  font-size: 12px;
-}
-
-.charges-input-settings-form {
-  width: 100%;
-  min-width: 0;
-  height: 29px;
-  padding: 4px 6px;
-  color: #333333;
-  font-size: 12px;
-  outline: none;
-  background: #ffffff;
-  border: 1px solid #d3d8dd;
-  border-radius: 3px;
-}
-
-.charges-input-settings-form:focus {
-  border-color: #0876d1;
-}
 
 
 /* =========================================================
@@ -348,31 +302,6 @@
 
 
 /* =========================================================
-   RUPEE INPUT
-========================================================= */
-
-.input-rupee-wrapper-settings-form {
-  position: relative;
-  width: 100%;
-}
-
-.input-rupee-settings-form {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  z-index: 1;
-  color: #555555;
-  font-size: 12px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.rupee-input-settings-form {
-  padding-left: 27px;
-}
-
-
-/* =========================================================
    DISCOUNT
 ========================================================= */
 
@@ -407,6 +336,52 @@
   pointer-events: none;
 }
 
+/* =========================================================
+   X-RAY & CT SCAN CALL
+========================================================= */
+
+.xray-lab-field-settings-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}
+
+.xray-lab-heading-settings-form {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.xray-lab-label-settings-form {
+  flex: 1;
+  min-width: 0;
+  color: #333333;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.xray-lab-heading-settings-form
+.icon-small-settings-form {
+  flex-shrink: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .xray-lab-field-settings-form {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .xray-lab-label-settings-form {
+    font-size: 12px;
+  }
+}
 
 /* =========================================================
    RIGHT PANEL
@@ -477,7 +452,7 @@
 
 
 /* =========================================================
-   RIGHT SECTIONS
+   RIGHT TEXT SECTIONS
 ========================================================= */
 
 .right-section-header-settings-form {
@@ -504,7 +479,7 @@
 .physiotherapy-heading-settings-form {
   width: 100%;
   padding: 12px 15px;
-  background: #0876d1;
+  background: #212EA0;
   border-radius: 5px;
 }
 
@@ -530,6 +505,14 @@
   border-bottom: 1px solid #e1e5e9;
 }
 
+.treatment-heading-left-settings-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
 .treatment-title-settings-form {
   flex: 1;
   min-width: 0;
@@ -545,6 +528,62 @@
   align-items: center;
   gap: 7px;
 }
+
+
+/* =========================================================
+   HEADING CHARGE
+========================================================= */
+
+.heading-charge-box-settings-form {
+  width: 115px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+}
+
+.heading-charge-rupee-settings-form {
+  width: 30px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666666;
+  font-size: 13px;
+  background: #f8f8f8;
+  border-right: 1px solid #e1e1e1;
+}
+
+.heading-charge-input-settings-form {
+  width: calc(100% - 30px);
+  height: 100%;
+  padding: 0 7px;
+  color: #333333;
+  font-size: 12px;
+  outline: none;
+  background: transparent;
+  border: none;
+  -moz-appearance: textfield;
+}
+
+.heading-charge-input-settings-form::placeholder {
+  color: #aaaaaa;
+}
+
+.heading-charge-input-settings-form::-webkit-inner-spin-button,
+.heading-charge-input-settings-form::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* =========================================================
+   HEADER ICON BUTTON
+========================================================= */
 
 .header-icon-btn-settings-form {
   width: 29px;
@@ -594,7 +633,12 @@
   width: 100%;
   min-height: 45px;
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) 125px 32px 32px;
+  grid-template-columns:
+    34px
+    minmax(0, 1fr)
+    125px
+    32px
+    32px;
   align-items: center;
   gap: 7px;
   padding: 5px 9px;
@@ -619,6 +663,11 @@
   border-radius: 5px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
 }
+
+
+/* =========================================================
+   TREATMENT DRAG BUTTON
+========================================================= */
 
 .drag-button-settings-form {
   width: 30px;
@@ -664,6 +713,11 @@
   overflow-wrap: anywhere;
 }
 
+
+/* =========================================================
+   SERVICE TYPE BADGE
+========================================================= */
+
 .service-type-badge-settings-form {
   flex-shrink: 0;
   display: inline-flex;
@@ -698,7 +752,7 @@
 
 
 /* =========================================================
-   TREATMENT CHARGES
+   TREATMENT CHARGE
 ========================================================= */
 
 .treatment-charge-box-settings-form {
@@ -736,7 +790,7 @@
 
 
 /* =========================================================
-   EDIT DELETE BUTTON
+   TREATMENT EDIT DELETE BUTTON
 ========================================================= */
 
 .service-edit-btn-settings-form,
@@ -779,6 +833,11 @@
   transform: scale(1.05);
 }
 
+
+/* =========================================================
+   EMPTY SERVICE
+========================================================= */
+
 .empty-service-settings-form {
   width: 100%;
   padding: 18px 12px;
@@ -805,7 +864,24 @@
 
 
 /* =========================================================
-   MAIN SAVE BUTTON
+   NOTE
+========================================================= */
+
+.note-settings-form {
+  width: 100%;
+}
+
+.note-settings-form h4 {
+  margin: 0;
+  color: #555555;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
 ========================================================= */
 
 .form-save-section-settings-form {
@@ -923,7 +999,7 @@
 
 .popup-close-settings-form:hover {
   color: #dc3545;
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
 }
 
 
@@ -1047,7 +1123,7 @@
 
 
 /* =========================================================
-   SCROLLBAR
+   POPUP SCROLLBAR
 ========================================================= */
 
 .popup-box-settings-form::-webkit-scrollbar {
@@ -1067,279 +1143,6 @@
   background: #929ba4;
 }
 
-/* ================= TREATMENT HEADING LEFT ================= */
-
-.treatment-heading-left-settings-form {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  min-width: 0;
-}
-
-
-/* ================= HEADING CHARGES BOX ================= */
-
-.heading-charge-box-settings-form {
-  display: flex;
-  align-items: center;
-  width: 115px;
-  height: 34px;
-  border: 1px solid #d6d6d6;
-  border-radius: 5px;
-  background: #ffffff;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-
-/* ================= HEADING CHARGE RUPEE ================= */
-
-.heading-charge-rupee-settings-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 100%;
-  color: #666666;
-  font-size: 13px;
-  border-right: 1px solid #e1e1e1;
-  background: #f8f8f8;
-}
-
-
-/* ================= HEADING CHARGE INPUT ================= */
-
-.heading-charge-input-settings-form {
-  width: calc(100% - 30px);
-  height: 100%;
-  border: none;
-  outline: none;
-  padding: 0 7px;
-  font-size: 12px;
-  color: #333333;
-  background: transparent;
-}
-
-
-.heading-charge-input-settings-form::placeholder {
-  color: #aaaaaa;
-}
-
-
-/* REMOVE NUMBER ARROW CHROME */
-
-.heading-charge-input-settings-form::-webkit-inner-spin-button,
-.heading-charge-input-settings-form::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-
-/* REMOVE NUMBER ARROW FIREFOX */
-
-.heading-charge-input-settings-form {
-  -moz-appearance: textfield;
-}
-
-
-/* ================= IN INV INPUT ================= */
-
-.right-section-box-settings-form
-.form-input-settings-form {
-  width: 100%;
-}
-
-
-/* ================= MOBILE ================= */
-
-@media screen and (max-width: 768px) {
-  .treatment-header-settings-form {
-    align-items: flex-start;
-  }
-
-  .treatment-heading-left-settings-form {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .heading-charge-box-settings-form {
-    width: 105px;
-    height: 32px;
-  }
-
-  .heading-charge-input-settings-form {
-    font-size: 11px;
-  }
-}
-
-/* ================= TREATMENT 2 COLUMN GRID ================= */
-
-.treatment-grid-settings-form {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  align-items: start;
-}
-
-
-/* ================= TREATMENT GRID SECTION ================= */
-
-.treatment-grid-settings-form
-.treatment-section-settings-form {
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-}
-
-
-/* ================= TREATMENT HEADER ================= */
-
-.treatment-grid-settings-form
-.treatment-header-settings-form {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-
-/* ================= HEADING LEFT ================= */
-
-.treatment-grid-settings-form
-.treatment-heading-left-settings-form {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
-}
-
-
-/* ================= TREATMENT TITLE ================= */
-
-.treatment-grid-settings-form
-.treatment-title-settings-form {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-  font-size: 15px;
-  line-height: 20px;
-}
-
-
-/* ================= HEADING CHARGE ================= */
-
-.treatment-grid-settings-form
-.heading-charge-box-settings-form {
-  width: 100px;
-  min-width: 100px;
-  height: 32px;
-}
-
-
-/* ================= SERVICE ROW ================= */
-
-.treatment-grid-settings-form
-.treatment-row-settings-form {
-  width: 100%;
-  display: grid;
-  grid-template-columns:
-    30px
-    minmax(0, 1fr)
-    105px
-    32px
-    32px;
-  align-items: center;
-  gap: 6px;
-}
-
-
-/* ================= SERVICE NAME ================= */
-
-.treatment-grid-settings-form
-.treatment-service-name-settings-form {
-  min-width: 0;
-  overflow: hidden;
-}
-
-
-/* ================= SERVICE TEXT ================= */
-
-.treatment-grid-settings-form
-.treatment-name-text-settings-form {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-
-/* ================= CHARGE BOX ================= */
-
-.treatment-grid-settings-form
-.treatment-charge-box-settings-form {
-  width: 105px;
-  min-width: 0;
-}
-
-
-/* ================= TABLET ================= */
-
-@media screen and (max-width: 1100px) {
-
-  .treatment-grid-settings-form {
-    grid-template-columns: 1fr;
-  }
-
-}
-
-
-/* ================= MOBILE ================= */
-
-@media screen and (max-width: 600px) {
-
-  .treatment-grid-settings-form {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .treatment-grid-settings-form
-  .treatment-header-settings-form {
-    align-items: flex-start;
-  }
-
-  .treatment-grid-settings-form
-  .treatment-heading-left-settings-form {
-    flex-wrap: wrap;
-  }
-
-  .treatment-grid-settings-form
-  .treatment-row-settings-form {
-    grid-template-columns:
-      26px
-      minmax(0, 1fr)
-      85px
-      30px
-      30px;
-    gap: 4px;
-  }
-
-  .treatment-grid-settings-form
-  .treatment-charge-box-settings-form {
-    width: 85px;
-  }
-
-  .treatment-grid-settings-form
-  .heading-charge-box-settings-form {
-    width: 95px;
-    min-width: 95px;
-  }
-
-}
 
 /* =========================================================
    TABLET RESPONSIVE
@@ -1347,28 +1150,35 @@
 
 @media screen and (max-width: 1100px) {
   .container-settings-form {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns:
+      minmax(0, 0.9fr)
+      minmax(0, 1.1fr);
     gap: 14px;
     padding: 15px;
   }
 
   .service-row-settings-form {
-    grid-template-columns: 23px minmax(0, 1fr) 65px 65px 25px 25px;
-    gap: 3px;
-    padding-right: 5px;
-    padding-left: 5px;
+    grid-template-columns:
+      25px
+      minmax(0, 1fr)
+      28px
+      28px;
+    gap: 5px;
+    padding-right: 7px;
+    padding-left: 7px;
   }
 
   .service-name-settings-form {
     font-size: 11px;
   }
 
-  .service-type-settings-form {
-    font-size: 9px;
-  }
-
   .treatment-row-settings-form {
-    grid-template-columns: 30px minmax(0, 1fr) 105px 30px 30px;
+    grid-template-columns:
+      30px
+      minmax(0, 1fr)
+      105px
+      30px
+      30px;
     gap: 5px;
     padding-right: 6px;
     padding-left: 6px;
@@ -1400,6 +1210,15 @@
     width: 100%;
   }
 
+  .investigations-main-heading-settings-form {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+
+  .investigations-main-title-settings-form {
+    font-size: 17px;
+  }
+
   .patient-grid-settings-form {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1422,24 +1241,45 @@
 
   .charges-table-header-settings-form,
   .charges-table-row-settings-form {
-    grid-template-columns: minmax(0, 1fr) 115px;
+    grid-template-columns:
+      minmax(0, 1fr)
+      115px;
   }
 
   .service-row-settings-form {
-    grid-template-columns: 25px minmax(0, 1fr) 55px 25px 25px;
+    grid-template-columns:
+      25px
+      minmax(0, 1fr)
+      28px
+      28px;
     gap: 4px;
   }
 
-  .service-type-settings-form {
-    display: none;
+  .treatment-header-settings-form {
+    align-items: flex-start;
   }
 
-  .service-charges-settings-form {
-    font-size: 10px;
+  .treatment-heading-left-settings-form {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .heading-charge-box-settings-form {
+    width: 105px;
+    height: 32px;
+  }
+
+  .heading-charge-input-settings-form {
+    font-size: 11px;
   }
 
   .treatment-row-settings-form {
-    grid-template-columns: 30px minmax(0, 1fr) 95px 29px 29px;
+    grid-template-columns:
+      30px
+      minmax(0, 1fr)
+      95px
+      29px
+      29px;
     gap: 4px;
     padding: 5px;
   }
@@ -1471,6 +1311,176 @@
   }
 }
 
+/* =========================================================
+   SESSION DISCOUNT / CHARGES TABLE/ Discount
+========================================================= */
+
+.session-table-wrapper-settings-form {
+  width: 100%;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.session-table-settings-form {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #ffffff;
+}
+
+.session-table-settings-form th,
+.session-table-settings-form td {
+  border: 1px solid #333333;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.session-table-settings-form th {
+  padding: 14px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #111111;
+  background: #f8f8f8;
+}
+
+.session-table-settings-form th:first-child {
+  width: 25%;
+}
+
+.session-table-settings-form th:nth-child(2),
+.session-table-settings-form th:nth-child(3) {
+  width: 37.5%;
+}
+
+.session-table-settings-form td {
+  padding: 12px;
+  height: 65px;
+}
+
+.session-number-settings-form {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111111;
+}
+
+.session-charge-input-wrapper-settings-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.session-rupee-settings-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.session-charge-input-settings-form {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 10px 8px;
+  font-size: 13px;
+  color: #333333;
+  background: transparent;
+}
+
+.session-charge-input-settings-form::placeholder {
+  color: #999999;
+}
+
+.session-charge-input-settings-form::-webkit-inner-spin-button,
+.session-charge-input-settings-form::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.session-charge-input-settings-form[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media screen and (max-width: 768px) {
+  .session-table-wrapper-settings-form {
+    padding: 10px;
+  }
+
+  .session-table-settings-form th {
+    padding: 12px 6px;
+    font-size: 13px;
+  }
+
+  .session-table-settings-form td {
+    padding: 8px;
+    height: 58px;
+  }
+
+  .session-number-settings-form {
+    font-size: 20px;
+  }
+
+  .session-charge-input-settings-form {
+    padding: 9px 6px;
+    font-size: 12px;
+  }
+
+  .session-rupee-settings-form {
+    padding-left: 7px;
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media screen and (max-width: 480px) {
+  .session-table-wrapper-settings-form {
+    padding: 8px;
+  }
+
+  .session-table-settings-form {
+    min-width: 420px;
+  }
+
+  .session-table-settings-form th {
+    padding: 10px 5px;
+    font-size: 12px;
+  }
+
+  .session-table-settings-form td {
+    padding: 6px;
+    height: 54px;
+  }
+
+  .session-number-settings-form {
+    font-size: 18px;
+  }
+
+  .session-charge-input-settings-form {
+    padding: 8px 5px;
+    font-size: 11px;
+  }
+
+  .session-rupee-settings-form {
+    padding-left: 6px;
+    font-size: 11px;
+  }
+}
+
 
 /* =========================================================
    SMALL MOBILE
@@ -1492,13 +1502,12 @@
   }
 
   .service-row-settings-form {
-    grid-template-columns: 22px minmax(0, 1fr) 23px 23px;
+    grid-template-columns:
+      22px
+      minmax(0, 1fr)
+      25px
+      25px;
     gap: 3px;
-  }
-
-  .service-charges-settings-form,
-  .service-type-settings-form {
-    display: none;
   }
 
   .service-name-settings-form {
@@ -1511,7 +1520,9 @@
 
   .charges-table-header-settings-form,
   .charges-table-row-settings-form {
-    grid-template-columns: minmax(0, 1fr) 100px;
+    grid-template-columns:
+      minmax(0, 1fr)
+      100px;
   }
 
   .charges-header-item-settings-form,
@@ -1539,16 +1550,18 @@
     padding: 10px;
   }
 
-  .main-title-settings-form {
-    font-size: 15px;
-  }
-
+  .main-title-settings-form,
   .physiotherapy-title-settings-form {
     font-size: 15px;
   }
 
   .treatment-row-settings-form {
-    grid-template-columns: 27px minmax(0, 1fr) 75px 27px 27px;
+    grid-template-columns:
+      27px
+      minmax(0, 1fr)
+      75px
+      27px
+      27px;
     gap: 2px;
     padding: 4px;
   }

@@ -25,19 +25,17 @@ export default function PrescriptionSettingForm() {
   const defaultLeftSections = [
     {
       id: "investigation",
-      title: "Investigations Required",
+      title: "X-Ray",
       items: [
         {
           id: Date.now() + 1,
           name: "Cervical Spine AP/Lat View",
-          charges: "",
-          type: "Essential",
+         
         },
         {
           id: Date.now() + 2,
           name: "Lumbar Spine AP/Lat View",
-          charges: "",
-          type: "Advanced",
+          
         },
       ],
     },
@@ -49,14 +47,12 @@ export default function PrescriptionSettingForm() {
         {
           id: Date.now() + 3,
           name: "CBC",
-          charges: "",
-          type: "Essential",
+         
         },
         {
           id: Date.now() + 4,
           name: "ESR",
-          charges: "",
-          type: "Essential",
+         
         },
       ],
     },
@@ -169,9 +165,17 @@ export default function PrescriptionSettingForm() {
 
     arp: "",
 
-    discount5: "",
+   essentialSession1: "",
+   advancedSession1: "",
 
-    discount20: "",
+   essentialSession5: "",
+   advancedSession5: "",
+
+   essentialSession20: "",
+    advancedSession20: "",
+
+    advanceXrayLabHeading: "Advance X-Ray Lab:",
+    advanceXrayLab: "",
 
   };
 
@@ -558,43 +562,43 @@ export default function PrescriptionSettingForm() {
       UPDATE SECTION TITLE
   -----------------------------------------------------------*/
 
-  const updateHeading = () => {
-    if (editingTitle.trim() === "") {
-      alert("Heading cannot be empty.");
-      return;
-    }
+ const updateHeading = () => {
+  if (editingTitle.trim() === "") {
+    alert("Heading cannot be empty.");
+    return;
+  }
 
-    if (editingSectionType === "left") {
-      const updated = leftSections.map((section) => {
-        if (section.id === editingSectionId) {
-          return {
-            ...section,
-            title: editingTitle,
-          };
-        }
+  if (editingSectionType === "left") {
+    setLeftSections((prevSections) =>
+      prevSections.map((section) =>
+        section.id === editingSectionId
+          ? {
+              ...section,
+              title: editingTitle,
+            }
+          : section
+      )
+    );
+  } else if (editingSectionType === "right") {
+    setTreatmentSections((prevSections) =>
+      prevSections.map((section) =>
+        section.id === editingSectionId
+          ? {
+              ...section,
+              title: editingTitle,
+            }
+          : section
+      )
+    );
+  } else if (editingSectionType === "form") {
+    setFormData((prev) => ({
+      ...prev,
+      [editingSectionId]: editingTitle,
+    }));
+  }
 
-        return section;
-      });
-
-      setLeftSections(updated);
-    } else {
-      const updated = treatmentSections.map((section) => {
-        if (section.id === editingSectionId) {
-          return {
-            ...section,
-            title: editingTitle,
-          };
-        }
-
-        return section;
-      });
-
-      setTreatmentSections(updated);
-    }
-
-    setShowTitlePopup(false);
-  };
-
+  setShowTitlePopup(false);
+};
   /*----------------------------------------------------------
       SAVE BUTTON
   -----------------------------------------------------------*/
@@ -745,55 +749,64 @@ const onDragEnd = (result) => {
           </div>
 
           <div className="popup-body-settings-form">
-            <label className="popup-label-settings-form">
-              Service Name
-            </label>
+  <label className="popup-label-settings-form">
+    Service Name
+  </label>
 
-            <input
-              type="text"
-              name="name"
-              value={popupData.name}
-              onChange={handlePopupChange}
-              className="popup-input-settings-form"
-              placeholder="Enter Service Name"
-            />
+  <input
+    type="text"
+    name="name"
+    value={popupData.name}
+    onChange={handlePopupChange}
+    className="popup-input-settings-form"
+    placeholder="Enter Service Name"
+  />
 
-            <label className="popup-label-settings-form">
-              Charges
-            </label>
+  {/* CHARGES AND SERVICE TYPE ONLY FOR RIGHT SIDE */}
 
-            <input
-              type="number"
-              name="charges"
-              value={popupData.charges}
-              onChange={handlePopupChange}
-              className="popup-input-settings-form"
-              placeholder="Enter Charges"
-            />
+  {!leftSections.some(
+    (section) => section.id === selectedSection
+  ) && (
+    <>
+      <label className="popup-label-settings-form">
+        Charges
+      </label>
 
-            <label className="popup-label-settings-form">
-              Service Type
-            </label>
+      <input
+        type="number"
+        name="charges"
+        value={popupData.charges}
+        onChange={handlePopupChange}
+        className="popup-input-settings-form"
+        placeholder="Enter Charges"
+        min="0"
+      />
 
-            <select
-              name="type"
-              value={popupData.type}
-              onChange={handlePopupChange}
-              className="popup-select-settings-form"
-            >
-              <option value="Essential">
-                Essential
-              </option>
+      <label className="popup-label-settings-form">
+        Service Type
+      </label>
 
-              <option value="Advanced">
-                Advanced
-              </option>
+      <select
+        name="type"
+        value={popupData.type}
+        onChange={handlePopupChange}
+        className="popup-select-settings-form"
+      >
+        <option value="Essential">
+          Essential
+        </option>
 
-              <option value="Both">
-                Both
-              </option>
-            </select>
-          </div>
+        <option value="Advanced">
+          Advanced
+        </option>
+
+        <option value="Both">
+          Both
+        </option>
+      </select>
+    </>
+  )}
+</div>
 
           <div className="popup-footer-settings-form">
             <button
@@ -884,6 +897,12 @@ const onDragEnd = (result) => {
 
         <div className="left-panel-settings-form">
 
+              <div className="investigations-main-heading-settings-form">
+    <h2 className="investigations-main-title-settings-form">
+      Investigations Required:
+    </h2>
+  </div>
+
           {/* ================= DYNAMIC LEFT SECTIONS ================= */}
 
           {leftSections.map((section) => (
@@ -954,54 +973,38 @@ const onDragEnd = (result) => {
                             >
                               {/* DRAG HANDLE */}
 
-                              <div
-                                className="drag-handle-settings-form"
-                                {...provided.dragHandleProps}
-                              >
-                                <FaGripVertical />
-                              </div>
+          {/* ================= DRAG HANDLE ================= */}
 
-                              {/* SERVICE NAME */}
+<div
+  className="drag-handle-settings-form"
+  {...provided.dragHandleProps}
+>
+  <FaGripVertical />
+</div>
 
-                              <div className="service-name-settings-form">
-                                {item.name}
-                              </div>
+{/* ================= SERVICE NAME ================= */}
 
-                              {/* CHARGES */}
+<div className="service-name-settings-form">
+  {item.name}
+</div>
 
-                              <div className="service-charges-settings-form">
-                                ₹ {item.charges || "0"}
-                              </div>
+{/* ================= EDIT ================= */}
 
-                              {/* TYPE */}
+<FaEdit
+  className="icon-small-settings-form"
+  onClick={() =>
+    openEditPopup(section.id, item)
+  }
+/>
 
-                              <div className="service-type-settings-form">
-                                {item.type}
-                              </div>
+{/* ================= DELETE ================= */}
 
-                              {/* EDIT */}
-
-                              <FaEdit
-                                className="icon-small-settings-form"
-                                onClick={() =>
-                                  openEditPopup(
-                                    section.id,
-                                    item
-                                  )
-                                }
-                              />
-
-                              {/* DELETE */}
-
-                              <FaTrash
-                                className="icon-small-settings-form delete-settings-form"
-                                onClick={() =>
-                                  deleteService(
-                                    section.id,
-                                    item.id
-                                  )
-                                }
-                              />
+<FaTrash
+  className="icon-small-settings-form delete-settings-form"
+  onClick={() =>
+    deleteService(section.id, item.id)
+  }
+/>
                             </div>
                           )}
                         </Draggable>
@@ -1020,6 +1023,47 @@ const onDragEnd = (result) => {
               </Droppable>
             </div>
           ))}
+
+          {/* ================= X-RAY & CT SCAN CALL ================= */}
+
+<div className="section-box-settings-form">
+  <div className="section-header-settings-form">
+    <h3 className="section-title-settings-form">
+      For X-Ray & CT Scan Call:—
+    </h3>
+  </div>
+
+  <div className="xray-lab-field-settings-form">
+    <div className="xray-lab-heading-settings-form">
+      <label className="xray-lab-label-settings-form">
+        {formData.advanceXrayLabHeading ||
+          "Advance X-Ray Lab:"}
+      </label>
+
+      <FaEdit
+        className="icon-small-settings-form"
+        onClick={() =>
+          openTitlePopup(
+            "advanceXrayLabHeading",
+            formData.advanceXrayLabHeading ||
+              "Advance X-Ray Lab:",
+            "form"
+          )
+        }
+        title="Edit Heading"
+      />
+    </div>
+
+    <input
+      type="text"
+      name="advanceXrayLab"
+      value={formData.advanceXrayLab || ""}
+      onChange={handleInputChange}
+      className="form-input-settings-form"
+      placeholder="Enter Advance X-Ray Lab"
+    />
+  </div>
+</div>
 
           {/* ================= OTHER INVESTIGATION ================= */}
 
@@ -1040,94 +1084,7 @@ const onDragEnd = (result) => {
             />
           </div>
 
-          {/* ================= ON SITE TREATMENT CHARGES ================= */}
-
-          <div className="section-box-settings-form">
-            <div className="section-header-settings-form">
-              <h3 className="section-title-settings-form">
-                On-Site Treatment Charges
-              </h3>
-            </div>
-
-            <div className="charges-table-settings-form">
-              <div className="charges-table-header-settings-form">
-                <div className="charges-header-item-settings-form">
-                  Service
-                </div>
-
-                <div className="charges-header-item-settings-form">
-                  Charges
-                </div>
-              </div>
-
-              {treatmentSections.map((section) =>
-                section.items.map((item) => (
-                  <div
-                    key={`charge-${section.id}-${item.id}`}
-                    className="charges-table-row-settings-form"
-                  >
-                    <div className="charges-service-name-settings-form">
-                      {item.name}
-                    </div>
-
-                    <div className="charges-input-wrapper-settings-form">
-                      <span className="rupee-symbol-settings-form">
-                        ₹
-                      </span>
-
-                      <input
-                        type="number"
-                        value={item.charges}
-                        onChange={(e) => {
-                          const value =
-                            e.target.value;
-
-                          setTreatmentSections(
-                            (prevSections) =>
-                              prevSections.map(
-                                (
-                                  currentSection
-                                ) => {
-                                  if (
-                                    currentSection.id !==
-                                    section.id
-                                  ) {
-                                    return currentSection;
-                                  }
-
-                                  return {
-                                    ...currentSection,
-
-                                    items:
-                                      currentSection.items.map(
-                                        (
-                                          currentItem
-                                        ) =>
-                                          currentItem.id ===
-                                          item.id
-                                            ? {
-                                                ...currentItem,
-                                                charges:
-                                                  value,
-                                              }
-                                            : currentItem
-                                      ),
-                                  };
-                                }
-                              )
-                          );
-                        }}
-                        className="charges-input-settings-form"
-                        placeholder="Charges"
-                        min="0"
-                      />
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-
+        
          {/* ================= HOME REHAB ================= */}
 
 <div className="section-box-settings-form">
@@ -1194,71 +1151,199 @@ const onDragEnd = (result) => {
 </div>
 
 <div className="note-settings-form">
-    <h4>Note: Charges are vary according to the condition of the patient</h4>
+    <h3>Note: Charges are vary according to the condition of the patient</h3>
 </div>
 
           {/* ================= DISCOUNT ================= */}
 
-          <div className="section-box-settings-form">
-            <div className="section-header-settings-form">
-              <h3 className="section-title-settings-form">
-                Discount
-              </h3>
+          {/* ================= SESSION CHARGES TABLE ================= */}
+
+<div className="section-box-settings-form">
+  <div className="section-header-settings-form">
+    <h3 className="section-title-settings-form">
+      Discount on Session<span>:-</span>
+    </h3>
+  </div>
+
+  <div className="session-table-wrapper-settings-form">
+    <table className="session-table-settings-form">
+      <thead>
+        <tr>
+          <th>
+            No. of
+            <br />
+            Sessions
+          </th>
+
+          <th>
+            Essential
+            <br />
+            (in ₹)
+          </th>
+
+          <th>
+            Advanced
+            <br />
+            (in ₹)
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {/* ================= 1 SESSION ================= */}
+
+        <tr>
+          <td className="session-number-settings-form">
+            1
+          </td>
+
+          <td>
+            <div className="session-charge-input-wrapper-settings-form">
+              <span className="session-rupee-settings-form">
+                ₹
+              </span>
+
+              <input
+                type="number"
+                name="essentialSession1"
+                value={
+                  formData.essentialSession1 || ""
+                }
+                onChange={handleInputChange}
+                className="session-charge-input-settings-form"
+                placeholder="Enter charges"
+                min="0"
+              />
             </div>
+          </td>
 
-            <div className="discount-grid-settings-form">
-              <div className="discount-field-settings-form">
-                <label className="field-label-settings-form">
-                  Discount on 5 Sessions (%)
-                </label>
+          <td>
+            <div className="session-charge-input-wrapper-settings-form">
+              <span className="session-rupee-settings-form">
+                ₹
+              </span>
 
-                <div className="percentage-input-wrapper-settings-form">
-                  <input
-                    type="number"
-                    name="discount5"
-                    value={formData.discount5}
-                    onChange={handleInputChange}
-                    className="form-input-settings-form percentage-input-settings-form"
-                    placeholder="Enter discount"
-                    min="0"
-                  />
-
-                  <span className="percentage-symbol-settings-form">
-                    %
-                  </span>
-                </div>
-              </div>
-
-              <div className="discount-field-settings-form">
-                <label className="field-label-settings-form">
-                  Discount on 20 Sessions (%)
-                </label>
-
-                <div className="percentage-input-wrapper-settings-form">
-                  <input
-                    type="number"
-                    name="discount20"
-                    value={formData.discount20}
-                    onChange={handleInputChange}
-                    className="form-input-settings-form percentage-input-settings-form"
-                    placeholder="Enter discount"
-                    min="0"
-                  />
-
-                  <span className="percentage-symbol-settings-form">
-                    %
-                  </span>
-                </div>
-              </div>
+              <input
+                type="number"
+                name="advancedSession1"
+                value={
+                  formData.advancedSession1 || ""
+                }
+                onChange={handleInputChange}
+                className="session-charge-input-settings-form"
+                placeholder="Enter charges"
+                min="0"
+              />
             </div>
-          </div>
+          </td>
+        </tr>
+
+        {/* ================= 5 SESSIONS ================= */}
+
+        <tr>
+          <td className="session-number-settings-form">
+            5
+          </td>
+
+          <td>
+            <div className="session-charge-input-wrapper-settings-form">
+              <span className="session-rupee-settings-form">
+                ₹
+              </span>
+
+              <input
+                type="number"
+                name="essentialSession5"
+                value={
+                  formData.essentialSession5 || ""
+                }
+                onChange={handleInputChange}
+                className="session-charge-input-settings-form"
+                placeholder="Enter charges"
+                min="0"
+              />
+            </div>
+          </td>
+
+          <td>
+            <div className="session-charge-input-wrapper-settings-form">
+              <span className="session-rupee-settings-form">
+                ₹
+              </span>
+
+              <input
+                type="number"
+                name="advancedSession5"
+                value={
+                  formData.advancedSession5 || ""
+                }
+                onChange={handleInputChange}
+                className="session-charge-input-settings-form"
+                placeholder="Enter charges"
+                min="0"
+              />
+            </div>
+          </td>
+        </tr>
+
+        {/* ================= 20 SESSIONS ================= */}
+
+        <tr>
+          <td className="session-number-settings-form">
+            20
+          </td>
+
+          <td>
+            <div className="session-charge-input-wrapper-settings-form">
+              <span className="session-rupee-settings-form">
+                ₹
+              </span>
+
+              <input
+                type="number"
+                name="essentialSession20"
+                value={
+                  formData.essentialSession20 || ""
+                }
+                onChange={handleInputChange}
+                className="session-charge-input-settings-form"
+                placeholder="Enter charges"
+                min="0"
+              />
+            </div>
+          </td>
+
+          <td>
+            <div className="session-charge-input-wrapper-settings-form">
+              <span className="session-rupee-settings-form">
+                ₹
+              </span>
+
+              <input
+                type="number"
+                name="advancedSession20"
+                value={
+                  formData.advancedSession20 || ""
+                }
+                onChange={handleInputChange}
+                className="session-charge-input-settings-form"
+                placeholder="Enter charges"
+                min="0"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
         </div>
 
         {/* ================= LEFT PANEL END ================= */}
 
         {/* =====================================================
-            RIGHT PANEL
+                            RIGHT PANEL
         ====================================================== */}
 
         <div className="right-panel-settings-form">
@@ -1378,7 +1463,7 @@ const onDragEnd = (result) => {
             </div>
           </div>
 
-         {/* ================= COMPLAINT / C/CO ================= */}
+      {/* ================= COMPLAINT / C/CO ================= */}
 
 <div className="right-section-box-settings-form">
   <div className="right-section-header-settings-form">
@@ -1387,13 +1472,13 @@ const onDragEnd = (result) => {
     </h3>
   </div>
 
-  <input
-    type="text"
+  <textarea
     name="complaint"
     value={formData.complaint}
     onChange={handleInputChange}
-    className="form-input-settings-form"
+    className="textarea-settings-form"
     placeholder="Enter Prefilled Value"
+    rows="1"
   />
 </div>
 
@@ -1407,13 +1492,13 @@ const onDragEnd = (result) => {
     </h3>
   </div>
 
-  <input
-    type="text"
+  <textarea
     name="otherDetails"
     value={formData.otherDetails}
     onChange={handleInputChange}
-    className="form-input-settings-form"
+    className="textarea-settings-form"
     placeholder="Enter Prefilled Value"
+    rows="1"
   />
 </div>
 
@@ -1427,13 +1512,13 @@ const onDragEnd = (result) => {
     </h3>
   </div>
 
-  <input
-    type="text"
+  <textarea
     name="examination"
     value={formData.examination}
     onChange={handleInputChange}
-    className="form-input-settings-form"
+    className="textarea-settings-form"
     placeholder="Enter Prefilled Value"
+    rows="1"
   />
 </div>
 
@@ -1447,13 +1532,13 @@ const onDragEnd = (result) => {
     </h3>
   </div>
 
-  <input
-    type="text"
+  <textarea
     name="inInv"
     value={formData.inInv || ""}
     onChange={handleInputChange}
-    className="form-input-settings-form"
+    className="textarea-settings-form"
     placeholder="Enter Prefilled Value"
+    rows="1"
   />
 </div>
 
@@ -1467,34 +1552,15 @@ const onDragEnd = (result) => {
     </h3>
   </div>
 
-  <input
-    type="text"
+  <textarea
     name="diagnosis"
     value={formData.diagnosis}
     onChange={handleInputChange}
-    className="form-input-settings-form"
+    className="textarea-settings-form"
     placeholder="Enter Prefilled Value"
+    rows="1"
   />
 </div>
-
-          {/* ================= ADVICE ================= */}
-
-          <div className="right-section-box-settings-form">
-            <div className="right-section-header-settings-form">
-              <h3 className="right-section-title-settings-form">
-                Advice / Note
-              </h3>
-            </div>
-
-            <textarea
-              name="advice"
-              value={formData.advice}
-              onChange={handleInputChange}
-              className="textarea-settings-form"
-              placeholder="Enter advice or note"
-              rows="3"
-            />
-          </div>
 
           {/* ================= PHYSIOTHERAPY HEADING ================= */}
 
@@ -1778,7 +1844,7 @@ const onDragEnd = (result) => {
           </div>
 
           <div className="note-settings-form">
-            <h4>Treatment duration mentioned above is approximate & subject to change</h4>
+            <h3>Treatment duration mentioned above is approximate & subject to change</h3>
           </div>
 
           {/* ================= SAVE ================= */}
