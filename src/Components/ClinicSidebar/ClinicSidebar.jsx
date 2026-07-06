@@ -16,6 +16,7 @@ import {
   FaNotesMedical,
   FaFolder,
   FaChevronDown,
+  FaHistory,
 } from "react-icons/fa";
 
 import "./ClinicSidebar.css";
@@ -137,7 +138,7 @@ const handleMenuClick = () => {
               e.stopPropagation();
               setShowProfile(!showProfile); }}/>
            
-          {/* show profile data */}
+                     {/* show profile data */}
           {showProfile && (
             <div className="profile-dropdown">
 
@@ -339,6 +340,18 @@ const handleMenuClick = () => {
 </div>
             
           
+          
+                    {/* Recharge history */}
+          <NavLink
+            to="/recharge-history"
+            onClick={handleMenuClick}
+            className={({ isActive }) =>
+              isActive
+                ? "menu-btn-sidebar1-clinic active"
+                : "menu-btn-sidebar1-clinic"
+            }>
+          
+            <FaHistory />Recharge History</NavLink>
 
                     {/* Download submenu */}
           <NavLink

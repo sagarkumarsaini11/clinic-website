@@ -192,6 +192,7 @@ textarea{
 @media(max-width:768px){
 
   .patient-container-addpatient{
+    margin-top: 50px;
     padding:15px;
   }
 

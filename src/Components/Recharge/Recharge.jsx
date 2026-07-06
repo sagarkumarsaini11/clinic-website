@@ -82,12 +82,12 @@ const calculateTotal = () => {
   return total;
 };
 
-const handleSubmit = (e) => {
+// api callling
+
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (
-    !rechargeData.package)
-   {
+  if (!rechargeData.package) {
     alert("Please select at least one service");
     return;
   }
@@ -97,27 +97,58 @@ const handleSubmit = (e) => {
     return;
   }
 
-  console.log("===== RECHARGE DATA =====");
-const finalData = {
-  ...rechargeData,
-  totalAmount: calculateTotal(),
-};
+  const token = localStorage.getItem("token");
 
-console.table(finalData);
+  console.log("Token:", token);
 
-console.log(
-  JSON.stringify(finalData, null, 2)
-);
+  if (!token) {
+    alert("Please login again");
+    return;
+  }
 
-  alert("Recharge Submitted Successfully!");
+  const rechargePayload = {
+    package: rechargeData.package,
+    additionalSessions: Number(rechargeData.additionalSessions || 0),
+    totalAmount: calculateTotal(),
+    amountPaid: Number(rechargeData.amountPaid),
+  };
 
-  setRechargeData({
-    package: "",
-    // homePhysio: false,
-    // exercisePlan: false,
-    additionalSessions: "",
-    amountPaid: "",
-  });
+  console.log("Recharge Payload:", rechargePayload);
+
+  try {
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/clinics/patients/recharge",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(rechargePayload),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Recharge Response:", data);
+
+    if (!response.ok) {
+      alert(data.message || "Recharge Failed");
+      return;
+    }
+
+    alert("Recharge Submitted Successfully!");
+
+    setRechargeData({
+      package: "",
+      additionalSessions: "",
+      amountPaid: "",
+    });
+
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
 };
 
   return (

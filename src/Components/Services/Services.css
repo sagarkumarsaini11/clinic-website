@@ -186,6 +186,7 @@
 @media(max-width:768px){
 
   .service-page{
+    margin-top: 40px;
     padding:15px;
   }
 

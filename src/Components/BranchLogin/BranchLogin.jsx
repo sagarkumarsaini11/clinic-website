@@ -46,7 +46,7 @@ const handleLogin = async (e) => {
 }
 
   // ADMIN Clinic LOGIN
-// ADMIN + CLINIC LOGIN
+
 
 if (loginType === "AdminClinic") {
 
@@ -124,6 +124,14 @@ if (loginType === "AdminClinic") {
         sameSite: "Lax",
       }
     );
+
+    // Store token in Local Storage
+localStorage.setItem("token", data.data.accessToken);
+localStorage.setItem("refreshToken", data.data.refreshToken);
+localStorage.setItem("user", JSON.stringify(data.data.user));
+
+console.log("Access Token:", localStorage.getItem("token"));
+console.log("Refresh Token:", localStorage.getItem("refreshToken"));
 
     const role =
       data.data.user.role;

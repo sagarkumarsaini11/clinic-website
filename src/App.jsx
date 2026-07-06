@@ -26,13 +26,15 @@ import FeatureSection from './Components/FeatureSection/FeatureSection'
 import TreatmentSection from './Components/TreatmentSection/TreatmentSection'
 import Dashboard from './Components/Dashboard/Dashboard'
 import ClinicSuspended from './Components/Clinic-suspended/ClinicSuspended'
-import SettingForm from './Components/SettingForm/SettingForm'
+
 import Sidebar1 from './Components/Sidebar1/Sidebar1'
 import Layout from './Layout'
 import ClinicSidebar from './Components/ClinicSidebar/ClinicSidebar'
 import LayoutClinic from './LayoutClinic'
 import MenuSetting from './Components/MenuSetting/MenuSetting'
 import PatientTreatmentProtocol from './Components/PaitentTreatmentProtocol/PatientTreatmentProtocol'
+import RechargeHistory from './Components/RechargeHistory/RechargeHistory'
+import PrescriptionSettingForm from './Components/PrescriptionSettingForm/PrescriptionSettingForm'
 
 
 
@@ -82,8 +84,9 @@ function App () {
   <Route path="/services" element={<Services />} />
   <Route path="/category" element={<ServiceCategory />} />
   <Route path="/sub-category" element={<ServicesSubCategory />} />
-  <Route path="/setting-clinics" element={<SettingForm/>} />
+  <Route path="/setting-clinics" element={<PrescriptionSettingForm/>} />
     <Route path="/menu-settings" element={<MenuSetting/>} />
+     <Route path="/recharge-history" element={<RechargeHistory/>} />
                {/*Recharge form*/}
    <Route path="/recharge" element={<Recharge/>}/>
                  {/*Open Patientn File */}

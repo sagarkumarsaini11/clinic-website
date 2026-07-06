@@ -99,8 +99,13 @@ export default function PatientTreatmentProtocol() {
     <div className="protocol-page-patient-protocol">
 
       <FaArrowLeft
-        className="close-icon-patient-protocol"
-        onClick={() => navigate("/homepage")}
+         onClick={() =>
+    navigate("/homepage", {
+      state: {
+        openPatientPopup: true,
+      },
+    })
+  }
       />
 
       {/*LEFT PANEL*/}
@@ -126,11 +131,9 @@ export default function PatientTreatmentProtocol() {
 
         {treatmentMenus.map((menu) => (
 
-          <div
-            key={menu.id}
-            className="menu-card-patient-protocol"
-          >
-
+          <div   key={menu.id}
+          className="menu-card-patient-protocol" >
+           
             <div className="menu-title-patient-protocol">
               {menu.title}
             </div>
@@ -139,13 +142,11 @@ export default function PatientTreatmentProtocol() {
 
               {menu.subMenus.map((submenu, index) => (
 
-                <li
-                  key={index}
-                  className="submenu-item-patient-protocol"
-                >
-                  {submenu}
-                </li>
-
+                <li  key={index}
+                  className="submenu-item-patient-protocol">
+                {submenu}
+                 </li>
+                  
               ))}
 
             </ul>
@@ -156,7 +157,7 @@ export default function PatientTreatmentProtocol() {
 
       </div>
 
-      {/*MENU POPUP*/}
+                    {/*MENU POPUP*/}
       
       {showMenuPopup && (
 
@@ -172,9 +173,8 @@ export default function PatientTreatmentProtocol() {
                 className="close-icon-patient-protocol"
                 onClick={() =>
                   setShowMenuPopup(false)
-                }
-              />
-
+                } />
+  
             </div>
 
             <input
@@ -182,11 +182,9 @@ export default function PatientTreatmentProtocol() {
               placeholder="Search Menu..."
               className="search-input-patient-protocol"
               value={searchText}
-              onChange={(e) =>
-                setSearchText(e.target.value)
-              }
-            />
-
+              onChange={(e) =>  setSearchText(e.target.value)
+              }/>
+              
             <div className="popup-menu-list-patient-protocol">
 
               {filteredMenus.map((menu) => (
@@ -201,9 +199,8 @@ export default function PatientTreatmentProtocol() {
                         expandedMenu === menu.id
                           ? null
                           : menu.id
-                      )
-                    }
-                  >
+                      )} >
+                  
 
                     <div className="popup-menu-left-patient-protocol">
 

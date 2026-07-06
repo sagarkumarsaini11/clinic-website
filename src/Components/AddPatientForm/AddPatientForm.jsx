@@ -25,7 +25,7 @@ export default function AddPatientForm() {
       appointmentType: "",
       appointmentDate: "",
       appointmentTime: "",
-       amount: "",
+       amount: 700,
       cash: "",
       upi: "",
       total: "",
@@ -140,10 +140,10 @@ if (
 
 }
 
-if (!formData.amount) {
-  newErrors.amount =
-    "Amount is required";
-}
+// if (!formData.amount) {
+//   newErrors.amount =
+//     "Amount is required";
+// }
 
 if (
   formData.amount &&
@@ -177,46 +177,75 @@ if (
 
   // Submit
 
- const handleSubmit = async (e) => {
- console.log("Complete Patient Data:",formData);
-
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (!validateForm()) {
-    return;
-  }
+  if (!validateForm()) return;
+
+  setLoading(true);
 
   try {
+    const patientData = {
+      name: formData.name,
+      age: Number(formData.age),
+      gender: formData.gender,
+      mobileNumber: formData.mobile,
+      address: formData.address,
+      problem: formData.problem,
+      appointmentType: formData.appointmentType,
+      appointmentDate: formData.appointmentDate,
+      appointmentTime: formData.appointmentTime,
+      amount: Number(formData.amount),
+      cash: Number(formData.cash || 0),
+      upi: Number(formData.upi || 0),
+      total: Number(formData.total || 0),
+    };
 
-    setLoading(true);
+    console.log("Sending Data:", patientData);
 
-    console.log("Sending Data:", formData);
+  const token = localStorage.getItem("token");
 
-    const response = await fetch(
-      "https://clinic-backend-5ucx.onrender.com/api/appointment/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+console.log("Token from Local Storage:", token);
+
+if (!token) {
+  alert("Token not found. Please login again.");
+  return;
+}
+
+const response = await fetch(
+  "https://clinic-backend-5ucx.onrender.com/api/clinics/patients",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(patientData),
+  }
+);
 
     const data = await response.json();
 
-    console.log("Status:", response.status);
-    console.log("Response:", data);
+    console.log("API Response:", data);
 
     if (!response.ok) {
-      alert(
-        data.message ||
-        "Failed to save patient"
-      );
+      alert(data.message || data.error || "Failed to save patient");
       return;
     }
 
-    alert("Patient Added Successfully!");
+    // Store token only if API returns one
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+
+      console.log(
+        "Stored Token:",
+        localStorage.getItem("token")
+      );
+    } else {
+      console.log("No token returned from API");
+    }
+
+    alert("Patient Saved Successfully!");
 
     setFormData({
       name: "",
@@ -225,20 +254,20 @@ if (
       mobile: "",
       address: "",
       problem: "",
+      appointmentType: "",
+      appointmentDate: "",
+      appointmentTime: "",
+      amount: 700,
+      cash: "",
+      upi: "",
+      total: "",
     });
 
     setErrors({});
-
   } catch (error) {
-
-    console.error("API Error:", error);
-
-    alert(
-      "Something went wrong. Please try again."
-    );
-
+    console.error("Error:", error);
+    alert("Something went wrong!");
   } finally {
-
     setLoading(false);
   }
 };
@@ -444,7 +473,7 @@ if (
   <div className="form-group">
 
     <label>Amount * </label>
-   <label>700 </label>
+   <label>{formData.amount}</label>
 
 
   </div>
