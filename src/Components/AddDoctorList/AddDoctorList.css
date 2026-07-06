@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-doctor-list {
+    margin-top: 50px;
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 40px 20px;
+}
+
+.content-doctor-list {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.header-doctor-list {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.heading-doctor-list {
+  font-size: 26px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.table-wrapper-doctor-list {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-doctor-list {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+.thead-doctor-list {
+  background: #1e40af;
+}
+
+.header-row-doctor-list {
+  width: 100%;
+}
+
+.th-doctor-list {
+  padding: 14px 15px;
+  text-align: left;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid #e0e0e0;
+}
+
+.tbody-doctor-list {
+  width: 100%;
+}
+
+.row-doctor-list {
+  transition: 0.3s;
+}
+
+.row-doctor-list:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.row-doctor-list:hover {
+  background: #eef5ff;
+}
+
+.td-doctor-list {
+  padding: 13px 15px;
+  font-size: 14px;
+  color: #444444;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+.delete-button-doctor-list {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  background: #dc3545;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.delete-button-doctor-list:hover {
+  background: #b02a37;
+}
+
+.empty-row-doctor-list {
+  width: 100%;
+}
+
+.empty-data-doctor-list {
+  padding: 30px;
+  text-align: center;
+  font-size: 16px;
+  color: #777777;
+  border: 1px solid #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .container-doctor-list {
+    padding: 20px 10px;
+  }
+
+  .content-doctor-list {
+    padding: 15px;
+  }
+
+  .heading-doctor-list {
+    font-size: 22px;
+  }
+
+  .th-doctor-list {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .td-doctor-list {
+    padding: 11px;
+    font-size: 13px;
+  }
+
+  .delete-button-doctor-list {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+}

@@ -35,6 +35,8 @@ import MenuSetting from './Components/MenuSetting/MenuSetting'
 import PatientTreatmentProtocol from './Components/PaitentTreatmentProtocol/PatientTreatmentProtocol'
 import RechargeHistory from './Components/RechargeHistory/RechargeHistory'
 import PrescriptionSettingForm from './Components/PrescriptionSettingForm/PrescriptionSettingForm'
+import AddDoctor from './Components/AddDoctor/AddDoctor'
+import AddDoctorList from './Components/AddDoctorList/AddDoctorList'
 
 
 function Website() {
@@ -51,7 +53,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
-
+      
     </div>
    )    
 };
@@ -78,6 +80,8 @@ function App () {
   <Route path="/category" element={<ServiceCategory />} />
   <Route path="/sub-category" element={<ServicesSubCategory />} />
   <Route path="/setting-clinics" element={<PrescriptionSettingForm/>} />
+  <Route path="/add-doctor" element={ <AddDoctor/>} />
+  <Route path="/add-doctor-list" element={<AddDoctorList/>} />
     <Route path="/menu-settings" element={<MenuSetting/>} />
      <Route path="/recharge-history" element={<RechargeHistory/>} />
                {/*Recharge form*/}

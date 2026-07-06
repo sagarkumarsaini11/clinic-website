@@ -165,8 +165,8 @@ export default function PrescriptionSettingForm() {
 
     arp: "",
 
-   essentialSession1: "",
-   advancedSession1: "",
+//    essentialSession1: "",
+//    advancedSession1: "",
 
    essentialSession5: "",
    advancedSession5: "",
@@ -1192,8 +1192,8 @@ const onDragEnd = (result) => {
       <tbody>
         {/* ================= 1 SESSION ================= */}
 
-        <tr>
-          <td className="session-number-settings-form">
+       {/* <tr>
+           <td className="session-number-settings-form">
             1
           </td>
 
@@ -1215,10 +1215,10 @@ const onDragEnd = (result) => {
                 min="0"
               />
             </div>
-          </td>
+          </td> */}
 
-          <td>
-            <div className="session-charge-input-wrapper-settings-form">
+          {/*<td>
+             <div className="session-charge-input-wrapper-settings-form">
               <span className="session-rupee-settings-form">
                 ₹
               </span>
@@ -1234,9 +1234,9 @@ const onDragEnd = (result) => {
                 placeholder="Enter charges"
                 min="0"
               />
-            </div>
+            </div> 
           </td>
-        </tr>
+        </tr>*/}
 
         {/* ================= 5 SESSIONS ================= */}
 

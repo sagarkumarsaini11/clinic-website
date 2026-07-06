@@ -235,7 +235,7 @@ const handleMenuClick = () => {
            
 
 
-                {/* Serivce submenu */}
+                {/* Serivce submenu 
           <NavLink
             to="/services"
             onClick={handleMenuClick}
@@ -250,7 +250,7 @@ const handleMenuClick = () => {
           
                
 
-                {/* Service-Category submenu */}
+                {/* Service-Category submenu 
           <NavLink
             to="/category"
             onClick={handleMenuClick}
@@ -260,11 +260,11 @@ const handleMenuClick = () => {
                 : "menu-btn-sidebar1-clinic"
             }>
           
-            <FaFolder />Service Category</NavLink>
+            <FaFolder />Service Category</NavLink>*/}
             
           
                 
-                 {/* Service-SubCategory submenu */}
+                 {/* Service-SubCategory submenu 
           <NavLink
             to="/sub-category"
             onClick={handleMenuClick}
@@ -274,7 +274,7 @@ const handleMenuClick = () => {
                 : "menu-btn-sidebar1-clinic"
             }>
           
-            <FaClipboardList />Service Sub Category </NavLink>
+            <FaClipboardList />Service Sub Category </NavLink>*/}
 
                   {/* Menu Settings
           <NavLink
@@ -339,8 +339,30 @@ const handleMenuClick = () => {
   )}
 </div>
             
+                  {/* Add doctor*/}
+          <NavLink
+            to="/add-doctor"
+            onClick={handleMenuClick}
+            className={({ isActive }) =>
+              isActive
+                ? "menu-btn-sidebar1-clinic active"
+                : "menu-btn-sidebar1-clinic"
+            }>
           
+           <FaUserPlus />Add Doctor</NavLink>
           
+                       {/* Add doctor list*/}
+          <NavLink
+            to="/add-doctor-list"
+            onClick={handleMenuClick}
+            className={({ isActive }) =>
+              isActive
+                ? "menu-btn-sidebar1-clinic active"
+                : "menu-btn-sidebar1-clinic"
+            }>
+          
+           <FaUserPlus />Doctor List</NavLink>
+
                     {/* Recharge history */}
           <NavLink
             to="/recharge-history"
