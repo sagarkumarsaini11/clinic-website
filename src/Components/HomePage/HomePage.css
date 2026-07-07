@@ -398,6 +398,72 @@ cursor: pointer;
   background:#16227c;
 }
 
+/* PAYMENT STATUS */
+
+.payment-status {
+  display: inline-block;
+  min-width: 75px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* PAID */
+
+.paid-status {
+  background: #d4edda;
+  color: #16813d;
+  border: 1px solid #a8d5b5;
+}
+
+/* UNPAID */
+
+.unpaid-status {
+  background: #f8d7da;
+  color: #c62828;
+  border: 1px solid #efb0b5;
+}
+
+/* PARTIAL */
+
+.partial-status {
+  background: #fff3cd;
+  color: #a66b00;
+  border: 1px solid #ffe69c;
+}
+
+/* PAYMENT TABLE COLUMN */
+
+.appointment-table th {
+  white-space: nowrap;
+}
+
+.appointment-table td {
+  vertical-align: middle;
+}
+
+/* TABLE HORIZONTAL SCROLL */
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 768px) {
+  .payment-status {
+    min-width: 65px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+
+  .appointment-table {
+    min-width: 1200px;
+  }
+}
 
 /* MOBILE */
 /* Tablet View */

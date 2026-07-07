@@ -17,6 +17,8 @@ import {
   FaFolder,
   FaChevronDown,
   FaHistory,
+  
+
 } from "react-icons/fa";
 
 import "./ClinicSidebar.css";
@@ -361,7 +363,7 @@ const handleMenuClick = () => {
                 : "menu-btn-sidebar1-clinic"
             }>
           
-           <FaUserPlus />Doctor List</NavLink>
+          <FaUserPlus /> Doctor List</NavLink>
 
                     {/* Recharge history */}
           <NavLink

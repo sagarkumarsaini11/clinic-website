@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./AddPatientForm.css";
 import { useNavigate } from "react-router-dom";
 
@@ -6,14 +6,80 @@ import { useNavigate } from "react-router-dom";
 export default function AddPatientForm() {
 
   const navigate = useNavigate();
+ 
+
+const formRef = useRef(null);
+
+const handleFormKeyDown = (e) => {
+  if (!formRef.current) return;
+
+  const focusableElements = Array.from(
+    formRef.current.querySelectorAll(
+      'input:not([type="radio"]):not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled])'
+    )
+  );
+
+  const currentIndex = focusableElements.indexOf(
+    document.activeElement
+  );
+
+  // DOWN ARROW - NEXT INPUT
+
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+
+    if (currentIndex === -1) {
+      focusableElements[0]?.focus();
+      return;
+    }
+
+    const nextIndex =
+      currentIndex < focusableElements.length - 1
+        ? currentIndex + 1
+        : 0;
+
+    focusableElements[nextIndex]?.focus();
+  }
+
+  // UP ARROW - PREVIOUS INPUT
+
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+
+    if (currentIndex === -1) {
+      focusableElements[
+        focusableElements.length - 1
+      ]?.focus();
+
+      return;
+    }
+
+    const previousIndex =
+      currentIndex > 0
+        ? currentIndex - 1
+        : focusableElements.length - 1;
+
+    focusableElements[previousIndex]?.focus();
+  }
+
+  // ENTER - SUBMIT FORM
+
+  if (e.key === "Enter") {
+    if (e.target.tagName === "TEXTAREA") {
+      return;
+    }
+
+    e.preventDefault();
+
+    formRef.current.requestSubmit();
+  }
+};
 
   // Sidebar State
-
-  const [showSidebar, setShowSidebar] =
-    useState(false);
+  const [showSidebar, setShowSidebar] =  useState(false);
+  
 
   // Form State
-
   const [formData, setFormData] =
     useState({
       name: "",
@@ -66,12 +132,8 @@ export default function AddPatientForm() {
     [name]: value,
   };
 
-  const cash =
-    Number(updatedData.cash || 0);
-
-  const upi =
-    Number(updatedData.upi || 0);
-
+  const cash =  Number(updatedData.cash || 0);
+  const upi =  Number(updatedData.upi || 0);
   updatedData.total = cash + upi;
 
   setFormData(updatedData);
@@ -185,6 +247,18 @@ const handleSubmit = async (e) => {
   setLoading(true);
 
   try {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+
+    console.log("Token:", token);
+    console.log("User:", user);
+
+    if (!token) {
+      alert("Token not found. Please login again.");
+      navigate("/login");
+      return;
+    }
+
     const patientData = {
       name: formData.name,
       age: Number(formData.age),
@@ -193,8 +267,17 @@ const handleSubmit = async (e) => {
       address: formData.address,
       problem: formData.problem,
       appointmentType: formData.appointmentType,
-      appointmentDate: formData.appointmentDate,
-      appointmentTime: formData.appointmentTime,
+
+      appointmentDate:
+        formData.appointmentType === "Standard"
+          ? formData.appointmentDate
+          : null,
+
+      appointmentTime:
+        formData.appointmentType === "Standard"
+          ? formData.appointmentTime
+          : null,
+
       amount: Number(formData.amount),
       cash: Number(formData.cash || 0),
       upi: Number(formData.upi || 0),
@@ -203,46 +286,53 @@ const handleSubmit = async (e) => {
 
     console.log("Sending Data:", patientData);
 
-  const token = localStorage.getItem("token");
+    const response = await fetch(
+      "https://clinic-backend-5ucx.onrender.com/api/clinic/patients",
+      {
+        method: "POST",
 
-console.log("Token from Local Storage:", token);
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
 
-if (!token) {
-  alert("Token not found. Please login again.");
-  return;
-}
-
-const response = await fetch(
-  "https://clinic-backend-5ucx.onrender.com/api/clinics/patients",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(patientData),
-  }
-);
+        body: JSON.stringify(patientData),
+      }
+    );
 
     const data = await response.json();
 
+    console.log("Status Code:", response.status);
     console.log("API Response:", data);
 
-    if (!response.ok) {
-      alert(data.message || data.error || "Failed to save patient");
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      alert("Session expired. Please login again.");
+
+      navigate("/login");
+
       return;
     }
 
-    // Store token only if API returns one
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-
-      console.log(
-        "Stored Token:",
-        localStorage.getItem("token")
+    if (response.status === 403) {
+      alert(
+        data.message ||
+          "You do not have permission to add patient. Please login with Clinic account."
       );
-    } else {
-      console.log("No token returned from API");
+
+      return;
+    }
+
+    if (!response.ok) {
+      alert(
+        data.message ||
+          data.error ||
+          "Failed to save patient"
+      );
+
+      return;
     }
 
     alert("Patient Saved Successfully!");
@@ -265,7 +355,8 @@ const response = await fetch(
 
     setErrors({});
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Add Patient Error:", error);
+
     alert("Something went wrong!");
   } finally {
     setLoading(false);
@@ -287,12 +378,13 @@ const response = await fetch(
 
           <h2>Add Patient</h2>
 
-          <form onSubmit={handleSubmit}>
-
-            {/* NAME */}
+         <form ref={formRef} onSubmit={handleSubmit}
+          onKeyDown={handleFormKeyDown}>
+ 
+                   
+                    {/* NAME */}
 
             <div className="form-group">
-
               <label> Name <span>*</span></label>
               <input  type="text"  name="name"  placeholder="Enter Patient Name"
                value={formData.name} onChange={handleChange}  />
@@ -304,10 +396,9 @@ const response = await fetch(
 
             </div>
  
-            {/* AGE */}
+                            {/* AGE */}
 
             <div className="form-group">
-
               <label> Age <span>*</span></label>
               <input    type="number"  name="age"  placeholder="Enter Age"
               value={formData.age}   onChange={handleChange} />
@@ -346,9 +437,6 @@ const response = await fetch(
             <div className="form-group">
 
               <label> Mobile Number <span>*</span>    </label>
-             
-          
-
               <input  type="tel"    name="mobile" placeholder="Enter Mobile Number"
                 maxLength="10"   value={formData.mobile}  onChange={handleChange}/>
                {errors.mobile && (
@@ -434,13 +522,9 @@ const response = await fetch(
      )}
 </div>
 
-
+                  {/* Time Slot */}
           <div className="form-group">
          <label> Available Time Slot<span>*</span></label>
-   
-    
-  
-
   <select  name="appointmentTime"  value={formData.appointmentTime}
   onChange={handleChange}>
 
