@@ -183,31 +183,21 @@ export default function PrescriptionSettingForm() {
       STATES
   -----------------------------------------------------------*/
 
-  const [formData, setFormData] =
-    useState(defaultForm);
+  const [formData, setFormData] =  useState(defaultForm);
 
-  const [leftSections, setLeftSections] =
-    useState(defaultLeftSections);
+  const [leftSections, setLeftSections] = useState(defaultLeftSections);
 
-  const [treatmentSections, setTreatmentSections] =
-    useState(defaultTreatmentSections);
+  const [treatmentSections, setTreatmentSections] =  useState(defaultTreatmentSections);
+  
 
   /*----------------------------------------------------------
       POPUP STATE
   -----------------------------------------------------------*/
 
-  const [showPopup, setShowPopup] =
-    useState(false);
-
-  const [popupMode, setPopupMode] =
-    useState("add");
-
-  const [selectedSection, setSelectedSection] =
-    useState(null);
-
-  const [editingItemId, setEditingItemId] =
-    useState(null);
-
+  const [showPopup, setShowPopup] =  useState(false);
+  const [popupMode, setPopupMode] =  useState("add");
+  const [selectedSection, setSelectedSection] =  useState(null);
+  const [editingItemId, setEditingItemId] = useState(null);
   const [popupData, setPopupData] =
     useState({
 
@@ -223,17 +213,11 @@ export default function PrescriptionSettingForm() {
       EDIT TITLE POPUP
   -----------------------------------------------------------*/
 
-  const [showTitlePopup, setShowTitlePopup] =
-    useState(false);
-
-  const [editingSectionId, setEditingSectionId] =
-    useState("");
-
-  const [editingSectionType, setEditingSectionType] =
-    useState("");
-
-  const [editingTitle, setEditingTitle] =
-    useState("");
+const [showTitlePopup, setShowTitlePopup] =  useState(false);  
+  const [editingSectionId, setEditingSectionId] = useState("");   
+  const [editingSectionType, setEditingSectionType] =  useState("");
+  const [editingTitle, setEditingTitle] =  useState("");
+  
 
   /*----------------------------------------------------------
         LOAD LOCAL STORAGE

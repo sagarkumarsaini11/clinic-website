@@ -22,41 +22,230 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
+// ================= BASE URL =================
+
+const BASE_URL =
+  "https://clinic-backend-5ucx.onrender.com";
+
 const HomePage = () => {
   const navigate = useNavigate();
+
   const location = useLocation();
 
   // ================= STATES =================
 
-  const [showAppointments, setShowAppointments] =
-    useState(false);
+  const [showAppointments, setShowAppointments,] = useState(false);
 
-  const [currentPatient, setCurrentPatient] =
-    useState(null);
+  const [ currentPatient, setCurrentPatient,] = useState(null);
+   
+  const [ searchValue, setSearchValue,] = useState("");
+   
+  const [ showPatientCard,setShowPatientCard,] = useState(false);
+   
+  const [ attendanceMarked, setAttendanceMarked,] = useState(false);
+   
+  const [ attendanceDate,setAttendanceDate,] = useState("Not Marked");
+   
+  const [loading, setLoading, ] = useState(true);
+    
+  const [patientList, setPatientList,] = useState([]);
+    
+  const [  showProfileModal, setShowProfileModal,] = useState(false);
 
-  const [searchValue, setSearchValue] =
-    useState("");
+  const [ userData, setUserData,] = useState(null);
+   
+  const [ searchLoading, setSearchLoading,] = useState(false);
+   
+   
+  
 
-  const [showPatientCard, setShowPatientCard] =
-    useState(false);
+  // ================= FORMAT PATIENT =================
 
-  const [attendanceMarked, setAttendanceMarked] =
-    useState(false);
+  const formatPatient = (item) => {
+    const payableAmount = Number(
+      item.amount ??
+        item.payable_amount ??
+        item.package_amount ??
+        700
+    );
 
-  const [attendanceDate, setAttendanceDate] =
-    useState("Not Marked");
+    const cashPaid = Number(
+      item.cash_amount ??
+        item.cash ??
+        0
+    );
 
-  const [loading, setLoading] =
-    useState(true);
+    const upiPaid = Number(
+      item.upi_amount ??
+        item.online_amount ??
+        item.upi ??
+        0
+    );
 
-  const [patientList, setPatientList] =
-    useState([]);
+    const totalPaid =
+      cashPaid + upiPaid;
 
-  const [showProfileModal, setShowProfileModal] =
-    useState(false);
+    return {
+      ...item,
 
-  const [userData, setUserData] =
-    useState(null);
+      // ================= ID =================
+
+      _id:
+        item.id ||
+        item._id ||
+        "",
+
+      // ================= NAME =================
+
+      name:
+        item.full_name ||
+        item.name ||
+        "",
+
+      // ================= AGE =================
+
+      age:
+        item.age ?? "",
+
+      // ================= GENDER =================
+
+      gender:
+        item.gender ||
+        item.sex ||
+        "",
+
+      // ================= MOBILE =================
+
+      mobileNumber:
+        item.mobile_number ||
+        item.mobileNumber ||
+        item.mobile ||
+        "",
+
+      // ================= ADDRESS =================
+
+      address:
+        item.address || "",
+
+      // ================= PROBLEM =================
+
+      problem:
+        item.problem ||
+        item.disease_problem ||
+        "",
+
+      // ================= APPOINTMENT TYPE =================
+
+      appointmentType:
+        item.appointment_type ||
+        item.appointmentType ||
+        "",
+
+      // ================= APPOINTMENT DATE =================
+
+      appointmentDate:
+        item.appointment_date ||
+        item.appointmentDate ||
+        item.created_date ||
+        "",
+
+      // ================= APPOINTMENT TIME =================
+
+      appointmentTime:
+        item.appointment_time ||
+        item.appointmentTime ||
+        "",
+
+      // ================= AMOUNT =================
+
+      amount: payableAmount,
+
+      // ================= CASH =================
+
+      cash: cashPaid,
+
+      // ================= UPI =================
+
+      upi: upiPaid,
+
+      // ================= TOTAL =================
+
+      total: totalPaid,
+
+      // ================= BACKEND TOTAL =================
+
+      backendTotalAmount: Number(
+        item.total_amount ?? 0
+      ),
+
+      // ================= FILE NUMBER =================
+
+      fileNo:
+        item.file_number ||
+        item.fileNo ||
+        "",
+
+      // ================= PATIENT CODE =================
+
+      patientCode:
+        item.patient_code ||
+        item.patientCode ||
+        "",
+
+      // ================= LAST ATTENDANCE =================
+
+      lastAttendanceDate:
+        item.last_attendance_date ||
+        item.lastAttendanceDate ||
+        "",
+
+      // ================= PAYMENT METHOD =================
+
+      paymentMethod:
+        item.payment_method ||
+        "",
+
+      // ================= PACKAGE NAME =================
+
+      packageName:
+        item.package_name ||
+        "",
+
+      // ================= SESSIONS REMAINING =================
+
+      sessionsRemaining:
+        item.sessions_remaining ??
+        0,
+
+      // ================= REPORT TYPE =================
+
+      reportType:
+        item.report_type ||
+        "",
+
+      // ================= START DATE =================
+
+      startDate:
+        item.start_date || "",
+
+      // ================= CREATED DATE =================
+
+      createdDate:
+        item.created_date ||
+        "",
+
+      // ================= BRANCH ID =================
+
+      branchId:
+        item.branch_id || "",
+
+      // ================= DOCUMENT =================
+
+      documentFile:
+        item.document_file ||
+        null,
+    };
+  };
 
   // ================= PROFILE DATA =================
 
@@ -122,12 +311,13 @@ const HomePage = () => {
       }
 
       const response = await fetch(
-        "https://clinic-backend-5ucx.onrender.com/api/clinic/patients",
+        `${BASE_URL}/api/clinic/patients`,
         {
           method: "GET",
 
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:
+              `Bearer ${token}`,
           },
         }
       );
@@ -145,12 +335,16 @@ const HomePage = () => {
         data
       );
 
-      // ================= 401 ERROR =================
+      // ================= 401 =================
 
       if (response.status === 401) {
-        localStorage.removeItem("token");
+        localStorage.removeItem(
+          "token"
+        );
 
-        localStorage.removeItem("user");
+        localStorage.removeItem(
+          "user"
+        );
 
         alert(
           "Session expired. Please login again."
@@ -161,7 +355,7 @@ const HomePage = () => {
         return;
       }
 
-      // ================= 403 ERROR =================
+      // ================= 403 =================
 
       if (response.status === 403) {
         alert(
@@ -216,204 +410,13 @@ const HomePage = () => {
         patients
       );
 
-      // ================= FORMAT PATIENT DATA =================
+      // ================= FORMAT PATIENTS =================
 
       const formattedPatients =
-        patients.map((item) => {
-          // PAYABLE AMOUNT
-
-          const payableAmount = Number(
-            item.amount ??
-              item.payable_amount ??
-              item.package_amount ??
-              700
-          );
-
-          // CASH PAID
-
-          const cashPaid = Number(
-            item.cash_amount ??
-              item.cash ??
-              0
-          );
-
-          // UPI PAID
-
-          const upiPaid = Number(
-            item.upi_amount ??
-              item.online_amount ??
-              item.upi ??
-              0
-          );
-
-          // TOTAL PAID
-
-          const totalPaid =
-            cashPaid + upiPaid;
-
-          return {
-            ...item,
-
-            // ID
-
-            _id:
-              item.id ||
-              item._id ||
-              "",
-
-            // NAME
-
-            name:
-              item.full_name ||
-              item.name ||
-              "",
-
-            // AGE
-
-            age:
-              item.age ?? "",
-
-            // GENDER
-
-            gender:
-              item.gender ||
-              item.sex ||
-              "",
-
-            // MOBILE
-
-            mobileNumber:
-              item.mobile_number ||
-              item.mobileNumber ||
-              item.mobile ||
-              "",
-
-            // ADDRESS
-
-            address:
-              item.address ||
-              "",
-
-            // PROBLEM
-
-            problem:
-              item.disease_problem ||
-              item.problem ||
-              "",
-
-            // APPOINTMENT TYPE
-
-            appointmentType:
-              item.appointment_type ||
-              item.appointmentType ||
-              "",
-
-            // APPOINTMENT DATE
-
-            appointmentDate:
-              item.appointment_date ||
-              item.appointmentDate ||
-              item.created_date ||
-              "",
-
-            // APPOINTMENT TIME
-
-            appointmentTime:
-              item.appointment_time ||
-              item.appointmentTime ||
-              "",
-
-            // AMOUNT
-
-            amount: payableAmount,
-
-            // CASH PAID
-
-            cash: cashPaid,
-
-            // UPI PAID
-
-            upi: upiPaid,
-
-            // TOTAL PAID
-
-            total: totalPaid,
-
-            // BACKEND TOTAL AMOUNT
-
-            backendTotalAmount: Number(
-              item.total_amount ?? 0
-            ),
-
-            // FILE NUMBER
-
-            fileNo:
-              item.file_number ||
-              item.fileNo ||
-              "",
-
-            // PATIENT CODE
-
-            patientCode:
-              item.patient_code ||
-              item.patientCode ||
-              "",
-
-            // LAST ATTENDANCE
-
-            lastAttendanceDate:
-              item.last_attendance_date ||
-              "",
-
-            // PAYMENT METHOD
-
-            paymentMethod:
-              item.payment_method ||
-              "",
-
-            // PACKAGE NAME
-
-            packageName:
-              item.package_name ||
-              "",
-
-            // SESSIONS REMAINING
-
-            sessionsRemaining:
-              item.sessions_remaining ??
-              0,
-
-            // REPORT TYPE
-
-            reportType:
-              item.report_type ||
-              "",
-
-            // START DATE
-
-            startDate:
-              item.start_date ||
-              "",
-
-            // CREATED DATE
-
-            createdDate:
-              item.created_date ||
-              "",
-
-            // BRANCH ID
-
-            branchId:
-              item.branch_id ||
-              "",
-
-            // DOCUMENT
-
-            documentFile:
-              item.document_file ||
-              null,
-          };
-        });
+        patients.map(
+          (item) =>
+            formatPatient(item)
+        );
 
       console.log(
         "FORMATTED PATIENT DATA:",
@@ -447,11 +450,37 @@ const HomePage = () => {
 
   useEffect(() => {
     if (
-      location.state?.openPatientPopup &&
+      location.state
+        ?.openPatientPopup &&
       location.state?.patient
     ) {
-      setCurrentPatient(
-        location.state.patient
+      const patient =
+        formatPatient(
+          location.state.patient
+        );
+
+      setCurrentPatient(patient);
+
+      const hasAttendance =
+        Boolean(
+          patient.lastAttendanceDate ||
+            patient.last_attendance_date
+        );
+
+      setAttendanceMarked(
+        hasAttendance
+      );
+
+      setAttendanceDate(
+        patient.lastAttendanceDate ||
+          patient.last_attendance_date
+          ? new Date(
+              patient.lastAttendanceDate ||
+                patient.last_attendance_date
+            ).toLocaleDateString(
+              "en-IN"
+            )
+          : "Not Marked"
       );
 
       setShowPatientCard(true);
@@ -460,15 +489,28 @@ const HomePage = () => {
 
   // ================= OPEN PATIENT =================
 
-  const openPatient = (patient) => {
+  const openPatient = (patientData) => {
+    const patient =
+      formatPatient(patientData);
+
     setCurrentPatient(patient);
 
-    setAttendanceMarked(false);
+    const hasAttendance =
+      Boolean(
+        patient.lastAttendanceDate ||
+          patient.last_attendance_date
+      );
+
+    setAttendanceMarked(
+      hasAttendance
+    );
 
     setAttendanceDate(
-      patient.lastAttendanceDate
+      patient.lastAttendanceDate ||
+        patient.last_attendance_date
         ? new Date(
-            patient.lastAttendanceDate
+            patient.lastAttendanceDate ||
+              patient.last_attendance_date
           ).toLocaleDateString(
             "en-IN"
           )
@@ -478,56 +520,215 @@ const HomePage = () => {
     setShowPatientCard(true);
   };
 
-  // ================= SEARCH PATIENT =================
+  // ================= SEARCH PATIENT API =================
 
-  const handleSubmit = () => {
-    const search =
-      searchValue
-        .trim()
-        .toLowerCase();
+  const handleSubmit = async () => {
+    try {
+      const fileNumber =
+        searchValue.trim();
 
-    if (!search) {
-      return;
-    }
+      if (!fileNumber) {
+        return;
+      }
 
-    const patient =
-      patientList.find((item) => {
-        const name =
-          String(
-            item.name || ""
-          ).toLowerCase();
+      const token =
+        localStorage.getItem("token");
 
-        const mobile =
-          String(
-            item.mobileNumber || ""
-          );
-
-        const fileNo =
-          String(
-            item.fileNo || ""
-          ).toLowerCase();
-
-        const patientCode =
-          String(
-            item.patientCode || ""
-          ).toLowerCase();
-
-        return (
-          name.includes(search) ||
-          mobile ===
-            searchValue.trim() ||
-          fileNo === search ||
-          patientCode === search
+      if (!token) {
+        alert(
+          "Token not found. Please login again."
         );
-      });
 
-    if (!patient) {
-      alert("Patient Not Found");
+        navigate("/login");
 
-      return;
+        return;
+      }
+
+      setSearchLoading(true);
+
+      console.log(
+        "SEARCH FILE NUMBER:",
+        fileNumber
+      );
+
+      // ================= SEARCH API =================
+
+      const response = await fetch(
+        `${BASE_URL}/api/clinic/patients/search?file_number=${encodeURIComponent(
+          fileNumber
+        )}`,
+        {
+          method: "GET",
+
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+      const responseText =
+        await response.text();
+
+      console.log(
+        "RAW SEARCH RESPONSE:",
+        responseText
+      );
+
+      let data = {};
+
+      try {
+        data = responseText
+          ? JSON.parse(responseText)
+          : {};
+      } catch (error) {
+        console.error(
+          "SEARCH JSON PARSE ERROR:",
+          error
+        );
+      }
+
+      console.log(
+        "SEARCH STATUS:",
+        response.status
+      );
+
+      console.log(
+        "SEARCH RESPONSE:",
+        data
+      );
+
+      // ================= 401 =================
+
+      if (response.status === 401) {
+        localStorage.removeItem(
+          "token"
+        );
+
+        localStorage.removeItem(
+          "user"
+        );
+
+        alert(
+          "Session expired. Please login again."
+        );
+
+        navigate("/login");
+
+        return;
+      }
+
+      // ================= 403 =================
+
+      if (response.status === 403) {
+        alert(
+          data.message ||
+            "You do not have permission to search patients."
+        );
+
+        return;
+      }
+
+      // ================= 404 =================
+
+      if (response.status === 404) {
+        alert(
+          data.message ||
+            "Patient Not Found"
+        );
+
+        return;
+      }
+
+      // ================= API ERROR =================
+
+      if (!response.ok) {
+        alert(
+          data.message ||
+            data.error ||
+            `Patient search failed. Status: ${response.status}`
+        );
+
+        return;
+      }
+
+      // ================= GET PATIENT FROM RESPONSE =================
+
+      let patient = null;
+
+      if (
+        data &&
+        !Array.isArray(data) &&
+        (
+          data.id ||
+          data._id ||
+          data.file_number ||
+          data.patient_code
+        )
+      ) {
+        patient = data;
+      } else if (
+        data.data &&
+        !Array.isArray(data.data)
+      ) {
+        patient =
+          data.data.patient ||
+          data.data;
+      } else if (
+        data.patient &&
+        !Array.isArray(data.patient)
+      ) {
+        patient = data.patient;
+      } else if (
+        Array.isArray(data) &&
+        data.length > 0
+      ) {
+        patient = data[0];
+      } else if (
+        Array.isArray(data.data) &&
+        data.data.length > 0
+      ) {
+        patient = data.data[0];
+      } else if (
+        Array.isArray(data.patients) &&
+        data.patients.length > 0
+      ) {
+        patient =
+          data.patients[0];
+      } else if (
+        Array.isArray(data.result) &&
+        data.result.length > 0
+      ) {
+        patient =
+          data.result[0];
+      }
+
+      console.log(
+        "SEARCHED PATIENT:",
+        patient
+      );
+
+      if (!patient) {
+        alert("Patient Not Found");
+
+        return;
+      }
+
+      // ================= OPEN PATIENT POPUP =================
+
+      openPatient(patient);
+    } catch (error) {
+      console.error(
+        "SEARCH PATIENT ERROR:",
+        error
+      );
+
+      alert(
+        "Something went wrong while searching patient!"
+      );
+    } finally {
+      setSearchLoading(false);
     }
-
-    openPatient(patient);
   };
 
   // ================= CAMERA CLICK =================
@@ -548,33 +749,252 @@ const HomePage = () => {
     }
   };
 
-  // ================= MARK ATTENDANCE =================
+  // ================= MARK ATTENDANCE API =================
 
-  const handleMarkAttendance = () => {
-    const today =
-      new Date().toLocaleDateString(
-        "en-IN"
-      );
+  const handleMarkAttendance =
+    async () => {
+      try {
+        const token =
+          localStorage.getItem(
+            "token"
+          );
 
-    setAttendanceMarked(true);
+        if (!token) {
+          alert(
+            "Token not found. Please login again."
+          );
 
-    setAttendanceDate(today);
+          navigate("/login");
 
-    alert(
-      `${currentPatient?.name} Attendance Marked`
-    );
-  };
+          return;
+        }
+
+        if (!currentPatient) {
+          alert(
+            "Patient data not found"
+          );
+
+          return;
+        }
+
+        const patientId =
+          currentPatient.id ||
+          currentPatient._id;
+
+        console.log(
+          "COMPLETE CURRENT PATIENT:",
+          currentPatient
+        );
+
+        console.log(
+          "PATIENT ID:",
+          patientId
+        );
+
+        if (!patientId) {
+          alert(
+            "Patient ID not found"
+          );
+
+          return;
+        }
+
+        // ================= PAYLOAD =================
+
+        const attendancePayload = {
+          patientId:
+            Number(patientId),
+        };
+
+        console.log(
+          "ATTENDANCE PAYLOAD:",
+          attendancePayload
+        );
+
+        // ================= API CALL =================
+
+        const response = await fetch(
+          `${BASE_URL}/api/clinic/patients/attendance`,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+
+              Authorization:
+                `Bearer ${token}`,
+            },
+
+            body: JSON.stringify(
+              attendancePayload
+            ),
+          }
+        );
+
+        const responseText =
+          await response.text();
+
+        console.log(
+          "RAW ATTENDANCE RESPONSE:",
+          responseText
+        );
+
+        let data = {};
+
+        try {
+          data = responseText
+            ? JSON.parse(
+                responseText
+              )
+            : {};
+        } catch (error) {
+          console.error(
+            "JSON PARSE ERROR:",
+            error
+          );
+        }
+
+        console.log(
+          "ATTENDANCE STATUS:",
+          response.status
+        );
+
+        console.log(
+          "ATTENDANCE RESPONSE:",
+          data
+        );
+
+        // ================= 401 =================
+
+        if (
+          response.status === 401
+        ) {
+          localStorage.removeItem(
+            "token"
+          );
+
+          localStorage.removeItem(
+            "user"
+          );
+
+          alert(
+            "Session expired. Please login again."
+          );
+
+          navigate("/login");
+
+          return;
+        }
+
+        // ================= 403 =================
+
+        if (
+          response.status === 403
+        ) {
+          alert(
+            data.message ||
+              "You do not have permission to mark attendance."
+          );
+
+          return;
+        }
+
+        // ================= API ERROR =================
+
+        if (!response.ok) {
+          alert(
+            data.message ||
+              data.error ||
+              `Attendance failed. Status: ${response.status}`
+          );
+
+          return;
+        }
+
+        // ================= ATTENDANCE DATE =================
+
+        const attendanceDateFromApi =
+          data.attendance_date ||
+          data.data
+            ?.attendance_date ||
+          data.last_attendance_date ||
+          data.data
+            ?.last_attendance_date ||
+          new Date().toISOString();
+
+        // ================= FILE NUMBER =================
+
+        const fileNumberFromApi =
+          data.file_number ||
+          data.fileNo ||
+          data.data?.file_number ||
+          data.data?.fileNo ||
+          currentPatient.file_number ||
+          currentPatient.fileNo ||
+          "";
+
+        const formattedDate =
+          new Date(
+            attendanceDateFromApi
+          ).toLocaleDateString(
+            "en-IN"
+          );
+
+        // ================= UPDATE ATTENDANCE =================
+
+        setAttendanceMarked(true);
+
+        setAttendanceDate(
+          formattedDate
+        );
+
+        // ================= UPDATE CURRENT PATIENT =================
+
+        setCurrentPatient(
+          (previousPatient) => ({
+            ...previousPatient,
+
+            lastAttendanceDate:
+              attendanceDateFromApi,
+
+            last_attendance_date:
+              attendanceDateFromApi,
+
+            fileNo:
+              fileNumberFromApi,
+
+            file_number:
+              fileNumberFromApi,
+          })
+        );
+
+        alert(
+          data.message ||
+            "Attendance Marked Successfully"
+        );
+
+        await fetchPatients();
+      } catch (error) {
+        console.error(
+          "MARK ATTENDANCE ERROR:",
+          error
+        );
+
+        alert(
+          "Something went wrong while marking attendance!"
+        );
+      }
+    };
 
   return (
     <div className="container-homepage">
-
       {/* ================= SEARCH BOX ================= */}
 
       <div className="search-box">
-
         <input
           type="text"
-          placeholder="Enter File No / Patient Name / Mobile No"
+          placeholder="Enter File No"
           value={searchValue}
           onChange={(e) =>
             setSearchValue(
@@ -582,12 +1002,15 @@ const HomePage = () => {
             )
           }
           onKeyDown={handleEnterKey}
+          disabled={searchLoading}
         />
 
-        {searchValue.trim().length > 0 ? (
+        {searchValue.trim().length >
+        0 ? (
           <button
             className="search-icon-btn"
             onClick={handleSubmit}
+            disabled={searchLoading}
           >
             <FaSearch size={20} />
           </button>
@@ -601,7 +1024,6 @@ const HomePage = () => {
             <FaCamera size={20} />
           </button>
         )}
-
       </div>
 
       {/* ================= PATIENT RECORDS ================= */}
@@ -612,7 +1034,6 @@ const HomePage = () => {
         </h3>
       ) : (
         <div className="records-section">
-
           <button
             className="appointment-record-btn"
             onClick={() =>
@@ -622,25 +1043,22 @@ const HomePage = () => {
             }
           >
             {showAppointments
-              ? "Hide Appointments "
-              : "Show Appointments "}
+              ? "Hide Appointments"
+              : "Show Appointments"}
           </button>
 
           {showAppointments && (
             <>
-              {patientList.length === 0 ? (
+              {patientList.length ===
+              0 ? (
                 <p>
                   No Patient Added
                 </p>
               ) : (
                 <div className="table-container">
-
                   <table className="appointment-table">
-
                     <thead>
-
                       <tr>
-
                         <th>S.No</th>
 
                         <th>Name</th>
@@ -680,13 +1098,10 @@ const HomePage = () => {
                         </th>
 
                         <th>Action</th>
-
                       </tr>
-
                     </thead>
 
                     <tbody>
-
                       {patientList.map(
                         (
                           item,
@@ -694,12 +1109,14 @@ const HomePage = () => {
                         ) => {
                           const cashPaid =
                             Number(
-                              item.cash || 0
+                              item.cash ||
+                                0
                             );
 
                           const upiPaid =
                             Number(
-                              item.upi || 0
+                              item.upi ||
+                                0
                             );
 
                           const totalPaid =
@@ -713,9 +1130,9 @@ const HomePage = () => {
                                 index
                               }
                             >
-
                               <td>
-                                {index + 1}
+                                {index +
+                                  1}
                               </td>
 
                               <td>
@@ -781,7 +1198,6 @@ const HomePage = () => {
                               </td>
 
                               <td>
-
                                 <button
                                   className="enter-btn"
                                   onClick={() =>
@@ -792,23 +1208,17 @@ const HomePage = () => {
                                 >
                                   Enter
                                 </button>
-
                               </td>
-
                             </tr>
                           );
                         }
                       )}
-
                     </tbody>
-
                   </table>
-
                 </div>
               )}
             </>
           )}
-
         </div>
       )}
 
@@ -817,9 +1227,7 @@ const HomePage = () => {
       {showPatientCard &&
         currentPatient && (
           <div className="modal-overlay">
-
             <div className="patient-card">
-
               <FaTimes
                 className="close-icon"
                 onClick={() =>
@@ -830,7 +1238,6 @@ const HomePage = () => {
               />
 
               <div className="patient-header">
-
                 <h2>
                   {currentPatient.name ||
                     "Patient"}
@@ -916,12 +1323,23 @@ const HomePage = () => {
                   {attendanceDate}
                 </p>
 
+                {/* ================= FILE NUMBER ================= */}
+
+                {attendanceMarked && (
+                  <p>
+                    <strong>
+                      File No:
+                    </strong>{" "}
+                    {currentPatient.fileNo ||
+                      currentPatient.file_number ||
+                      "-"}
+                  </p>
+                )}
               </div>
 
               {/* ================= ATTENDANCE ================= */}
 
               <div className="attendance-box">
-
                 {!attendanceMarked ? (
                   <button
                     className="attendance-btn"
@@ -933,20 +1351,16 @@ const HomePage = () => {
                   </button>
                 ) : (
                   <div className="attendance-success">
-
                     <h3>
                       ✅ Attendance Marked
                     </h3>
-
                   </div>
                 )}
-
               </div>
 
               {/* ================= FEATURE CARDS ================= */}
 
               <div className="feature-row">
-
                 <div
                   className="feature-card"
                   onClick={() =>
@@ -956,6 +1370,7 @@ const HomePage = () => {
                         state: {
                           returnToPopup:
                             true,
+
                           patient:
                             currentPatient,
                         },
@@ -963,11 +1378,9 @@ const HomePage = () => {
                     )
                   }
                 >
-
                   <FaWallet size={35} />
 
                   <p>Recharge</p>
-
                 </div>
 
                 <div
@@ -979,6 +1392,7 @@ const HomePage = () => {
                         state: {
                           returnToPopup:
                             true,
+
                           patient:
                             currentPatient,
                         },
@@ -986,21 +1400,22 @@ const HomePage = () => {
                     )
                   }
                 >
-
                   <FaFolder size={35} />
 
                   <p>
                     Open Patient File
                   </p>
-
                 </div>
 
-                <div className="feature-card">
-
+                <div
+                  className="feature-card"
+                  onClick={() =>
+                    navigate("/")
+                  }
+                >
                   <FaHome size={35} />
 
                   <p>Homepage</p>
-
                 </div>
 
                 <div
@@ -1017,13 +1432,11 @@ const HomePage = () => {
                     )
                   }
                 >
-
                   <FaFilePrescription
                     size={35}
                   />
 
                   <p>Prescription</p>
-
                 </div>
 
                 <div
@@ -1040,7 +1453,6 @@ const HomePage = () => {
                     )
                   }
                 >
-
                   <FaClipboardList
                     size={35}
                   />
@@ -1048,7 +1460,6 @@ const HomePage = () => {
                   <p>
                     Treatment Protocol
                   </p>
-
                 </div>
 
                 <div
@@ -1065,7 +1476,6 @@ const HomePage = () => {
                     )
                   }
                 >
-
                   <FaCalendarCheck
                     size={35}
                   />
@@ -1073,49 +1483,41 @@ const HomePage = () => {
                   <p>
                     Attendance Sheet
                   </p>
-
                 </div>
-
               </div>
 
               {/* ================= STATS ================= */}
 
               <div className="stats-row">
-
                 <div>
-
-                  <h3>Attendance</h3>
+                  <h3>
+                    Attendance
+                  </h3>
 
                   <h2>72%</h2>
 
                   <p>Good</p>
-
                 </div>
 
                 <div>
-
-                  <h3>Punctuality</h3>
+                  <h3>
+                    Punctuality
+                  </h3>
 
                   <h2>85%</h2>
 
                   <p>Excellent</p>
-
                 </div>
-
               </div>
 
               {/* ================= WHATSAPP ================= */}
 
               <button className="whatsapp-btn">
-
                 <FaWhatsapp />
 
                 Share ID on WhatsApp
-
               </button>
-
             </div>
-
           </div>
         )}
 
@@ -1123,9 +1525,7 @@ const HomePage = () => {
 
       {showProfileModal && (
         <div className="modal-overlay">
-
           <div className="profile-modal">
-
             <FaTimes
               className="close-icon"
               onClick={() =>
@@ -1135,9 +1535,7 @@ const HomePage = () => {
               }
             />
 
-            <h2>
-              Clinic Profile
-            </h2>
+            <h2>Clinic Profile</h2>
 
             <p>
               <strong>ID:</strong>{" "}
@@ -1163,12 +1561,9 @@ const HomePage = () => {
               <strong>Role:</strong>{" "}
               {userData?.role || "-"}
             </p>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 };

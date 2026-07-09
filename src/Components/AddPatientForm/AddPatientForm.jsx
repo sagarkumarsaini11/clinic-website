@@ -133,14 +133,9 @@ export default function AddPatientForm() {
       [name]: value,
     };
 
-    const cash = Number(
-      updatedData.cash || 0
-    );
+    const cash = Number( updatedData.cash || 0);
 
-    const upi = Number(
-      updatedData.upi || 0
-    );
-
+    const upi = Number( updatedData.upi || 0 );
     updatedData.total = cash + upi;
 
     setFormData(updatedData);
@@ -288,18 +283,14 @@ export default function AddPatientForm() {
             ? formData.appointmentTime
             : null,
 
-        cash: Number(
-          formData.cash || 0
-        ),
+        cash: Number(  formData.cash || 0),
 
-        upi: Number(
-          formData.upi || 0
-        ),
+        upi: Number( formData.upi || 0 ),
 
-        total: Number(
-          formData.total || 0
-        ),
+        total: Number( formData.total || 0 ),
+       
       };
+         
 
       console.log(
         "Sending Data:",
@@ -342,10 +333,8 @@ export default function AddPatientForm() {
 
         localStorage.removeItem("user");
 
-        alert(
-          "Session expired. Please login again."
-        );
-
+        alert( "Session expired. Please login again.");
+ 
         navigate("/login");
 
         return;
@@ -422,7 +411,7 @@ export default function AddPatientForm() {
     <>
       <div className="page-wrapper-addpatient">
 
-        {/* FORM */}
+                    {/* FORM */}
 
         <div className="patient-container-addpatient">
 
@@ -440,9 +429,7 @@ export default function AddPatientForm() {
 
               <div className="form-group">
 
-                <label>
-                  Name <span>*</span>
-                </label>
+                <label>  Name <span>*</span> </label>
 
                 <input
                   type="text"
@@ -464,9 +451,7 @@ export default function AddPatientForm() {
 
               <div className="form-group">
 
-                <label>
-                  Age <span>*</span>
-                </label>
+                <label> Age <span>*</span> </label>
 
                 <input
                   type="number"
@@ -488,31 +473,19 @@ export default function AddPatientForm() {
 
               <div className="form-group">
 
-                <label>
-                  Gender <span>*</span>
-                </label>
+                <label> Gender <span>*</span>  </label>
 
-                <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                >
+                <select  name="gender"
+                 value={formData.gender}
+                  onChange={handleChange} >
 
-                  <option value="">
-                    Select Gender
-                  </option>
+                  <option value="">  Select Gender </option>
 
-                  <option value="Male">
-                    Male
-                  </option>
+                  <option value="Male"> Male </option>
 
-                  <option value="Female">
-                    Female
-                  </option>
+                  <option value="Female"> Female</option>
 
-                  <option value="Other">
-                    Other
-                  </option>
+                  <option value="Other">Other </option>
 
                 </select>
 
@@ -528,9 +501,7 @@ export default function AddPatientForm() {
 
               <div className="form-group">
 
-                <label>
-                  Mobile Number <span>*</span>
-                </label>
+                <label>Mobile Number <span>*</span> </label>
 
                 <input
                   type="tel"
@@ -553,9 +524,7 @@ export default function AddPatientForm() {
 
               <div className="form-group full-width">
 
-                <label>
-                  Address <span>*</span>
-                </label>
+                <label>    Address <span>*</span> </label>
 
                 <textarea
                   name="address"
@@ -577,9 +546,7 @@ export default function AddPatientForm() {
 
               <div className="form-group full-width">
 
-                <label>
-                  Problem <span>*</span>
-                </label>
+                <label>  Problem <span>*</span></label>
 
                 <textarea
                   name="problem"
@@ -601,10 +568,7 @@ export default function AddPatientForm() {
 
               <div className="form-group">
 
-                <label>
-                  Appointment Type{" "}
-                  <span>*</span>
-                </label>
+                <label>   Appointment Type{" "}<span>*</span> </label>
 
                 <div className="radio-group">
 
@@ -700,64 +664,35 @@ export default function AddPatientForm() {
                       value={
                         formData.appointmentTime
                       }
-                      onChange={handleChange}
-                    >
+                      onChange={handleChange}>
 
-                      <option value="">
-                        Select Time
-                      </option>
+                      <option value=""> Select Time  </option>
 
-                      <option value="09:00 AM">
-                        09:00 AM
-                      </option>
+                      <option value="09:00 AM"> 09:00 AM</option>
 
-                      <option value="10:00 AM">
-                        10:00 AM
-                      </option>
+                      <option value="10:00 AM"> 10:00 AM</option>
 
-                      <option value="11:00 AM">
-                        11:00 AM
-                      </option>
+                      <option value="11:00 AM">11:00 AM </option>
+ 
+                      <option value="12:00 PM"> 12:00 PM </option>
 
-                      <option value="12:00 PM">
-                        12:00 PM
-                      </option>
+                      <option value="01:00 PM">01:00 PM </option>
+    
+                      <option value="02:00 PM"> 02:00 PM</option>
 
-                      <option value="01:00 PM">
-                        01:00 PM
-                      </option>
+                      <option value="03:00 PM">03:00 PM</option>
 
-                      <option value="02:00 PM">
-                        02:00 PM
-                      </option>
+                      <option value="04:00 PM"> 04:00 PM</option>
+ 
+                      <option value="05:00 PM"> 05:00 PM </option>
 
-                      <option value="03:00 PM">
-                        03:00 PM
-                      </option>
+                      <option value="06:00 PM">06:00 PM </option>
 
-                      <option value="04:00 PM">
-                        04:00 PM
-                      </option>
+                      <option value="07:00 PM">07:00 PM  </option>
+ 
+                      <option value="08:00 PM">08:00 PM</option>
 
-                      <option value="05:00 PM">
-                        05:00 PM
-                      </option>
-
-                      <option value="06:00 PM">
-                        06:00 PM
-                      </option>
-
-                      <option value="07:00 PM">
-                        07:00 PM
-                      </option>
-
-                      <option value="08:00 PM">
-                        08:00 PM
-                      </option>
-
-                      <option value="09:00 PM">
-                        09:00 PM
-                      </option>
+                      <option value="09:00 PM">  09:00 PM   </option>
 
                     </select>
 
