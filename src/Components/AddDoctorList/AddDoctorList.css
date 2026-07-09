@@ -113,6 +113,69 @@
   border: 1px solid #e0e0e0;
 }
 
+.edit-input-doctor-list {
+  width: 100%;
+  min-width: 130px;
+  padding: 8px 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.edit-input-doctor-list:focus {
+  border-color: #2563eb;
+}
+
+.action-buttons-doctor-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.edit-button-doctor-list {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 7px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.edit-button-doctor-list:hover {
+  background: #1d4ed8;
+}
+
+.save-button-doctor-list {
+  border: none;
+  background: #16a34a;
+  color: #ffffff;
+  padding: 7px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.save-button-doctor-list:hover {
+  background: #15803d;
+}
+
+.cancel-button-doctor-list {
+  border: none;
+  background: #6b7280;
+  color: #ffffff;
+  padding: 7px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.cancel-button-doctor-list:hover {
+  background: #4b5563;
+}
+
 @media (max-width: 768px) {
   .container-doctor-list {
     padding: 20px 10px;

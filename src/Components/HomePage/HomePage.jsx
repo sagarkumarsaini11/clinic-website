@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 
 import "./HomePage.css";
 
@@ -29,27 +26,39 @@ const HomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // STATES
+  // ================= STATES =================
 
-  const [ showAppointments, setShowAppointments,] = useState(false);
-  const [ currentPatient, setCurrentPatient,] = useState(null);
-  const [ searchValue, setSearchValue,] = useState("");
-  const [showPatientCard,setShowPatientCard, ] = useState(false);
-  const [ attendanceMarked, setAttendanceMarked,] = useState(false);
-  const [ attendanceDate,setAttendanceDate, ] = useState("Not Marked");
-  const [loading,setLoading,] = useState(true);
-  const [ patientList, setPatientList,] = useState([]);
-  const [showProfileModal, setShowProfileModal,] = useState(false);
-    
-   
-  
+  const [showAppointments, setShowAppointments] =
+    useState(false);
 
-  const [
-    userData,
-    setUserData,
-  ] = useState(null);
+  const [currentPatient, setCurrentPatient] =
+    useState(null);
 
-  // PROFILE DATA
+  const [searchValue, setSearchValue] =
+    useState("");
+
+  const [showPatientCard, setShowPatientCard] =
+    useState(false);
+
+  const [attendanceMarked, setAttendanceMarked] =
+    useState(false);
+
+  const [attendanceDate, setAttendanceDate] =
+    useState("Not Marked");
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [patientList, setPatientList] =
+    useState([]);
+
+  const [showProfileModal, setShowProfileModal] =
+    useState(false);
+
+  const [userData, setUserData] =
+    useState(null);
+
+  // ================= PROFILE DATA =================
 
   useEffect(() => {
     const userCookie =
@@ -88,7 +97,7 @@ const HomePage = () => {
     }
   }, []);
 
-  // GET ALL PATIENTS API
+  // ================= GET ALL PATIENTS API =================
 
   const fetchPatients = async () => {
     try {
@@ -136,18 +145,12 @@ const HomePage = () => {
         data
       );
 
-      // ========================================
-      // 401 ERROR
-      // ========================================
+      // ================= 401 ERROR =================
 
       if (response.status === 401) {
-        localStorage.removeItem(
-          "token"
-        );
+        localStorage.removeItem("token");
 
-        localStorage.removeItem(
-          "user"
-        );
+        localStorage.removeItem("user");
 
         alert(
           "Session expired. Please login again."
@@ -158,9 +161,7 @@ const HomePage = () => {
         return;
       }
 
-      // ========================================
-      // 403 ERROR
-      // ========================================
+      // ================= 403 ERROR =================
 
       if (response.status === 403) {
         alert(
@@ -171,9 +172,7 @@ const HomePage = () => {
         return;
       }
 
-      // ========================================
-      // API ERROR
-      // ========================================
+      // ================= API ERROR =================
 
       if (!response.ok) {
         alert(
@@ -185,9 +184,7 @@ const HomePage = () => {
         return;
       }
 
-      // ========================================
-      // GET PATIENT ARRAY
-      // ========================================
+      // ================= GET PATIENT ARRAY =================
 
       let patients = [];
 
@@ -219,14 +216,11 @@ const HomePage = () => {
         patients
       );
 
-      // ========================================
-      // FORMAT PATIENT DATA
-      // ========================================
+      // ================= FORMAT PATIENT DATA =================
 
       const formattedPatients =
         patients.map((item) => {
           // PAYABLE AMOUNT
-          // Add Patient Form default amount = 700
 
           const payableAmount = Number(
             item.amount ??
@@ -252,7 +246,7 @@ const HomePage = () => {
               0
           );
 
-          // ACTUAL TOTAL PAID
+          // TOTAL PAID
 
           const totalPaid =
             cashPaid + upiPaid;
@@ -329,7 +323,7 @@ const HomePage = () => {
               item.appointmentTime ||
               "",
 
-            // PAYABLE AMOUNT
+            // AMOUNT
 
             amount: payableAmount,
 
@@ -443,13 +437,13 @@ const HomePage = () => {
     }
   };
 
-  // CALL GET API
+  // ================= CALL GET API =================
 
   useEffect(() => {
     fetchPatients();
   }, []);
 
-  // OPEN PATIENT POPUP FROM LOCATION
+  // ================= OPEN PATIENT POPUP FROM LOCATION =================
 
   useEffect(() => {
     if (
@@ -464,7 +458,7 @@ const HomePage = () => {
     }
   }, [location]);
 
-  // OPEN PATIENT
+  // ================= OPEN PATIENT =================
 
   const openPatient = (patient) => {
     setCurrentPatient(patient);
@@ -484,7 +478,7 @@ const HomePage = () => {
     setShowPatientCard(true);
   };
 
-  // SEARCH PATIENT
+  // ================= SEARCH PATIENT =================
 
   const handleSubmit = () => {
     const search =
@@ -536,7 +530,7 @@ const HomePage = () => {
     openPatient(patient);
   };
 
-  // CAMERA CLICK
+  // ================= CAMERA CLICK =================
 
   const handleCameraClick = () => {
     alert(
@@ -544,7 +538,7 @@ const HomePage = () => {
     );
   };
 
-  // ENTER KEY
+  // ================= ENTER KEY =================
 
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
@@ -554,7 +548,7 @@ const HomePage = () => {
     }
   };
 
-  // MARK ATTENDANCE
+  // ================= MARK ATTENDANCE =================
 
   const handleMarkAttendance = () => {
     const today =
@@ -571,58 +565,10 @@ const HomePage = () => {
     );
   };
 
-  // PAYMENT STATUS
-
-  const getPaymentStatus = (
-    cash,
-    upi,
-    amount
-  ) => {
-    const cashPaid =
-      Number(cash || 0);
-
-    const upiPaid =
-      Number(upi || 0);
-
-    const payableAmount =
-      Number(amount || 0);
-
-    const totalPaid =
-      cashPaid + upiPaid;
-
-    // UNPAID
-
-    if (totalPaid === 0) {
-      return "Unpaid";
-    }
-
-    // PARTIAL PAYMENT
-
-    if (
-      payableAmount > 0 &&
-      totalPaid < payableAmount
-    ) {
-      return "Partial";
-    }
-
-    // FULL PAYMENT
-
-    if (
-      payableAmount > 0 &&
-      totalPaid >= payableAmount
-    ) {
-      return "Paid";
-    }
-
-    return "Unpaid";
-  };
-
-  // RETURN
-
   return (
     <div className="container-homepage">
 
-      {/* SEARCH BOX */}
+      {/* ================= SEARCH BOX ================= */}
 
       <div className="search-box">
 
@@ -638,8 +584,7 @@ const HomePage = () => {
           onKeyDown={handleEnterKey}
         />
 
-        {searchValue.trim().length >
-        0 ? (
+        {searchValue.trim().length > 0 ? (
           <button
             className="search-icon-btn"
             onClick={handleSubmit}
@@ -659,9 +604,7 @@ const HomePage = () => {
 
       </div>
 
-      {/* ======================================
-          PATIENT RECORDS
-      ====================================== */}
+      {/* ================= PATIENT RECORDS ================= */}
 
       {loading ? (
         <h3 className="loading-text">
@@ -679,14 +622,13 @@ const HomePage = () => {
             }
           >
             {showAppointments
-              ? "Hide Patient Records"
-              : "Show Patient Records"}
+              ? "Hide Appointments "
+              : "Show Appointments "}
           </button>
 
           {showAppointments && (
             <>
-              {patientList.length ===
-              0 ? (
+              {patientList.length === 0 ? (
                 <p>
                   No Patient Added
                 </p>
@@ -696,7 +638,9 @@ const HomePage = () => {
                   <table className="appointment-table">
 
                     <thead>
+
                       <tr>
+
                         <th>S.No</th>
 
                         <th>Name</th>
@@ -723,8 +667,6 @@ const HomePage = () => {
                           Appointment Time
                         </th>
 
-                        <th>Amount</th>
-
                         <th>
                           Cash Paid
                         </th>
@@ -737,12 +679,10 @@ const HomePage = () => {
                           Total Paid
                         </th>
 
-                        <th>
-                          Payment Status
-                        </th>
-
                         <th>Action</th>
+
                       </tr>
+
                     </thead>
 
                     <tbody>
@@ -752,34 +692,19 @@ const HomePage = () => {
                           item,
                           index
                         ) => {
-                          const amount =
-                            Number(
-                              item.amount ||
-                                0
-                            );
-
                           const cashPaid =
                             Number(
-                              item.cash ||
-                                0
+                              item.cash || 0
                             );
 
                           const upiPaid =
                             Number(
-                              item.upi ||
-                                0
+                              item.upi || 0
                             );
 
                           const totalPaid =
                             cashPaid +
                             upiPaid;
-
-                          const paymentStatus =
-                            getPaymentStatus(
-                              cashPaid,
-                              upiPaid,
-                              amount
-                            );
 
                           return (
                             <tr
@@ -843,53 +768,17 @@ const HomePage = () => {
                                   "-"}
                               </td>
 
-                              {/* AMOUNT */}
-
-                              <td>
-                                ₹{amount}
-                              </td>
-
-                              {/* CASH */}
-
                               <td>
                                 ₹{cashPaid}
                               </td>
-
-                              {/* UPI */}
 
                               <td>
                                 ₹{upiPaid}
                               </td>
 
-                              {/* TOTAL PAID */}
-
                               <td>
                                 ₹{totalPaid}
                               </td>
-
-                              {/* PAYMENT STATUS */}
-
-                              <td>
-
-                                <span
-                                  className={`payment-status ${
-                                    paymentStatus ===
-                                    "Paid"
-                                      ? "paid-status"
-                                      : paymentStatus ===
-                                        "Partial"
-                                      ? "partial-status"
-                                      : "unpaid-status"
-                                  }`}
-                                >
-                                  {
-                                    paymentStatus
-                                  }
-                                </span>
-
-                              </td>
-
-                              {/* ACTION */}
 
                               <td>
 
@@ -923,9 +812,7 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* ======================================
-          PATIENT MODAL
-      ====================================== */}
+      {/* ================= PATIENT MODAL ================= */}
 
       {showPatientCard &&
         currentPatient && (
@@ -965,7 +852,6 @@ const HomePage = () => {
                   <strong>
                     Patient Code:
                   </strong>{" "}
-
                   {currentPatient.patientCode ||
                     "-"}
                 </p>
@@ -974,7 +860,6 @@ const HomePage = () => {
                   <strong>
                     Mobile:
                   </strong>{" "}
-
                   {currentPatient.mobileNumber ||
                     "-"}
                 </p>
@@ -983,7 +868,6 @@ const HomePage = () => {
                   <strong>
                     Address:
                   </strong>{" "}
-
                   {currentPatient.address ||
                     "-"}
                 </p>
@@ -992,7 +876,6 @@ const HomePage = () => {
                   <strong>
                     Problem:
                   </strong>{" "}
-
                   {currentPatient.problem ||
                     "-"}
                 </p>
@@ -1001,7 +884,6 @@ const HomePage = () => {
                   <strong>
                     Appointment Type:
                   </strong>{" "}
-
                   {currentPatient.appointmentType ||
                     "-"}
                 </p>
@@ -1010,7 +892,6 @@ const HomePage = () => {
                   <strong>
                     Appointment Date:
                   </strong>{" "}
-
                   {currentPatient.appointmentDate
                     ? new Date(
                         currentPatient.appointmentDate
@@ -1024,7 +905,6 @@ const HomePage = () => {
                   <strong>
                     Appointment Time:
                   </strong>{" "}
-
                   {currentPatient.appointmentTime ||
                     "-"}
                 </p>
@@ -1033,76 +913,12 @@ const HomePage = () => {
                   <strong>
                     Last Attendance Date:
                   </strong>{" "}
-
                   {attendanceDate}
                 </p>
 
-                <p>
-                  <strong>
-                    File Number:
-                  </strong>{" "}
-
-                  {currentPatient.fileNo ||
-                    "-"}
-                </p>
-
-                {/* PAYMENT DETAILS */}
-
-                <div className="balance-box">
-
-                  <p>
-                    Amount: ₹
-                    {Number(
-                      currentPatient.amount ||
-                        0
-                    )}
-                  </p>
-
-                  <p>
-                    Cash Paid: ₹
-                    {Number(
-                      currentPatient.cash ||
-                        0
-                    )}
-                  </p>
-
-                  <p>
-                    UPI Paid: ₹
-                    {Number(
-                      currentPatient.upi ||
-                        0
-                    )}
-                  </p>
-
-                  <p>
-                    Total Paid: ₹
-                    {Number(
-                      currentPatient.cash ||
-                        0
-                    ) +
-                      Number(
-                        currentPatient.upi ||
-                          0
-                      )}
-                  </p>
-
-                  <p>
-                    Payment Status:{" "}
-
-                    <strong>
-                      {getPaymentStatus(
-                        currentPatient.cash,
-                        currentPatient.upi,
-                        currentPatient.amount
-                      )}
-                    </strong>
-                  </p>
-
-                </div>
-
               </div>
 
-              {/* ATTENDANCE */}
+              {/* ================= ATTENDANCE ================= */}
 
               <div className="attendance-box">
 
@@ -1127,7 +943,7 @@ const HomePage = () => {
 
               </div>
 
-              {/* FEATURE CARDS */}
+              {/* ================= FEATURE CARDS ================= */}
 
               <div className="feature-row">
 
@@ -1140,7 +956,6 @@ const HomePage = () => {
                         state: {
                           returnToPopup:
                             true,
-
                           patient:
                             currentPatient,
                         },
@@ -1164,7 +979,6 @@ const HomePage = () => {
                         state: {
                           returnToPopup:
                             true,
-
                           patient:
                             currentPatient,
                         },
@@ -1264,7 +1078,7 @@ const HomePage = () => {
 
               </div>
 
-              {/* STATS */}
+              {/* ================= STATS ================= */}
 
               <div className="stats-row">
 
@@ -1290,7 +1104,7 @@ const HomePage = () => {
 
               </div>
 
-              {/* WHATSAPP */}
+              {/* ================= WHATSAPP ================= */}
 
               <button className="whatsapp-btn">
 
@@ -1305,9 +1119,7 @@ const HomePage = () => {
           </div>
         )}
 
-      {/* ======================================
-          PROFILE MODAL
-      ====================================== */}
+      {/* ================= PROFILE MODAL ================= */}
 
       {showProfileModal && (
         <div className="modal-overlay">
