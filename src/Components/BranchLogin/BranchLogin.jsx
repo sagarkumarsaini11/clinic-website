@@ -152,7 +152,7 @@ console.log("Refresh Token:", localStorage.getItem("refreshToken"));
 
     } else {
 
-      navigate("/sidebar-clinic");
+      navigate("/dashboard-clinic");
 
     }
 

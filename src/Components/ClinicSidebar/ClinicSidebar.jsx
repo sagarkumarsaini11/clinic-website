@@ -17,6 +17,7 @@ import {
   FaFolder,
   FaChevronDown,
   FaHistory,
+ 
   
 
 } from "react-icons/fa";
@@ -218,7 +219,7 @@ const handleMenuClick = () => {
        ? "menu-btn-sidebar1-clinic active"
        : "menu-btn-sidebar1-clinic"
        }>
-       <FaHome /> Dashbord</NavLink>
+        Dashbord</NavLink>
             
              {/* Homepage submenu */}
          <NavLink to="/homepage"
