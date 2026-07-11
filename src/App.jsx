@@ -37,6 +37,7 @@ import RechargeHistory from './Components/RechargeHistory/RechargeHistory'
 import PrescriptionSettingForm from './Components/PrescriptionSettingForm/PrescriptionSettingForm'
 import AddDoctor from './Components/AddDoctor/AddDoctor'
 import AddDoctorList from './Components/AddDoctorList/AddDoctorList'
+import DashboardClinic from './Components/DashboardClinic/DashboardClinic'
 
 
 function Website() {
@@ -53,7 +54,7 @@ function Website() {
       <Contact/>
       <TreatmentSection/>
       <Footer/>
-      
+    
     </div>
    )    
 };
@@ -74,6 +75,7 @@ function App () {
             {/* Routes WITH Fixed Sidebar  Clinic*/}   
 
 <Route element={<LayoutClinic />}>
+<Route path="/dashboard-clinic" element={  <DashboardClinic/>} />
   <Route path="/homepage" element={<HomePage />} />
   <Route path="/addpatient" element={<AddPatientForm />} />
   <Route path="/services" element={<Services />} />

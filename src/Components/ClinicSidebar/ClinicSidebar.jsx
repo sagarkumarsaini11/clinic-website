@@ -210,6 +210,15 @@ const handleMenuClick = () => {
         </div>
 
         <nav className="navbar-sidebar1-clinic">
+
+             {/* Dashbord Clinic*/}
+         <NavLink to="/dashboard-clinic"
+        onClick={handleMenuClick}
+        className={({ isActive }) =>isActive
+       ? "menu-btn-sidebar1-clinic active"
+       : "menu-btn-sidebar1-clinic"
+       }>
+       <FaHome /> Dashbord</NavLink>
             
              {/* Homepage submenu */}
          <NavLink to="/homepage"

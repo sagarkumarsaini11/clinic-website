@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import "./HomePage.css";
 
@@ -34,30 +37,135 @@ const HomePage = () => {
 
   // ================= STATES =================
 
-  const [showAppointments, setShowAppointments,] = useState(false);
+  const [
+    showAppointments,
+    setShowAppointments,
+  ] = useState(false);
 
-  const [ currentPatient, setCurrentPatient,] = useState(null);
-   
-  const [ searchValue, setSearchValue,] = useState("");
-   
-  const [ showPatientCard,setShowPatientCard,] = useState(false);
-   
-  const [ attendanceMarked, setAttendanceMarked,] = useState(false);
-   
-  const [ attendanceDate,setAttendanceDate,] = useState("Not Marked");
-   
-  const [loading, setLoading, ] = useState(true);
-    
-  const [patientList, setPatientList,] = useState([]);
-    
-  const [  showProfileModal, setShowProfileModal,] = useState(false);
+  const [
+    currentPatient,
+    setCurrentPatient,
+  ] = useState(null);
 
-  const [ userData, setUserData,] = useState(null);
-   
-  const [ searchLoading, setSearchLoading,] = useState(false);
-   
-   
-  
+  const [
+    searchValue,
+    setSearchValue,
+  ] = useState("");
+
+  const [
+    showPatientCard,
+    setShowPatientCard,
+  ] = useState(false);
+
+  const [
+    attendanceMarked,
+    setAttendanceMarked,
+  ] = useState(false);
+
+  const [
+    attendanceDate,
+    setAttendanceDate,
+  ] = useState("Not Marked");
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+  const [
+    patientList,
+    setPatientList,
+  ] = useState([]);
+
+  const [
+    showProfileModal,
+    setShowProfileModal,
+  ] = useState(false);
+
+  const [
+    userData,
+    setUserData,
+  ] = useState(null);
+
+  const [
+    searchLoading,
+    setSearchLoading,
+  ] = useState(false);
+
+  const [
+    attendanceLoading,
+    setAttendanceLoading,
+  ] = useState(false);
+
+  // ================= CHECK TODAY ATTENDANCE =================
+
+  const isAttendanceMarkedToday = (
+    attendanceValue
+  ) => {
+    if (!attendanceValue) {
+      return false;
+    }
+
+    const attendanceDateValue =
+      new Date(attendanceValue);
+
+    if (
+      Number.isNaN(
+        attendanceDateValue.getTime()
+      )
+    ) {
+      return false;
+    }
+
+    const today = new Date();
+
+    return (
+      attendanceDateValue.getFullYear() ===
+        today.getFullYear() &&
+      attendanceDateValue.getMonth() ===
+        today.getMonth() &&
+      attendanceDateValue.getDate() ===
+        today.getDate()
+    );
+  };
+
+  // ================= SET ATTENDANCE STATUS =================
+
+  const setPatientAttendanceStatus = (
+    patient
+  ) => {
+    const lastAttendance =
+      patient?.lastAttendanceDate ||
+      patient?.last_attendance_date ||
+      "";
+
+    const markedToday =
+      isAttendanceMarkedToday(
+        lastAttendance
+      );
+
+    console.log(
+      "LAST ATTENDANCE:",
+      lastAttendance
+    );
+
+    console.log(
+      "ATTENDANCE MARKED TODAY:",
+      markedToday
+    );
+
+    setAttendanceMarked(markedToday);
+
+    setAttendanceDate(
+      lastAttendance
+        ? new Date(
+            lastAttendance
+          ).toLocaleDateString(
+            "en-IN"
+          )
+        : "Not Marked"
+    );
+  };
 
   // ================= FORMAT PATIENT =================
 
@@ -88,33 +196,23 @@ const HomePage = () => {
     return {
       ...item,
 
-      // ================= ID =================
-
       _id:
         item.id ||
         item._id ||
         "",
-
-      // ================= NAME =================
 
       name:
         item.full_name ||
         item.name ||
         "",
 
-      // ================= AGE =================
-
       age:
         item.age ?? "",
-
-      // ================= GENDER =================
 
       gender:
         item.gender ||
         item.sex ||
         "",
-
-      // ================= MOBILE =================
 
       mobileNumber:
         item.mobile_number ||
@@ -122,26 +220,18 @@ const HomePage = () => {
         item.mobile ||
         "",
 
-      // ================= ADDRESS =================
-
       address:
         item.address || "",
-
-      // ================= PROBLEM =================
 
       problem:
         item.problem ||
         item.disease_problem ||
         "",
 
-      // ================= APPOINTMENT TYPE =================
-
       appointmentType:
         item.appointment_type ||
         item.appointmentType ||
         "",
-
-      // ================= APPOINTMENT DATE =================
 
       appointmentDate:
         item.appointment_date ||
@@ -149,97 +239,63 @@ const HomePage = () => {
         item.created_date ||
         "",
 
-      // ================= APPOINTMENT TIME =================
-
       appointmentTime:
         item.appointment_time ||
         item.appointmentTime ||
         "",
 
-      // ================= AMOUNT =================
-
       amount: payableAmount,
-
-      // ================= CASH =================
 
       cash: cashPaid,
 
-      // ================= UPI =================
-
       upi: upiPaid,
 
-      // ================= TOTAL =================
-
       total: totalPaid,
-
-      // ================= BACKEND TOTAL =================
 
       backendTotalAmount: Number(
         item.total_amount ?? 0
       ),
-
-      // ================= FILE NUMBER =================
 
       fileNo:
         item.file_number ||
         item.fileNo ||
         "",
 
-      // ================= PATIENT CODE =================
-
       patientCode:
         item.patient_code ||
         item.patientCode ||
         "",
-
-      // ================= LAST ATTENDANCE =================
 
       lastAttendanceDate:
         item.last_attendance_date ||
         item.lastAttendanceDate ||
         "",
 
-      // ================= PAYMENT METHOD =================
-
       paymentMethod:
         item.payment_method ||
         "",
-
-      // ================= PACKAGE NAME =================
 
       packageName:
         item.package_name ||
         "",
 
-      // ================= SESSIONS REMAINING =================
-
       sessionsRemaining:
         item.sessions_remaining ??
         0,
-
-      // ================= REPORT TYPE =================
 
       reportType:
         item.report_type ||
         "",
 
-      // ================= START DATE =================
-
       startDate:
         item.start_date || "",
-
-      // ================= CREATED DATE =================
 
       createdDate:
         item.created_date ||
         "",
 
-      // ================= BRANCH ID =================
-
       branchId:
         item.branch_id || "",
-
-      // ================= DOCUMENT =================
 
       documentFile:
         item.document_file ||
@@ -261,20 +317,10 @@ const HomePage = () => {
         const user =
           JSON.parse(userCookie);
 
-        console.log(
-          "Logged User From Cookie:",
-          user
-        );
-
         setUserData(user);
       } else if (localUser) {
         const user =
           JSON.parse(localUser);
-
-        console.log(
-          "Logged User From LocalStorage:",
-          user
-        );
 
         setUserData(user);
       }
@@ -295,11 +341,6 @@ const HomePage = () => {
       const token =
         localStorage.getItem("token");
 
-      console.log(
-        "Patient GET Token:",
-        token
-      );
-
       if (!token) {
         alert(
           "Token not found. Please login again."
@@ -307,7 +348,7 @@ const HomePage = () => {
 
         navigate("/login");
 
-        return;
+        return [];
       }
 
       const response = await fetch(
@@ -322,8 +363,21 @@ const HomePage = () => {
         }
       );
 
-      const data =
-        await response.json();
+      const responseText =
+        await response.text();
+
+      let data = {};
+
+      try {
+        data = responseText
+          ? JSON.parse(responseText)
+          : {};
+      } catch (error) {
+        console.error(
+          "PATIENT JSON ERROR:",
+          error
+        );
+      }
 
       console.log(
         "GET STATUS:",
@@ -334,8 +388,6 @@ const HomePage = () => {
         "COMPLETE GET RESPONSE:",
         data
       );
-
-      // ================= 401 =================
 
       if (response.status === 401) {
         localStorage.removeItem(
@@ -352,10 +404,8 @@ const HomePage = () => {
 
         navigate("/login");
 
-        return;
+        return [];
       }
-
-      // ================= 403 =================
 
       if (response.status === 403) {
         alert(
@@ -363,10 +413,8 @@ const HomePage = () => {
             "You do not have permission to view patients."
         );
 
-        return;
+        return [];
       }
-
-      // ================= API ERROR =================
 
       if (!response.ok) {
         alert(
@@ -375,10 +423,8 @@ const HomePage = () => {
             "Failed to get patients"
         );
 
-        return;
+        return [];
       }
-
-      // ================= GET PATIENT ARRAY =================
 
       let patients = [];
 
@@ -405,17 +451,9 @@ const HomePage = () => {
         patients = data.result;
       }
 
-      console.log(
-        "PATIENT ARRAY:",
-        patients
-      );
-
-      // ================= FORMAT PATIENTS =================
-
       const formattedPatients =
-        patients.map(
-          (item) =>
-            formatPatient(item)
+        patients.map((item) =>
+          formatPatient(item)
         );
 
       console.log(
@@ -426,6 +464,8 @@ const HomePage = () => {
       setPatientList(
         formattedPatients
       );
+
+      return formattedPatients;
     } catch (error) {
       console.error(
         "Fetch Patient Error:",
@@ -435,6 +475,8 @@ const HomePage = () => {
       alert(
         "Something went wrong while loading patients!"
       );
+
+      return [];
     } finally {
       setLoading(false);
     }
@@ -446,7 +488,7 @@ const HomePage = () => {
     fetchPatients();
   }, []);
 
-  // ================= OPEN PATIENT POPUP FROM LOCATION =================
+  // ================= OPEN PATIENT FROM LOCATION =================
 
   useEffect(() => {
     if (
@@ -461,26 +503,8 @@ const HomePage = () => {
 
       setCurrentPatient(patient);
 
-      const hasAttendance =
-        Boolean(
-          patient.lastAttendanceDate ||
-            patient.last_attendance_date
-        );
-
-      setAttendanceMarked(
-        hasAttendance
-      );
-
-      setAttendanceDate(
-        patient.lastAttendanceDate ||
-          patient.last_attendance_date
-          ? new Date(
-              patient.lastAttendanceDate ||
-                patient.last_attendance_date
-            ).toLocaleDateString(
-              "en-IN"
-            )
-          : "Not Marked"
+      setPatientAttendanceStatus(
+        patient
       );
 
       setShowPatientCard(true);
@@ -489,32 +513,16 @@ const HomePage = () => {
 
   // ================= OPEN PATIENT =================
 
-  const openPatient = (patientData) => {
+  const openPatient = (
+    patientData
+  ) => {
     const patient =
       formatPatient(patientData);
 
     setCurrentPatient(patient);
 
-    const hasAttendance =
-      Boolean(
-        patient.lastAttendanceDate ||
-          patient.last_attendance_date
-      );
-
-    setAttendanceMarked(
-      hasAttendance
-    );
-
-    setAttendanceDate(
-      patient.lastAttendanceDate ||
-        patient.last_attendance_date
-        ? new Date(
-            patient.lastAttendanceDate ||
-              patient.last_attendance_date
-          ).toLocaleDateString(
-            "en-IN"
-          )
-        : "Not Marked"
+    setPatientAttendanceStatus(
+      patient
     );
 
     setShowPatientCard(true);
@@ -546,13 +554,6 @@ const HomePage = () => {
 
       setSearchLoading(true);
 
-      console.log(
-        "SEARCH FILE NUMBER:",
-        fileNumber
-      );
-
-      // ================= SEARCH API =================
-
       const response = await fetch(
         `${BASE_URL}/api/clinic/patients/search?file_number=${encodeURIComponent(
           fileNumber
@@ -570,11 +571,6 @@ const HomePage = () => {
       const responseText =
         await response.text();
 
-      console.log(
-        "RAW SEARCH RESPONSE:",
-        responseText
-      );
-
       let data = {};
 
       try {
@@ -583,7 +579,7 @@ const HomePage = () => {
           : {};
       } catch (error) {
         console.error(
-          "SEARCH JSON PARSE ERROR:",
+          "SEARCH JSON ERROR:",
           error
         );
       }
@@ -597,8 +593,6 @@ const HomePage = () => {
         "SEARCH RESPONSE:",
         data
       );
-
-      // ================= 401 =================
 
       if (response.status === 401) {
         localStorage.removeItem(
@@ -618,8 +612,6 @@ const HomePage = () => {
         return;
       }
 
-      // ================= 403 =================
-
       if (response.status === 403) {
         alert(
           data.message ||
@@ -628,8 +620,6 @@ const HomePage = () => {
 
         return;
       }
-
-      // ================= 404 =================
 
       if (response.status === 404) {
         alert(
@@ -640,8 +630,6 @@ const HomePage = () => {
         return;
       }
 
-      // ================= API ERROR =================
-
       if (!response.ok) {
         alert(
           data.message ||
@@ -651,8 +639,6 @@ const HomePage = () => {
 
         return;
       }
-
-      // ================= GET PATIENT FROM RESPONSE =================
 
       let patient = null;
 
@@ -690,7 +676,9 @@ const HomePage = () => {
       ) {
         patient = data.data[0];
       } else if (
-        Array.isArray(data.patients) &&
+        Array.isArray(
+          data.patients
+        ) &&
         data.patients.length > 0
       ) {
         patient =
@@ -703,18 +691,11 @@ const HomePage = () => {
           data.result[0];
       }
 
-      console.log(
-        "SEARCHED PATIENT:",
-        patient
-      );
-
       if (!patient) {
         alert("Patient Not Found");
 
         return;
       }
-
-      // ================= OPEN PATIENT POPUP =================
 
       openPatient(patient);
     } catch (error) {
@@ -731,7 +712,7 @@ const HomePage = () => {
     }
   };
 
-  // ================= CAMERA CLICK =================
+  // ================= CAMERA =================
 
   const handleCameraClick = () => {
     alert(
@@ -754,6 +735,14 @@ const HomePage = () => {
   const handleMarkAttendance =
     async () => {
       try {
+        if (attendanceMarked) {
+          alert(
+            "Attendance already marked for today."
+          );
+
+          return;
+        }
+
         const token =
           localStorage.getItem(
             "token"
@@ -781,16 +770,6 @@ const HomePage = () => {
           currentPatient.id ||
           currentPatient._id;
 
-        console.log(
-          "COMPLETE CURRENT PATIENT:",
-          currentPatient
-        );
-
-        console.log(
-          "PATIENT ID:",
-          patientId
-        );
-
         if (!patientId) {
           alert(
             "Patient ID not found"
@@ -799,7 +778,7 @@ const HomePage = () => {
           return;
         }
 
-        // ================= PAYLOAD =================
+        setAttendanceLoading(true);
 
         const attendancePayload = {
           patientId:
@@ -810,8 +789,6 @@ const HomePage = () => {
           "ATTENDANCE PAYLOAD:",
           attendancePayload
         );
-
-        // ================= API CALL =================
 
         const response = await fetch(
           `${BASE_URL}/api/clinic/patients/attendance`,
@@ -835,22 +812,15 @@ const HomePage = () => {
         const responseText =
           await response.text();
 
-        console.log(
-          "RAW ATTENDANCE RESPONSE:",
-          responseText
-        );
-
         let data = {};
 
         try {
           data = responseText
-            ? JSON.parse(
-                responseText
-              )
+            ? JSON.parse(responseText)
             : {};
         } catch (error) {
           console.error(
-            "JSON PARSE ERROR:",
+            "ATTENDANCE JSON ERROR:",
             error
           );
         }
@@ -865,11 +835,7 @@ const HomePage = () => {
           data
         );
 
-        // ================= 401 =================
-
-        if (
-          response.status === 401
-        ) {
+        if (response.status === 401) {
           localStorage.removeItem(
             "token"
           );
@@ -887,11 +853,7 @@ const HomePage = () => {
           return;
         }
 
-        // ================= 403 =================
-
-        if (
-          response.status === 403
-        ) {
+        if (response.status === 403) {
           alert(
             data.message ||
               "You do not have permission to mark attendance."
@@ -899,8 +861,6 @@ const HomePage = () => {
 
           return;
         }
-
-        // ================= API ERROR =================
 
         if (!response.ok) {
           alert(
@@ -912,8 +872,6 @@ const HomePage = () => {
           return;
         }
 
-        // ================= ATTENDANCE DATE =================
-
         const attendanceDateFromApi =
           data.attendance_date ||
           data.data
@@ -922,8 +880,6 @@ const HomePage = () => {
           data.data
             ?.last_attendance_date ||
           new Date().toISOString();
-
-        // ================= FILE NUMBER =================
 
         const fileNumberFromApi =
           data.file_number ||
@@ -934,39 +890,28 @@ const HomePage = () => {
           currentPatient.fileNo ||
           "";
 
-        const formattedDate =
-          new Date(
-            attendanceDateFromApi
-          ).toLocaleDateString(
-            "en-IN"
-          );
+        const updatedPatient = {
+          ...currentPatient,
 
-        // ================= UPDATE ATTENDANCE =================
+          lastAttendanceDate:
+            attendanceDateFromApi,
 
-        setAttendanceMarked(true);
+          last_attendance_date:
+            attendanceDateFromApi,
 
-        setAttendanceDate(
-          formattedDate
-        );
+          fileNo:
+            fileNumberFromApi,
 
-        // ================= UPDATE CURRENT PATIENT =================
+          file_number:
+            fileNumberFromApi,
+        };
 
         setCurrentPatient(
-          (previousPatient) => ({
-            ...previousPatient,
+          updatedPatient
+        );
 
-            lastAttendanceDate:
-              attendanceDateFromApi,
-
-            last_attendance_date:
-              attendanceDateFromApi,
-
-            fileNo:
-              fileNumberFromApi,
-
-            file_number:
-              fileNumberFromApi,
-          })
+        setPatientAttendanceStatus(
+          updatedPatient
         );
 
         alert(
@@ -974,7 +919,28 @@ const HomePage = () => {
             "Attendance Marked Successfully"
         );
 
-        await fetchPatients();
+        const updatedPatients =
+          await fetchPatients();
+
+        const refreshedPatient =
+          updatedPatients.find(
+            (item) =>
+              String(
+                item.id ||
+                  item._id
+              ) ===
+              String(patientId)
+          );
+
+        if (refreshedPatient) {
+          setCurrentPatient(
+            refreshedPatient
+          );
+
+          setPatientAttendanceStatus(
+            refreshedPatient
+          );
+        }
       } catch (error) {
         console.error(
           "MARK ATTENDANCE ERROR:",
@@ -984,11 +950,14 @@ const HomePage = () => {
         alert(
           "Something went wrong while marking attendance!"
         );
+      } finally {
+        setAttendanceLoading(false);
       }
     };
 
   return (
     <div className="container-homepage">
+
       {/* ================= SEARCH BOX ================= */}
 
       <div className="search-box">
@@ -1131,8 +1100,7 @@ const HomePage = () => {
                               }
                             >
                               <td>
-                                {index +
-                                  1}
+                                {index + 1}
                               </td>
 
                               <td>
@@ -1228,6 +1196,7 @@ const HomePage = () => {
         currentPatient && (
           <div className="modal-overlay">
             <div className="patient-card">
+
               <FaTimes
                 className="close-icon"
                 onClick={() =>
@@ -1238,6 +1207,7 @@ const HomePage = () => {
               />
 
               <div className="patient-header">
+
                 <h2>
                   {currentPatient.name ||
                     "Patient"}
@@ -1323,44 +1293,51 @@ const HomePage = () => {
                   {attendanceDate}
                 </p>
 
-                {/* ================= FILE NUMBER ================= */}
-
-                {attendanceMarked && (
+                {currentPatient.fileNo ||
+                currentPatient.file_number ? (
                   <p>
                     <strong>
                       File No:
                     </strong>{" "}
                     {currentPatient.fileNo ||
-                      currentPatient.file_number ||
-                      "-"}
+                      currentPatient.file_number}
                   </p>
-                )}
+                ) : null}
+
               </div>
 
-              {/* ================= ATTENDANCE ================= */}
+              {/* ================= DAILY ATTENDANCE ================= */}
 
               <div className="attendance-box">
+
                 {!attendanceMarked ? (
                   <button
                     className="attendance-btn"
                     onClick={
                       handleMarkAttendance
                     }
+                    disabled={
+                      attendanceLoading
+                    }
                   >
-                    Mark Attendance
+                    {attendanceLoading
+                      ? "Marking Attendance..."
+                      : "Mark Attendance"}
                   </button>
                 ) : (
                   <div className="attendance-success">
                     <h3>
-                      ✅ Attendance Marked
+                      ✅ Today's Attendance Marked
                     </h3>
                   </div>
                 )}
+
               </div>
 
               {/* ================= FEATURE CARDS ================= */}
 
               <div className="feature-row">
+
                 <div
                   className="feature-card"
                   onClick={() =>
@@ -1484,15 +1461,15 @@ const HomePage = () => {
                     Attendance Sheet
                   </p>
                 </div>
+
               </div>
 
               {/* ================= STATS ================= */}
 
               <div className="stats-row">
+
                 <div>
-                  <h3>
-                    Attendance
-                  </h3>
+                  <h3>Attendance</h3>
 
                   <h2>72%</h2>
 
@@ -1500,14 +1477,13 @@ const HomePage = () => {
                 </div>
 
                 <div>
-                  <h3>
-                    Punctuality
-                  </h3>
+                  <h3>Punctuality</h3>
 
                   <h2>85%</h2>
 
                   <p>Excellent</p>
                 </div>
+
               </div>
 
               {/* ================= WHATSAPP ================= */}
@@ -1517,6 +1493,7 @@ const HomePage = () => {
 
                 Share ID on WhatsApp
               </button>
+
             </div>
           </div>
         )}
@@ -1526,6 +1503,7 @@ const HomePage = () => {
       {showProfileModal && (
         <div className="modal-overlay">
           <div className="profile-modal">
+
             <FaTimes
               className="close-icon"
               onClick={() =>
@@ -1561,9 +1539,11 @@ const HomePage = () => {
               <strong>Role:</strong>{" "}
               {userData?.role || "-"}
             </p>
+
           </div>
         </div>
       )}
+
     </div>
   );
 };
