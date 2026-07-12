@@ -726,6 +726,9 @@ body{
     transform:scale(.98);
 }
 
+
+
+
 /* ===========================================
    Scrollbar
 =========================================== */
@@ -736,17 +739,17 @@ body{
 }
 
 ::-webkit-scrollbar-track{
-    background:#edf2f7;
+    background:#b5b8b6;
     border-radius:10px;
 }
 
 ::-webkit-scrollbar-thumb{
-    background:#14b8a6;
+    background:#b5b8b6;
     border-radius:10px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
-    background:#0f766e;
+    background:#424242;
 }
 
 /* ===========================================

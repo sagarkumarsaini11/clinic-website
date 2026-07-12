@@ -17,9 +17,10 @@ import {
   FaFolder,
   FaChevronDown,
   FaHistory,
- 
-  
-
+  FaSearch,
+  FaThLarge,
+  FaUserMd,
+  FaUsers,
 } from "react-icons/fa";
 
 import "./ClinicSidebar.css";
@@ -35,6 +36,7 @@ const ClinicSidebar = () => {
   const sidebarRef = useRef(null);
 
   const [user, setUser] = useState(null);
+  const[searchText, setSearchText]= useState("");
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -131,7 +133,17 @@ const handleMenuClick = () => {
           onClick={() => setSidebarOpen(!sidebarOpen)} />
 
         <h3 className="clinic-title">Clinic Panel </h3>
-          
+            
+                 {/* Center Search Box */}
+                 <div className="navbar-search-clinic">
+                 <FaSearch className="navbar-search-icon-clinic"/>
+                 <input type="text"
+                 placeholder="Search patient, file no, mobile..."
+                 value={searchText} 
+                 onChange={(e)=> setSearchText(e.target.value)}
+                 className="navbar-search-input-clinic"/>
+
+                 </div>
        
                  {/* profile */}
         <div className="profile-wrapper" ref={dropdownRef}>
@@ -213,13 +225,17 @@ const handleMenuClick = () => {
         <nav className="navbar-sidebar1-clinic">
 
              {/* Dashbord Clinic*/}
-         <NavLink to="/dashboard-clinic"
-        onClick={handleMenuClick}
-        className={({ isActive }) =>isActive
-       ? "menu-btn-sidebar1-clinic active"
-       : "menu-btn-sidebar1-clinic"
-       }>
-        Dashbord</NavLink>
+        <NavLink
+  to="/dashboard-clinic"
+  onClick={handleMenuClick}
+  className={({ isActive }) =>
+    isActive
+      ? "menu-btn-sidebar1-clinic active"
+      : "menu-btn-sidebar1-clinic"
+  }
+>
+  <FaThLarge /> Dashboard
+</NavLink>
             
              {/* Homepage submenu */}
          <NavLink to="/homepage"
@@ -352,28 +368,30 @@ const handleMenuClick = () => {
 </div>
             
                   {/* Add doctor*/}
-          <NavLink
-            to="/add-doctor"
-            onClick={handleMenuClick}
-            className={({ isActive }) =>
-              isActive
-                ? "menu-btn-sidebar1-clinic active"
-                : "menu-btn-sidebar1-clinic"
-            }>
-          
-           <FaUserPlus />Add Doctor</NavLink>
+        <NavLink
+  to="/add-doctor"
+  onClick={handleMenuClick}
+  className={({ isActive }) =>
+    isActive
+      ? "menu-btn-sidebar1-clinic active"
+      : "menu-btn-sidebar1-clinic"
+  }
+>
+  <FaUserMd /> Add Doctor
+</NavLink>
           
                        {/* Add doctor list*/}
-          <NavLink
-            to="/add-doctor-list"
-            onClick={handleMenuClick}
-            className={({ isActive }) =>
-              isActive
-                ? "menu-btn-sidebar1-clinic active"
-                : "menu-btn-sidebar1-clinic"
-            }>
-          
-          <FaUserPlus /> Doctor List</NavLink>
+        <NavLink
+  to="/add-doctor-list"
+  onClick={handleMenuClick}
+  className={({ isActive }) =>
+    isActive
+      ? "menu-btn-sidebar1-clinic active"
+      : "menu-btn-sidebar1-clinic"
+  }
+>
+  <FaUsers /> Doctor List
+</NavLink>
 
                     {/* Recharge history */}
           <NavLink

@@ -1206,105 +1206,68 @@ const HomePage = () => {
                 }
               />
 
-              <div className="patient-header">
+            <div className="patient-header">
 
-                <h2>
-                  {currentPatient.name ||
-                    "Patient"}
+  <h2>
+    {currentPatient.name || "Patient"} (
+    {currentPatient.age ?? "-"} / {currentPatient.gender || "-"})
+  </h2>
 
-                  {" ("}
+  <div className="patient-info-table-wrapper">
 
-                  {currentPatient.age ??
-                    "-"}
+    <table className="patient-info-table">
 
-                  {" / "}
+      <tbody>
 
-                  {currentPatient.gender ||
-                    "-"}
+        <tr>
+          <th>Patient Code</th>
+          <td>{currentPatient.patientCode || "-"}</td>
 
-                  {")"}
-                </h2>
+          <th>Mobile</th>
+          <td>{currentPatient.mobileNumber || "-"}</td>
+        </tr>
 
-                <p>
-                  <strong>
-                    Patient Code:
-                  </strong>{" "}
-                  {currentPatient.patientCode ||
-                    "-"}
-                </p>
+        <tr>
+          <th>Address</th>
+          <td>{currentPatient.address || "-"}</td>
 
-                <p>
-                  <strong>
-                    Mobile:
-                  </strong>{" "}
-                  {currentPatient.mobileNumber ||
-                    "-"}
-                </p>
+          <th>Problem</th>
+          <td>{currentPatient.problem || "-"}</td>
+        </tr>
 
-                <p>
-                  <strong>
-                    Address:
-                  </strong>{" "}
-                  {currentPatient.address ||
-                    "-"}
-                </p>
+        <tr>
+          <th>Appointment Type</th>
+          <td>{currentPatient.appointmentType || "-"}</td>
 
-                <p>
-                  <strong>
-                    Problem:
-                  </strong>{" "}
-                  {currentPatient.problem ||
-                    "-"}
-                </p>
+          <th>Appointment Date</th>
+          <td>
+            {currentPatient.appointmentDate
+              ? new Date(
+                  currentPatient.appointmentDate
+                ).toLocaleDateString("en-IN")
+              : "-"}
+          </td>
+        </tr>
 
-                <p>
-                  <strong>
-                    Appointment Type:
-                  </strong>{" "}
-                  {currentPatient.appointmentType ||
-                    "-"}
-                </p>
+        <tr>
+          <th>Last Attendance</th>
+          <td>{attendanceDate}</td>
 
-                <p>
-                  <strong>
-                    Appointment Date:
-                  </strong>{" "}
-                  {currentPatient.appointmentDate
-                    ? new Date(
-                        currentPatient.appointmentDate
-                      ).toLocaleDateString(
-                        "en-IN"
-                      )
-                    : "-"}
-                </p>
+          <th>File No</th>
+          <td>
+            {currentPatient.fileNo ||
+              currentPatient.file_number ||
+              "-"}
+          </td>
+        </tr>
 
-                <p>
-                  <strong>
-                    Appointment Time:
-                  </strong>{" "}
-                  {currentPatient.appointmentTime ||
-                    "-"}
-                </p>
+      </tbody>
 
-                <p>
-                  <strong>
-                    Last Attendance Date:
-                  </strong>{" "}
-                  {attendanceDate}
-                </p>
+    </table>
 
-                {currentPatient.fileNo ||
-                currentPatient.file_number ? (
-                  <p>
-                    <strong>
-                      File No:
-                    </strong>{" "}
-                    {currentPatient.fileNo ||
-                      currentPatient.file_number}
-                  </p>
-                ) : null}
+  </div>
 
-              </div>
+</div>
 
               {/* ================= DAILY ATTENDANCE ================= */}
 

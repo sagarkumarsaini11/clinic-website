@@ -551,7 +551,7 @@ export default function DashboardClinic() {
           <button className="dc-btn">
             View Referral Report
           </button>
-
+           
         </div>
 
       </div>

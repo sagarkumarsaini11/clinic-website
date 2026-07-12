@@ -266,7 +266,71 @@ background: linear-gradient(
 
   z-index:1500;
 }
+/* search box in navbar */
+/* ===========================
+   Navbar Search
+=========================== */
 
+.top-navbar-sidebar1-clinic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.navbar-search-clinic {
+  flex: 1;
+  max-width: 520px;
+  position: relative;
+  margin: 0 20px;
+}
+
+.navbar-search-icon-clinic {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8b8b8b;
+  font-size: 15px;
+}
+
+.navbar-search-input-clinic {
+  width: 100%;
+  height: 42px;
+  border-radius: 30px;
+  border: 1px solid #d8d8d8;
+  outline: none;
+  background: #fff;
+  padding: 0 18px 0 45px;
+  font-size: 15px;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.navbar-search-input-clinic:focus {
+  border-color: #1f8ef1;
+  box-shadow: 0 0 10px rgba(31, 142, 241, 0.18);
+}
+
+.navbar-search-input-clinic::placeholder {
+  color: #9b9b9b;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .navbar-search-clinic {
+    display: none;
+  }
+
+  .clinic-title {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+  }
+
+}
 /* =========================
    MOBILE VIEW
 ========================= */

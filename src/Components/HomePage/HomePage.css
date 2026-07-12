@@ -465,6 +465,67 @@ cursor: pointer;
   }
 }
 
+/* patient popup data table */
+/* ===========================
+   Patient Information Table
+=========================== */
+
+.patient-info-table-wrapper {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+.patient-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 14px;
+  background: #ffffff;
+}
+
+.patient-info-table th {
+  width: 18%;
+  background: #16227c;
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid #dbe4f3;
+}
+
+.patient-info-table td {
+  width: 32%;
+  padding: 10px 12px;
+  border: 1px solid #dbe4f3;
+  background: #f8fbff;
+  color: #333;
+}
+
+.patient-info-table tr:nth-child(even) td {
+  background: #eef5ff;
+}
+
+.patient-info-table tr:hover td {
+  background: #e4f0ff;
+  transition: 0.25s;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .patient-info-table {
+    min-width: 650px;
+    font-size: 13px;
+  }
+
+  .patient-info-table th,
+  .patient-info-table td {
+    padding: 8px 10px;
+  }
+
+}
 /* MOBILE */
 /* Tablet View */
 @media (min-width: 481px) and (max-width: 768px) {

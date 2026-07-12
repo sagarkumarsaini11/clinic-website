@@ -146,6 +146,47 @@ export default function AddPatientForm() {
     }));
   };
 
+// ==========================================
+// FOCUS FIRST ERROR FIELD
+// ==========================================
+
+const focusFirstErrorField = (errors) => {
+  const fieldOrder = [
+    "name",
+    "age",
+    "gender",
+    "mobile",
+    "address",
+    "problem",
+    "appointmentType",
+    "appointmentDate",
+    "appointmentTime",
+    "cash",
+    "upi",
+  ];
+
+  for (const field of fieldOrder) {
+    if (errors[field]) {
+      const element = formRef.current?.querySelector(
+        `[name="${field}"]`
+      );
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+
+        setTimeout(() => {
+          element.focus();
+        }, 300);
+
+        break;
+      }
+    }
+  }
+};
+
   // ==========================================
   // VALIDATION
   // ==========================================
@@ -218,11 +259,14 @@ export default function AddPatientForm() {
         "Only numbers allowed";
     }
 
-    setErrors(newErrors);
+   setErrors(newErrors);
 
-    return (
-      Object.keys(newErrors).length === 0
-    );
+if (Object.keys(newErrors).length > 0) {
+  focusFirstErrorField(newErrors);
+  return false;
+}
+
+return true;
   };
 
   // ==========================================
