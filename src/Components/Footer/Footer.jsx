@@ -61,7 +61,23 @@ const Footer = () => {
 
           <p className="contact-item">
             <FaEnvelope />
-            info@krishnaclinic.com
+             krishnaadvancephysioclinic@gmail.com
+          </p>
+
+           <p className="contact-item">
+            <span>📞</span>
+              +91 7467067466
+          </p>
+
+           <p className="contact-item">
+          <span>📍</span>
+              M-38, Shiv Mandir Road, Hakikat Nagar,
+              Saharanpur, Uttar Pradesh
+          </p>
+
+           <p className="contact-item">
+            <span>🕒</span>
+              Monday - Saturday : 10:00 AM - 8:00 PM
           </p>
 
         </div>
@@ -75,7 +91,8 @@ const Footer = () => {
         <p>Copyright © 2026 Krishna Clinic.
           All Rights Reserved.
         </p>  
-        
+        <p>Powered by Raghuram Technology.
+        </p>
 
         <div className="footer-links">
           <span>Terms & Conditions</span>

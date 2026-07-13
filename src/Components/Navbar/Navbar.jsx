@@ -97,7 +97,7 @@ const Navbar = () => {
         </li>   
                        {/* contact button */}
         <li>
-          <Link  to="contact" smooth={true} offset={-100}  duration={500}  className="btn"  onClick={closeMenu}> Contact Us</Link>
+          <Link  to="contact" smooth={true} offset={-100}  duration={500}  className="btn"  onClick={closeMenu}>Enquiry</Link>
         </li>   
 
               {/* login btn */}
