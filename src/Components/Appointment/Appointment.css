@@ -7,7 +7,96 @@
     align-items: center;
 
     padding: 120px 20px;
+
     background: #f5f7ff;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* ==========================
+   DECORATIVE WAVES
+========================== */
+
+.appointment-container::before,
+.appointment-container::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+    opacity: 0.4;
+    transition: all 0.8s ease;
+    animation: waveFloat 8s ease-in-out infinite;
+}
+
+/* Top Left Wave */
+
+.appointment-container::before{
+    width: 420px;
+    height: 420px;
+
+    top: -180px;
+    left: -180px;
+
+    background: linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e,
+        #134e4a
+    );
+
+    border-radius: 45% 55% 70% 30% /
+                   40% 60% 40% 60%;
+
+    transform: rotate(-20deg);
+}
+
+/* Bottom Right Wave */
+
+.appointment-container::after{
+    width: 500px;
+    height: 500px;
+
+    right: -220px;
+    bottom: -220px;
+
+    background: linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e,
+        #134e4a
+    );
+
+    border-radius: 60% 40% 30% 70% /
+                   60% 30% 70% 40%;
+
+    transform: rotate(25deg);
+
+    animation-delay: 2s;
+}
+
+/* Floating Animation */
+
+@keyframes waveFloat{
+
+    0%{
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+
+    25%{
+        transform: translateY(-10px) rotate(5deg) scale(1.02);
+    }
+
+    50%{
+        transform: translateY(8px) rotate(-4deg) scale(1.04);
+    }
+
+    75%{
+        transform: translateY(-6px) rotate(3deg) scale(1.02);
+    }
+
+    100%{
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
 }
 
 /* Form */
@@ -24,6 +113,9 @@
     border-radius: 15px;
 
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+
+    position: relative;
+    z-index: 2;
 }
 
 /* Heading */

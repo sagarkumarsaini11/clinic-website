@@ -60,7 +60,7 @@ nav ul li button {
 
 nav ul li a:hover,
 nav ul li button:hover {
-    color: #3bc4b6;
+    color: #15b680;
 }
 
 /* Login Button */
@@ -121,10 +121,14 @@ nav ul li button {
         height:50px;
     }
 
-    .menu-icon{
-        display:block;
-        z-index:1001;
-    }
+  .menu-icon{
+    display: block;
+    width: 30px;
+    cursor: pointer;
+    z-index: 1001;
+
+    filter: invert(39%) sepia(93%) saturate(550%) hue-rotate(140deg) brightness(95%) contrast(90%);
+}
 
     nav ul{
         position:fixed;
