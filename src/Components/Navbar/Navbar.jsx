@@ -1,6 +1,6 @@
 import React, { useEffect, useState,  useRef,} from "react";
 import "./Navbar.css";
-import logo from "../../assets/logo.png";
+import cliniclogo from "../../assets/cliniclogo.png";
 import menu_icon from "../../assets/menu-icon.png";
 import { Link } from "react-scroll";
 import BranchLogin from "../BranchLogin/BranchLogin";
@@ -71,7 +71,7 @@ const Navbar = () => {
 
             {/* Logo */}
 
-        <img src={logo} alt="" className="logo"/>
+        <img src={cliniclogo} alt="" className="logo"/>
 
            {/* Navbar Menu */}
 
