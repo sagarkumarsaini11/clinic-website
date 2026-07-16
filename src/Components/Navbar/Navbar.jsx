@@ -65,63 +65,115 @@ const Navbar = () => {
   };
 
 }, [mobileMenu]);
-  return (
+return (
+  <nav className={`container ${sticky ? "dark-nav-web-navbar" : ""}`}>
 
-    <nav className={`container ${sticky ? "dark-nav" : ""}`}>
+    {/* Logo */}
+    <img
+      src={cliniclogo}
+      alt="Clinic Logo"
+      className="logo-web-navbar"
+    />
 
-            {/* Logo */}
+    {/* Mobile Overlay */}
+    {mobileMenu && (
+      <div
+        className="mobile-overlay-web-navbar"
+        onClick={() => setMobileMenu(false)}
+      />
+    )}
 
-        <img src={cliniclogo} alt="" className="logo"/>
+    {/* Navbar Menu */}
+    <ul
+      ref={menuRef}
+      className={mobileMenu ? "" : "hide-mobile-menu-web-navbar"}
+    >
 
-           {/* Navbar Menu */}
+      <li>
+        <Link
+          to="hero"
+          smooth={true}
+          offset={0}
+          duration={500}
+          onClick={closeMenu}
+        >
+          Home
+        </Link>
+      </li>
 
-      <ul ref={menuRef}  className={mobileMenu ? "" : "hide-mobile-menu"}>
-        {mobileMenu && (
-     <div className="mobile-overlay" onClick={() => setMobileMenu(false)}  />)}
-   
-        <li>
-          <Link to="hero"  smooth={true} offset={0}  duration={500}  onClick={closeMenu}>  Home </Link>
-        </li>  
- 
-        <li>
-          <Link  to="facilities" smooth={true} offset={-100} duration={500}  onClick={closeMenu}>Facilities </Link>
-          
-        </li>   
+      <li>
+        <Link
+          to="facilities"
+          smooth={true}
+          offset={-100}
+          duration={500}
+          onClick={closeMenu}
+        >
+          Facilities
+        </Link>
+      </li>
 
-        <li>
-          <Link  to="about" smooth={true} offset={-100}  duration={500} onClick={closeMenu} > About Us </Link>
-       </li>   
+      <li>
+        <Link
+          to="about"
+          smooth={true}
+          offset={-100}
+          duration={500}
+          onClick={closeMenu}
+        >
+          About Us
+        </Link>
+      </li>
 
-        <li>
-          <Link to="gallery" smooth={true} offset={-100} duration={500} onClick={closeMenu}> Clinic Photos</Link>
-        </li>   
-                       {/* contact button */}
-        <li>
-          <Link  to="contact" smooth={true} offset={-100}  duration={500}  className="btn"  onClick={closeMenu}>Enquiry</Link>
-        </li>   
+      <li>
+        <Link
+          to="gallery"
+          smooth={true}
+          offset={-100}
+          duration={500}
+          onClick={closeMenu}
+        >
+          Clinic Photos
+        </Link>
+      </li>
 
-              {/* login btn */}
-       <li>
-  <button
-    className="btn"
-    onClick={() => {
-      closeMenu();
-      navigate("/login");
-    }}
-  >
-    Login
-  </button>
-</li>
-    
+      <li>
+        <Link
+          to="contact"
+          smooth={true}
+          offset={-100}
+          duration={500}
+          className="btn-web-navbar"
+          onClick={closeMenu}
+        >
+          Enquiry
+        </Link>
+      </li>
 
-      </ul>
-     
-      {/* Menu Icon */}
+      <li>
+        <button
+          className="btn-web-navbar"
+          onClick={() => {
+            closeMenu();
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
+      </li>
 
-      <img  src={menu_icon} alt=""   className="menu-icon" onClick={toggleMenu}/>
+    </ul>
 
-    </nav>
-  );
+    {/* Menu Icon */}
+    <img
+      src={menu_icon}
+      alt="Menu"
+      className="menu-icon-web-navbar"
+      onClick={toggleMenu}
+    />
+
+  </nav>
+);
 };
 
 export default Navbar;

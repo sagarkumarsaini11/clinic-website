@@ -191,7 +191,7 @@ const handleMenuClick = () => {
                        {/* MOBILE OVERLAY */}
 
       {sidebarOpen && (
-        <div  className="sidebar-overlay"
+        <div  className="sidebar-overlay-clinic-sidebar"
           onClick={() => setSidebarOpen(false)}/>
        )} 
            
@@ -224,7 +224,10 @@ const handleMenuClick = () => {
 
         <nav className="navbar-sidebar1-clinic">
 
-             {/* Dashbord Clinic*/}
+                         
+                         
+                         
+                           {/* Dashbord Clinic*/}
         <NavLink
   to="/dashboard-clinic"
   onClick={handleMenuClick}
@@ -236,8 +239,9 @@ const handleMenuClick = () => {
 >
   <FaThLarge /> Dashboard
 </NavLink>
-            
-             {/* Homepage submenu */}
+
+
+                {/* Homepage submenu */}
          <NavLink to="/homepage"
         onClick={handleMenuClick}
         className={({ isActive }) =>isActive
@@ -245,6 +249,7 @@ const handleMenuClick = () => {
        : "menu-btn-sidebar1-clinic"
        }>
        <FaHome /> Homepage</NavLink>
+        
  
 
                {/* Add Patient submenu */}
@@ -260,7 +265,11 @@ const handleMenuClick = () => {
             <FaUserPlus />Add New Patient</NavLink>
             
           
-           
+            
+
+
+   
+            
 
 
                 {/* Serivce submenu 
