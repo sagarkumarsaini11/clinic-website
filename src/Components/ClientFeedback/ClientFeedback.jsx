@@ -15,25 +15,25 @@ export default function ClientFeedback() {
   const feedbackData = useMemo(
     () => [
       {
-        name: "Veit Rochus",
+        name: "Varun Sharma",
         role: "Sports Recovery",
         feedback:
           "I worried I'd never return to sports after my injury. The therapy sessions, expert guidance and constant encouragement completely transformed my recovery. Today I'm back on the basketball court stronger and more confident than ever.",
       },
       {
-        name: "Sophia Martin",
+        name: "Mohit Patel",
         role: "Back Pain Recovery",
         feedback:
           "For years I struggled with severe lower back pain. After only a few weeks of personalized physiotherapy, I noticed incredible improvement. The team was supportive, knowledgeable and genuinely cared about my progress.",
       },
       {
-        name: "James Wilson",
+        name: "Vidhi",
         role: "Post Surgery Care",
         feedback:
           "Every session was carefully planned according to my recovery stage. The therapists motivated me throughout the process and helped me regain mobility much faster than I expected.",
       },
       {
-        name: "Emma Johnson",
+        name: "Ansh Vashistha",
         role: "Neck & Shoulder Care",
         feedback:
           "Professional treatment, friendly staff and modern equipment made every visit comfortable. My neck pain has almost disappeared and I can work for long hours without discomfort.",
