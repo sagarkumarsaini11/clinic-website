@@ -5,9 +5,13 @@
 .trusted-support-section{
     width:100%;
     padding:110px 6%;
-    background:#b0eed4;
+      background:
+    radial-gradient(circle at 15% 80%,rgba(62,255,234,.08),transparent 40%),
+    radial-gradient(circle at 80% 30%,rgba(50,220,255,.07),transparent 35%),
+    linear-gradient(180deg,#08181d 0%,#0b262d 40%,#10363d 100%);
     overflow:hidden;
 }
+
 
 .trusted-support-wrapper{
 

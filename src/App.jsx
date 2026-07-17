@@ -40,6 +40,11 @@ import AddDoctorList from './Components/AddDoctorList/AddDoctorList'
 import DashboardClinic from './Components/DashboardClinic/DashboardClinic'
 import TrustedSupport from './Components/TrustedSupport/TrustedSupport'
 import ExcellenceCare from './Components/ExcellenceCare/ExcellenceCare'
+import SecureCare from './Components/SecureCare/SecureCare'
+import TherapySlider from './Components/TherapySlider/TherapySlider'
+import PlanVisit from './Components/PlanVisit/PlanVisit'
+import ClientFeedback from './Components/ClientFeedback/ClientFeedback'
+
 
 
 function Website() {
@@ -49,16 +54,23 @@ function Website() {
       <Navbar />
       <Hero/>
       <Appointment/>
+      <ExcellenceCare/> 
       <Facilities/>
     <FeatureSection/>
       <Gallery/>
+       
       <About/>
       <TrustedSupport/>
-      <Contact/>
-      <ExcellenceCare/>
-      <TreatmentSection/>
-      <Footer/>
       
+      <Contact/>
+      
+      <SecureCare/>
+      <TreatmentSection/>
+      <TherapySlider/>
+      <PlanVisit/>
+      <ClientFeedback/>
+      <Footer/>
+    
     </div>
    )    
 };
