@@ -38,6 +38,8 @@ import PrescriptionSettingForm from './Components/PrescriptionSettingForm/Prescr
 import AddDoctor from './Components/AddDoctor/AddDoctor'
 import AddDoctorList from './Components/AddDoctorList/AddDoctorList'
 import DashboardClinic from './Components/DashboardClinic/DashboardClinic'
+import TrustedSupport from './Components/TrustedSupport/TrustedSupport'
+import ExcellenceCare from './Components/ExcellenceCare/ExcellenceCare'
 
 
 function Website() {
@@ -51,10 +53,12 @@ function Website() {
     <FeatureSection/>
       <Gallery/>
       <About/>
+      <TrustedSupport/>
       <Contact/>
+      <ExcellenceCare/>
       <TreatmentSection/>
       <Footer/>
-    
+      
     </div>
    )    
 };
