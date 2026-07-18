@@ -1,196 +1,223 @@
-import React, { useState } from "react";
-import "./AddDoctorList.css";
+import React, { useEffect, useState } from "react";
+import './AddDoctorList.css'
 
 export default function AddDoctorList() {
-  const [doctorList, setDoctorList] = useState([
-    {
-      id: 1,
-      doctorName: "Dr. Amit Sharma",
-      mobile: "9876543210",
-      hospitalName: "City Care Hospital",
-      address: "Delhi Road, Saharanpur",
-    },
-    {
-      id: 2,
-      doctorName: "Dr. Neha Verma",
-      mobile: "9876501234",
-      hospitalName: "Life Care Hospital",
-      address: "Court Road, Saharanpur",
-    },
-    {
-      id: 3,
-      doctorName: "Dr. Rahul Gupta",
-      mobile: "9812345678",
-      hospitalName: "Krishna Hospital",
-      address: "Hakikat Nagar, Saharanpur",
-    },
-    {
-      id: 4,
-      doctorName: "Dr. Priya Singh",
-      mobile: "9765432109",
-      hospitalName: "Health Plus Hospital",
-      address: "Ambala Road, Saharanpur",
-    },
-    {
-      id: 5,
-      doctorName: "Dr. Mohit Kumar",
-      mobile: "9654321098",
-      hospitalName: "Advance Care Hospital",
-      address: "Delhi Road, Saharanpur",
-    },
-  ]);
+  const BASE_URL = "https://clinic-backend-5ucx.onrender.com";
+
+  const [doctorList, setDoctorList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [editDoctorId, setEditDoctorId] = useState(null);
 
   const [editDoctorData, setEditDoctorData] = useState({
-    doctorName: "",
+    doctor_name: "",
     mobile: "",
-    hospitalName: "",
+    hospital_name: "",
     address: "",
   });
 
-  // ================= DELETE DOCTOR =================
+  // ===========================
+  // GET TOKEN
+  // ===========================
 
-  const handleDelete = (id) => {
-    const updatedDoctorList = doctorList.filter(
-      (doctor) => doctor.id !== id
-    );
+  const token =
+    localStorage.getItem("token") ||
+    sessionStorage.getItem("token");
 
-    setDoctorList(updatedDoctorList);
+  // ===========================
+  // FETCH DOCTOR LIST
+  // ===========================
 
-    if (editDoctorId === id) {
-      setEditDoctorId(null);
+  const fetchDoctors = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${BASE_URL}/api/doctor`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setDoctorList(data.data);
+      } else {
+        setDoctorList([]);
+      }
+    } catch (error) {
+      console.log(error);
+      setDoctorList([]);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // ================= EDIT DOCTOR =================
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+  // ===========================
+  // DELETE api
+  // ===========================
+
+ const handleDelete = async (id) => {
+  if (!window.confirm("Delete this doctor?")) return;
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/doctor/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      fetchDoctors();
+    } else {
+      alert(data.message || "Delete failed");
+    }
+  } catch (error) {
+    console.log(error);
+    alert("Something went wrong.");
+  }
+};
+
+  // ===========================
+  // EDIT
+  // ===========================
 
   const handleEdit = (doctor) => {
     setEditDoctorId(doctor.id);
 
     setEditDoctorData({
-      doctorName: doctor.doctorName,
+      doctor_name: doctor.doctor_name,
       mobile: doctor.mobile,
-      hospitalName: doctor.hospitalName,
+      hospital_name: doctor.hospital_name,
       address: doctor.address,
     });
   };
 
-  // ================= INPUT CHANGE =================
+  // ===========================
+  // INPUT CHANGE
+  // ===========================
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
 
-    setEditDoctorData((prevData) => ({
-      ...prevData,
+    setEditDoctorData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  // ================= SAVE DOCTOR =================
+  // ===========================
+  // UPDATE api
+  // ===========================
 
-  const handleSave = (id) => {
-    const updatedDoctorList = doctorList.map((doctor) =>
-      doctor.id === id
-        ? {
-            ...doctor,
-            ...editDoctorData,
-          }
-        : doctor
+const handleSave = async (id) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/doctor/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          doctorName: editDoctorData.doctor_name,
+          mobile: editDoctorData.mobile,
+          hospitalName: editDoctorData.hospital_name,
+          address: editDoctorData.address,
+        }),
+      }
     );
 
-    setDoctorList(updatedDoctorList);
+    const data = await response.json();
 
-    setEditDoctorId(null);
-
-    setEditDoctorData({
-      doctorName: "",
-      mobile: "",
-      hospitalName: "",
-      address: "",
-    });
-  };
-
-  // ================= CANCEL EDIT =================
+    if (response.ok && data.success) {
+      alert("Doctor Updated Successfully");
+      setEditDoctorId(null);
+      fetchDoctors();
+    } else {
+      alert(data.message || "Update failed");
+    }
+  } catch (error) {
+    console.log(error);
+    alert("Something went wrong.");
+  }
+};
+  // ===========================
+  // CANCEL
+  // ===========================
 
   const handleCancel = () => {
     setEditDoctorId(null);
-
-    setEditDoctorData({
-      doctorName: "",
-      mobile: "",
-      hospitalName: "",
-      address: "",
-    });
   };
 
   return (
     <div className="container-doctor-list">
       <div className="content-doctor-list">
         <div className="header-doctor-list">
-          <h2 className="heading-doctor-list">Doctor List</h2>
+          <h2 className="heading-doctor-list">
+            Doctor List
+          </h2>
         </div>
 
         <div className="table-wrapper-doctor-list">
           <table className="table-doctor-list">
-            <thead className="thead-doctor-list">
-              <tr className="header-row-doctor-list">
-                <th className="th-doctor-list">S.No</th>
-
-                <th className="th-doctor-list">
-                  Doctor Name
-                </th>
-
-                <th className="th-doctor-list">
-                  Mobile
-                </th>
-
-                <th className="th-doctor-list">
-                  Hospital Name
-                </th>
-
-                <th className="th-doctor-list">
-                  Address
-                </th>
-
-                <th className="th-doctor-list">
-                  Action
-                </th>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Doctor Name</th>
+                <th>Mobile</th>
+                <th>Hospital Name</th>
+                <th>Address</th>
+                <th>Action</th>
               </tr>
             </thead>
 
-            <tbody className="tbody-doctor-list">
-              {doctorList.length > 0 ? (
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="6">
+                    Loading...
+                  </td>
+                </tr>
+              ) : doctorList.length > 0 ? (
                 doctorList.map((doctor, index) => (
-                  <tr
-                    className="row-doctor-list"
-                    key={doctor.id}
-                  >
-                    {/* SERIAL NUMBER */}
+                  <tr key={doctor.id}>
+                    <td>{index + 1}</td>
 
-                    <td className="td-doctor-list">
-                      {index + 1}
-                    </td>
-
-                    {/* DOCTOR NAME */}
-
-                    <td className="td-doctor-list">
+                    <td>
                       {editDoctorId === doctor.id ? (
                         <input
                           type="text"
-                          name="doctorName"
-                          value={editDoctorData.doctorName}
+                          name="doctor_name"
+                          value={
+                            editDoctorData.doctor_name
+                          }
                           onChange={handleEditChange}
                           className="edit-input-doctor-list"
                         />
                       ) : (
-                        doctor.doctorName
+                        doctor.doctor_name
                       )}
                     </td>
 
-                    {/* MOBILE */}
-
-                    <td className="td-doctor-list">
+                    <td>
                       {editDoctorId === doctor.id ? (
                         <input
                           type="text"
@@ -198,34 +225,29 @@ export default function AddDoctorList() {
                           value={editDoctorData.mobile}
                           onChange={handleEditChange}
                           className="edit-input-doctor-list"
-                          maxLength="10"
                         />
                       ) : (
                         doctor.mobile
                       )}
                     </td>
 
-                    {/* HOSPITAL NAME */}
-
-                    <td className="td-doctor-list">
+                    <td>
                       {editDoctorId === doctor.id ? (
                         <input
                           type="text"
-                          name="hospitalName"
+                          name="hospital_name"
                           value={
-                            editDoctorData.hospitalName
+                            editDoctorData.hospital_name
                           }
                           onChange={handleEditChange}
                           className="edit-input-doctor-list"
                         />
                       ) : (
-                        doctor.hospitalName
+                        doctor.hospital_name
                       )}
                     </td>
 
-                    {/* ADDRESS */}
-
-                    <td className="td-doctor-list">
+                    <td>
                       {editDoctorId === doctor.id ? (
                         <input
                           type="text"
@@ -239,59 +261,54 @@ export default function AddDoctorList() {
                       )}
                     </td>
 
-                    {/* ACTION */}
+                    <td>
+                      {editDoctorId === doctor.id ? (
+                        <>
+                          <button
+                            className="save-button-doctor-list"
+                            onClick={() =>
+                              handleSave(doctor.id)
+                            }
+                          >
+                            Save
+                          </button>
 
-                    <td className="td-doctor-list">
-                      <div className="action-buttons-doctor-list">
-                        {editDoctorId === doctor.id ? (
-                          <>
-                            <button
-                              className="save-button-doctor-list"
-                              onClick={() =>
-                                handleSave(doctor.id)
-                              }
-                            >
-                              Save
-                            </button>
+                          <button
+                            className="cancel-button-doctor-list"
+                            onClick={handleCancel}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className="edit-button-doctor-list"
+                            onClick={() =>
+                              handleEdit(doctor)
+                            }
+                          >
+                            Edit
+                          </button>
 
-                            <button
-                              className="cancel-button-doctor-list"
-                              onClick={handleCancel}
-                            >
-                              Cancel
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              className="edit-button-doctor-list"
-                              onClick={() =>
-                                handleEdit(doctor)
-                              }
-                            >
-                              Edit
-                            </button>
-
-                            <button
-                              className="delete-button-doctor-list"
-                              onClick={() =>
-                                handleDelete(doctor.id)
-                              }
-                            >
-                              Delete
-                            </button>
-                          </>
-                        )}
-                      </div>
+                          <button
+                            className="delete-button-doctor-list"
+                            onClick={() =>
+                              handleDelete(
+                                doctor.id
+                              )
+                            }
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))
               ) : (
-                <tr className="empty-row-doctor-list">
-                  <td
-                    className="empty-data-doctor-list"
-                    colSpan="6"
-                  >
+                <tr>
+                  <td colSpan="6">
                     No Doctor Found
                   </td>
                 </tr>

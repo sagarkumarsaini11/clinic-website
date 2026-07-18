@@ -44,6 +44,7 @@ import SecureCare from './Components/SecureCare/SecureCare'
 import TherapySlider from './Components/TherapySlider/TherapySlider'
 import PlanVisit from './Components/PlanVisit/PlanVisit'
 import ClientFeedback from './Components/ClientFeedback/ClientFeedback'
+import WhatWeDo from './Components/WhatWeDo/WhatWeDo'
 
 
 
@@ -57,6 +58,7 @@ function Website() {
       <ExcellenceCare/> 
       <Facilities/>
     <FeatureSection/>
+     <WhatWeDo/>
       <Gallery/>
        
       <About/>
@@ -70,7 +72,7 @@ function Website() {
       <PlanVisit/>
       <ClientFeedback/>
       <Footer/>
-    
+   
     </div>
    )    
 };

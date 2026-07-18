@@ -54,7 +54,7 @@
 .patient-card {
   width: 550px;
   max-width: 650px;
-
+   margin-top: 90px;
   background: #fff;
   border-radius: 15px;
 

@@ -257,11 +257,11 @@ const services = [
     <section className="treatment-section">
       <h1>WHAT WE TREAT</h1>
 
-      <p className="subtitle">
+      {/* <p className="subtitle">
         We provide specialized physiotherapy treatments for neurological,
         orthopedic, musculoskeletal, pediatric, geriatric, and sports-related
         conditions.
-      </p>
+      </p> */}
 
       <div className="grid">
         <Card title="Condition" items={conditions} />

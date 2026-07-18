@@ -301,39 +301,37 @@ return true;
         return;
       }
 
-      const patientData = {
-        name: formData.name,
+ const patientData = {
+  name: formData.name,
 
-        age: Number(formData.age),
+  age: Number(formData.age),
 
-        gender: formData.gender,
+  gender: formData.gender,
 
-        mobileNumber: formData.mobile,
+  mobileNumber: formData.mobile,
 
-        address: formData.address,
+  address: formData.address,
 
-        problem: formData.problem,
+  problem: formData.problem,
 
-        appointmentType:
-          formData.appointmentType,
+  appointmentType: formData.appointmentType,
 
-        appointmentDate:
-          formData.appointmentType === "Standard"
-            ? formData.appointmentDate
-            : null,
+  availableDate:
+    formData.appointmentType === "Standard"
+      ? formData.appointmentDate
+      : null,
 
-        appointmentTime:
-          formData.appointmentType === "Standard"
-            ? formData.appointmentTime
-            : null,
+  availableTimeSlot:
+    formData.appointmentType === "Standard"
+      ? formData.appointmentTime
+      : null,
 
-        cash: Number(  formData.cash || 0),
+  cash: Number(formData.cash || 0),
 
-        upi: Number( formData.upi || 0 ),
+  upi: Number(formData.upi || 0),
 
-        total: Number( formData.total || 0 ),
-       
-      };
+  total: Number(formData.total || 0),
+};
          
 
       console.log(

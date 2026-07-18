@@ -1,7 +1,10 @@
 .contact {
   width: 100%;
   padding: 120px 8%;
-  background: #cef0dd;
+  background:
+    radial-gradient(circle at 15% 80%,rgba(62,255,234,.08),transparent 40%),
+    radial-gradient(circle at 80% 30%,rgba(50,220,255,.07),transparent 35%),
+    linear-gradient(180deg,#08181d 0%,#0b262d 40%,#10363d 100%);
 
   position: relative;
   overflow: hidden;
@@ -152,14 +155,14 @@
 }
 
 .contact-title p {
-  color: #134e4a;
+  color: #eeebeb;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .contact-title h2 {
   font-size: 42px;
-  color: #134e4a;
+  color: #ddeeed;
 }
 
 .contact-container {
@@ -176,14 +179,14 @@
 .contact-left h3,
 .contact-right h3 {
   font-size: 30px;
-  color: #134e4a;
+  color: #d1ebe9;
   margin-bottom: 20px;
 }
 
 .contact-left p {
   line-height: 1.9;
   margin-bottom: 20px;
-  color: #555;
+  color: #eeeded;
 
 }
 
@@ -196,7 +199,7 @@
   margin-bottom: 20px;
   display: flex;
   gap: 12px;
-  color: #333;
+  color: #ebe8e8;
   line-height: 1.7;
 }
 

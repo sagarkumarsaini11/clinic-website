@@ -78,7 +78,7 @@ const BASE_URL = "https://clinic-backend-5ucx.onrender.com";
       // ===========================
       // API Call
       // ===========================
-     const response = await fetch(`${BASE_URL}/api/doctors`, {
+     const response = await fetch(`${BASE_URL}/api/doctor`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

@@ -35,9 +35,10 @@ const About = () => {
   }, []);
 
   return (
+   
     <section  ref={aboutRef} 
      className={`about ${ showAnimation ? "show" : "" }`}>
-
+     
       <div className="about-left">
         <img src={aboutImg} alt="Krishna Advance Physio Clinic"  className="about-img"/>
        </div>  

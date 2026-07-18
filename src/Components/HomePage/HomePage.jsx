@@ -233,16 +233,21 @@ const HomePage = () => {
         item.appointmentType ||
         "",
 
-      appointmentDate:
-        item.appointment_date ||
-        item.appointmentDate ||
-        item.created_date ||
-        "",
+ appointmentDate:
+  item.appointment_type === "STANDARD"
+    ? (item.available_date ||
+       item.availableDate)
+    : (item.appointment_date ||
+       item.appointmentDate ||
+       item.created_date),
 
-      appointmentTime:
-        item.appointment_time ||
-        item.appointmentTime ||
-        "",
+appointmentTime:
+  item.appointment_type === "STANDARD"
+    ? (item.available_time_slot ||
+       item.availableTimeSlot)
+    : (item.appointment_time ||
+       item.appointmentTime ||
+       ""),
 
       amount: payableAmount,
 

@@ -1,5 +1,8 @@
 .features-web {
-  background: #0d4f46;
+background:
+    radial-gradient(circle at 15% 80%,rgba(62,255,234,.08),transparent 40%),
+    radial-gradient(circle at 80% 30%,rgba(50,220,255,.07),transparent 35%),
+    linear-gradient(180deg,#08181d 0%,#0b262d 40%,#10363d 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
