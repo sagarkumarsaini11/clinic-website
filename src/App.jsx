@@ -48,6 +48,7 @@ import WhatWeDo from './Components/WhatWeDo/WhatWeDo'
 
 
 
+
 function Website() {
   return (
    
@@ -57,16 +58,13 @@ function Website() {
       <Appointment/>
       <ExcellenceCare/> 
       <Facilities/>
-    <FeatureSection/>
-     <WhatWeDo/>
-      <Gallery/>
-       
+      <FeatureSection/>
+       <WhatWeDo/>
+      <Gallery/>     
       <About/>
       <TrustedSupport/>
-      
-      <Contact/>
-      
       <SecureCare/>
+      <Contact/>
       <TreatmentSection/>
       <TherapySlider/>
       <PlanVisit/>

@@ -1,7 +1,6 @@
 .gallery {
   width: 100%;
   padding: 80px 0;
-
   overflow: hidden;
 }
 
@@ -118,7 +117,7 @@
   }
 }
 
-/* Mobile */
+   /* Mobile */
 
 @media (max-width: 480px) {
 
