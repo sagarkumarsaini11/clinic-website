@@ -390,7 +390,33 @@ export default function OpenPatientList() {
 
           {/* ================= PATIENT DETAILS ================= */}
 
-          <h2>Patient File</h2>
+         {/* ================= PATIENT HEADER ================= */}
+
+<div className="patient-header-open-patient">
+
+  <h2>{patient.name || "Unknown Patient"}</h2>
+
+  <div className="patient-header-details-open-patient">
+
+    <span>
+      <strong>File No:</strong>{" "}
+      {patient.fileNo || "-"}
+    </span>
+
+    <span>
+      <strong>Patient Code:</strong>{" "}
+      {patient.patientCode || "-"}
+    </span>
+
+  </div>
+
+  <h3>Patient File</h3>
+
+</div>
+
+{/* ================= PATIENT DETAILS ================= */}
+
+
 
           <div className="patient-info">
 

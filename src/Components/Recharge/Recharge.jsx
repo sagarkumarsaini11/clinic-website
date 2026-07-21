@@ -27,6 +27,21 @@ const Recharge = () => {
     patient?.id ||
     "";
 
+    const patientName =
+  patient?.name ||
+  patient?.full_name ||
+  "Unknown Patient";
+
+const patientCode =
+  patient?.patientCode ||
+  patient?.patient_code ||
+  "";
+
+const fileNo =
+  patient?.fileNo ||
+  patient?.file_number ||
+  "";
+
   console.log("Recharge Patient:", patient);
   console.log("Recharge Patient ID:", patientId);
 
@@ -279,9 +294,21 @@ const Recharge = () => {
             }
           />
 
-          <h2>
-            Select Services / Packages
-          </h2>
+        <div className="recharge-patient-header">
+  <h2>{patientName}</h2>
+
+  <div className="recharge-patient-details">
+    <span>
+      <strong>File No:</strong> {fileNo || "-"}
+    </span>
+
+    <span>
+      <strong>Patient Code:</strong> {patientCode || "-"}
+    </span>
+  </div>
+
+  <h3>Select Services / Packages</h3>
+</div>
 
           <form onSubmit={handleSubmit}>
       

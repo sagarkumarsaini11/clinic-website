@@ -289,6 +289,42 @@ input[type="radio"]{
 
   
 }
+
+.recharge-patient-header{
+    margin-bottom:25px;
+    text-align:center;
+    border-bottom:2px solid #ececec;
+    padding-bottom:18px;
+}
+
+.recharge-patient-header h2{
+    margin:0;
+    font-size:28px;
+    color:#1976d2;
+    font-weight:700;
+}
+
+.recharge-patient-header h3{
+    margin-top:15px;
+    font-size:20px;
+    color:#333;
+}
+
+.recharge-patient-details{
+    margin-top:10px;
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+    font-size:15px;
+    color:#555;
+}
+
+.recharge-patient-details span{
+    background:#f5f8ff;
+    padding:8px 14px;
+    border-radius:8px;
+}
              /* Mobile */
 
 @media (max-width:768px){

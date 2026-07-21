@@ -7,14 +7,41 @@ import {
   FaArrowLeft,
 } from "react-icons/fa";
 import "./PatientTreatmentProtocol.css";
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 export default function PatientTreatmentProtocol() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  
-  // Treatment Protocol Menu Data
- 
+  // ==========================
+  // PATIENT DATA
+  // ==========================
+
+  const patient =
+    location.state?.patient || null;
+
+  const patientName =
+    patient?.name ||
+    patient?.full_name ||
+    "Unknown Patient";
+
+  const patientCode =
+    patient?.patientCode ||
+    patient?.patient_code ||
+    "-";
+
+  const fileNo =
+    patient?.fileNo ||
+    patient?.file_number ||
+    "-";
+
+  // ==========================
+  // TREATMENT MENUS
+  // ==========================
+
   const treatmentMenus = [
     {
       id: 1,
@@ -66,50 +93,98 @@ export default function PatientTreatmentProtocol() {
     },
   ];
 
-  
-  // States
-   
-  const [showMenuPopup, setShowMenuPopup] = useState(false);
-  const [expandedMenu, setExpandedMenu] =  useState(null);
-  const [searchText, setSearchText] =  useState("");
+  // ==========================
+  // STATES
+  // ==========================
 
+  const [
+    showMenuPopup,
+    setShowMenuPopup,
+  ] = useState(false);
 
-  // Filter Menu
+  const [
+    expandedMenu,
+    setExpandedMenu,
+  ] = useState(null);
 
-  const filteredMenus = treatmentMenus.filter(
-    (menu) => {
-      if (searchText === "") return true;
+  const [
+    searchText,
+    setSearchText,
+  ] = useState("");
 
-      const menuMatch = menu.title
-        .toLowerCase()
-        .includes(searchText.toLowerCase());
+  // ==========================
+  // FILTER MENU
+  // ==========================
 
-      const subMenuMatch = menu.subMenus.some(
-        (sub) =>
+  const filteredMenus =
+    treatmentMenus.filter((menu) => {
+      if (searchText === "")
+        return true;
+
+      const menuMatch =
+        menu.title
+          .toLowerCase()
+          .includes(
+            searchText.toLowerCase()
+          );
+
+      const subMenuMatch =
+        menu.subMenus.some((sub) =>
           sub
             .toLowerCase()
-            .includes(searchText.toLowerCase())
-      );
+            .includes(
+              searchText.toLowerCase()
+            )
+        );
 
-      return menuMatch || subMenuMatch;
-    }
-  );
+      return (
+        menuMatch || subMenuMatch
+      );
+    });
 
   return (
     <div className="protocol-page-patient-protocol">
 
+      {/* BACK BUTTON */}
+
       <FaArrowLeft
-         onClick={() =>
-    navigate("/homepage", {
-      state: {
-        openPatientPopup: true,
-      },
-    })
-  }
+        className="back-icon-patient-protocol"
+        onClick={() =>
+          navigate("/homepage", {
+            state: {
+              openPatientPopup: true,
+              patient,
+            },
+          })
+        }
       />
 
-      {/*LEFT PANEL*/}
-      
+      {/* PATIENT HEADER */}
+
+      <div className="patient-header-treatment-protocol">
+
+        <h2>{patientName}</h2>
+
+        <div className="patient-details-treatment-protocol">
+
+          <span>
+            <strong>File No :</strong>{" "}
+            {fileNo}
+          </span>
+
+          <span>
+            <strong>
+              Patient Code :
+            </strong>{" "}
+            {patientCode}
+          </span>
+
+        </div>
+
+      </div>
+
+      {/* LEFT PANEL */}
+
       <div className="left-panel-patient-protocol">
 
         <div className="header-patient-protocol">
@@ -128,26 +203,31 @@ export default function PatientTreatmentProtocol() {
           />
 
         </div>
-
         {treatmentMenus.map((menu) => (
 
-          <div   key={menu.id}
-          className="menu-card-patient-protocol" >
-           
+          <div
+            key={menu.id}
+            className="menu-card-patient-protocol"
+          >
+
             <div className="menu-title-patient-protocol">
               {menu.title}
             </div>
 
             <ul className="submenu-list-patient-protocol">
 
-              {menu.subMenus.map((submenu, index) => (
+              {menu.subMenus.map(
+                (submenu, index) => (
 
-                <li  key={index}
-                  className="submenu-item-patient-protocol">
-                {submenu}
-                 </li>
-                  
-              ))}
+                  <li
+                    key={index}
+                    className="submenu-item-patient-protocol"
+                  >
+                    {submenu}
+                  </li>
+
+                )
+              )}
 
             </ul>
 
@@ -157,8 +237,10 @@ export default function PatientTreatmentProtocol() {
 
       </div>
 
-                    {/*MENU POPUP*/}
-      
+      {/* =========================
+          MENU POPUP
+      ========================== */}
+
       {showMenuPopup && (
 
         <div className="popup-overlay-patient-protocol">
@@ -173,8 +255,9 @@ export default function PatientTreatmentProtocol() {
                 className="close-icon-patient-protocol"
                 onClick={() =>
                   setShowMenuPopup(false)
-                } />
-  
+                }
+              />
+
             </div>
 
             <input
@@ -182,16 +265,20 @@ export default function PatientTreatmentProtocol() {
               placeholder="Search Menu..."
               className="search-input-patient-protocol"
               value={searchText}
-              onChange={(e) =>  setSearchText(e.target.value)
-              }/>
-              
+              onChange={(e) =>
+                setSearchText(e.target.value)
+              }
+            />
+
             <div className="popup-menu-list-patient-protocol">
 
-              {filteredMenus.map((menu) => (
+            {filteredMenus.map((menu) => (
 
-                <div key={menu.id}
-                  className="popup-menu-card-patient-protocol">
-                 
+                <div
+                  key={menu.id}
+                  className="popup-menu-card-patient-protocol"
+                >
+
                   <div
                     className="popup-menu-title-patient-protocol"
                     onClick={() =>
@@ -199,8 +286,9 @@ export default function PatientTreatmentProtocol() {
                         expandedMenu === menu.id
                           ? null
                           : menu.id
-                      )} >
-                  
+                      )
+                    }
+                  >
 
                     <div className="popup-menu-left-patient-protocol">
 
@@ -234,7 +322,11 @@ export default function PatientTreatmentProtocol() {
                             key={index}
                             className="popup-submenu-item-patient-protocol"
                             onClick={() => {
-                              console.log(submenu);
+                              console.log(
+                                "Selected:",
+                                submenu
+                              );
+
                               setShowMenuPopup(false);
                             }}
                           >
@@ -258,9 +350,6 @@ export default function PatientTreatmentProtocol() {
         </div>
 
       )}
-
-    </div>
-
+      </div>
   );
-
 }

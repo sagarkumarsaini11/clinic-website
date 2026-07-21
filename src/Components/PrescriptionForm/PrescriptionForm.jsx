@@ -5,15 +5,31 @@ import { FaTimes } from "react-icons/fa";
 
 
 export default function PrescriptionForm() {
- const navigate = useNavigate();
+const navigate = useNavigate();
 const location = useLocation();
+
+const patient = location.state?.patient || null;
+const patientName =
+  patient?.name ||
+  patient?.full_name ||
+  "Unknown Patient";
+
+const patientCode =
+  patient?.patientCode ||
+  patient?.patient_code ||
+  "-";
+
+const fileNo =
+  patient?.fileNo ||
+  patient?.file_number ||
+  "-";
 
 const [formData, setFormData] = useState({
   // Patient Details
-  name: "",
-  age: "",
-  gender: "",
-  address: "",
+  name: patient?.name || patient?.full_name || "",
+  age: patient?.age || "",
+  gender: patient?.gender || patient?.sex || "",
+  address: patient?.address || "",
   dateTime: "",
   cc: "",
   otherDetails: "",
@@ -136,15 +152,35 @@ personalizedHomeTreatment: false,
       
 <FaTimes
   className="close-icon-prescription"
-  onClick={() =>
+  onClick={() => {
     navigate("/homepage", {
       state: {
         openPatientPopup: true,
+        patient,
       },
-    })
-  }
+    });
+  }}
 />
-      <h1>PHYSICAL THERAPY PRESCRIPTION</h1>
+          
+     <div className="prescription-patient-header">
+
+  <h2>{patientName}</h2>
+
+  <div className="prescription-patient-details">
+
+    <span>
+      <strong>File No:</strong> {fileNo}
+    </span>
+
+    <span>
+      <strong>Patient Code:</strong> {patientCode}
+    </span>
+
+  </div>
+
+  <h1>PHYSICAL THERAPY PRESCRIPTION</h1>
+
+</div>
         
        <form onSubmit={handleSubmit}>
        <div className="top-section">
