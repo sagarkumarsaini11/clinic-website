@@ -715,7 +715,7 @@ const onDragEnd = (result) => {
  return (
   <>
     {/* ================= SERVICE POPUP ================= */}
-
+       <h2>Prescription Setting </h2>
     {showPopup && (
       <div className="popup-overlay-settings-form">
         <div className="popup-box-settings-form">
@@ -1324,7 +1324,7 @@ const onDragEnd = (result) => {
 
         </div>
 
-        {/* ================= LEFT PANEL END ================= */}
+      
 
         {/* =====================================================
                             RIGHT PANEL
@@ -1335,7 +1335,9 @@ const onDragEnd = (result) => {
           {/* ================= PATIENT DETAILS ================= */}
 
           <div className="patient-details-box-settings-form">
+          
             <div className="main-heading-settings-form">
+            
               <h2 className="main-title-settings-form">
                 Patient Details
               </h2>

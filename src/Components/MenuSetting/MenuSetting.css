@@ -320,7 +320,7 @@
     background:#16227c;
 }
 
-/* menu edit icon */
+/* menu edit icon Template setting*/
 
 .menu-actions-menu-setting {
   display: flex;
@@ -338,6 +338,38 @@
 .menu-edit-icon-menu-setting:hover {
   transform: scale(1.15);
   color: #1d4ed8;
+}
+
+.edit-btn-menu-setting {
+  font-size: 18px;
+  color: #e0e3e7;
+  cursor: pointer;
+  transition: 0.25s;
+  margin-left: 10px;
+}
+
+.edit-btn-menu-setting:hover {
+  color: #084298;
+  transform: scale(1.15);
+}
+
+.template-icons-menu-setting {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-plus-icon-menu-setting,
+.edit-btn-menu-setting,
+.delete-btn-menu-setting {
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.menu-plus-icon-menu-setting:hover,
+.edit-btn-menu-setting:hover,
+.delete-btn-menu-setting:hover {
+  transform: scale(1.15);
 }
 
 /* ==========================================

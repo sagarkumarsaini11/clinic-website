@@ -60,6 +60,13 @@ export default function MenuSetting() {
   const [selectedTemplateId, setSelectedTemplateId] =
     useState(null);
 
+
+    // ================= EDIT TEMPLATE Setting =================
+
+const [showEditTemplatePopup, setShowEditTemplatePopup] = useState(false);
+const [editTemplateId, setEditTemplateId] =  useState(null);
+const [editTemplateName, setEditTemplateName] =  useState("");
+
   // ================= ADD MAIN MENU =================
 
   const handleAddMenu = () => {
@@ -188,7 +195,7 @@ export default function MenuSetting() {
     );
   };
 
-  // ================= ADD TEMPLATE =================
+  // ================= ADD TEMPLATE Setting=================
 
   const handleAddTemplate = () => {
     if (!templateName.trim()) return;
@@ -207,7 +214,7 @@ export default function MenuSetting() {
     setShowTemplatePopup(false);
   };
 
-  // ================= DELETE TEMPLATE =================
+  // ================= DELETE TEMPLATE  Setting=================
 
   const handleDeleteTemplate = (id) => {
     setTemplates(
@@ -245,7 +252,36 @@ export default function MenuSetting() {
     setShowMenuPopup(false);
   };
 
-  // ================= DELETE SUB TEMPLATE =================
+  // ================= OPEN EDIT TEMPLATE SETTING=================
+
+const handleEditTemplate = (template) => {
+  setEditTemplateId(template.id);
+  setEditTemplateName(template.name);
+  setShowEditTemplatePopup(true);
+};
+
+// ================= UPDATE TEMPLATE  SETTING=================
+
+const handleUpdateTemplate = () => {
+  if (!editTemplateName.trim()) return;
+
+  setTemplates((prev) =>
+    prev.map((item) =>
+      item.id === editTemplateId
+        ? {
+            ...item,
+            name: editTemplateName,
+          }
+        : item
+    )
+  );
+
+  setShowEditTemplatePopup(false);
+  setEditTemplateId(null);
+  setEditTemplateName("");
+};
+
+  // ================= DELETE SUB TEMPLATE setting=================
 
   const handleDeleteSubTemplate = (
     templateId,
@@ -269,8 +305,9 @@ export default function MenuSetting() {
   };
 
   return (
+    
     <div className="container-menu-setting">
-
+        
       {/* ================= LEFT SIDE ================= */}
 
       <div className="sidebar-menu-setting">
@@ -584,20 +621,20 @@ export default function MenuSetting() {
                 <FaPlus
                   className="menu-plus-icon-menu-setting"
                   onClick={() =>
-                    handleOpenSubMenuList(
-                      template.id
-                    )
-                  }
-                />
+                    handleOpenSubMenuList(template.id)} />
+                      
+                    
+                    <FaEdit
+                     className="edit-btn-menu-setting"
+                     onClick={() =>   handleEditTemplate(template) }  />
+           
 
                 <FaTrash
                   className="delete-btn-menu-setting"
                   onClick={() =>
-                    handleDeleteTemplate(
-                      template.id
-                    )
-                  }
-                />
+                    handleDeleteTemplate( template.id) }/>
+                     
+                  
 
               </div>
 
@@ -642,7 +679,7 @@ export default function MenuSetting() {
 
       </div>
 
-      {/* ================= TEMPLATE POPUP ================= */}
+      {/* =================  Add TEMPLATE POPUP ================= */}
 
       {showTemplatePopup && (
 
@@ -686,7 +723,49 @@ export default function MenuSetting() {
         </div>
 
       )}
+           {/* ================= EDIT TEMPLATE POPUP ================= */}
 
+{showEditTemplatePopup && (
+
+  <div className="popup-overlay-menu-setting">
+
+    <div className="popup-box-menu-setting">
+
+      <h3>Edit Template</h3>
+
+      <input
+        className="input-menu-setting"
+        value={editTemplateName}
+        onChange={(e) =>
+          setEditTemplateName(e.target.value)
+        }
+      />
+
+      <div className="popup-btn-group-menu-setting">
+
+        <button
+          className="cancel-btn-menu-setting"
+          onClick={() =>
+            setShowEditTemplatePopup(false)
+          }
+        >
+          Cancel
+        </button>
+
+        <button
+          className="save-btn-menu-setting"
+          onClick={handleUpdateTemplate}
+        >
+          Update
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
       {/* ================= SELECT MENU POPUP ================= */}
 
       {showMenuPopup && (

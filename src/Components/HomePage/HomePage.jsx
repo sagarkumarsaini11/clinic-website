@@ -223,10 +223,10 @@ const HomePage = () => {
       address:
         item.address || "",
 
-      problem:
-        item.problem ||
-        item.disease_problem ||
-        "",
+      problem: "",
+        // item.problem ||
+        // item.disease_problem ||
+       
 
       appointmentType:
         item.appointment_type ||
@@ -1045,7 +1045,7 @@ appointmentTime:
 
                         <th>Address</th>
 
-                        <th>Problem</th>
+                        {/* <th>Problem</th> */}
 
                         <th>
                           Appointment Type
@@ -1132,11 +1132,11 @@ appointmentTime:
                                 {item.address ||
                                   "-"}
                               </td>
-
+{/* 
                               <td>
                                 {item.problem ||
                                   "-"}
-                              </td>
+                              </td> */}
 
                               <td>
                                 {item.appointmentType ||
@@ -1235,11 +1235,11 @@ appointmentTime:
         <tr>
           <th>Address</th>
           <td>{currentPatient.address || "-"}</td>
+ 
 
           <th>Problem</th>
           <td>{currentPatient.problem || "-"}</td>
-        </tr>
-
+       </tr>
         <tr>
           <th>Appointment Type</th>
           <td>{currentPatient.appointmentType || "-"}</td>
