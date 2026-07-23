@@ -4,8 +4,8 @@ import {
   FaTimes,
   FaChevronDown,
   FaChevronRight,
-  FaArrowLeft,
 } from "react-icons/fa";
+
 import "./PatientTreatmentProtocol.css";
 import {
   useNavigate,

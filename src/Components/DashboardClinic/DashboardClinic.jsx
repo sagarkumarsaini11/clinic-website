@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import "./DashboardClinic.css";
+import { useNavigate } from "react-router-dom";
 
 import {
   FaRupeeSign,
@@ -16,55 +17,93 @@ import {
 } from "react-icons/fa";
 
 export default function DashboardClinic() {
-  const summaryCards = [
-    {
-      id: 1,
-      title: "Today Revenue",
-      value: "₹54,320",
-      icon: <FaRupeeSign />,
-      iconClass: "dc-card-icon revenue",
-      change: "+18.6%",
-      changeType: "up",
-      subtitle: "from yesterday",
-      extra1: "Cash: ₹32000",
-      extra2: "Online: ₹22320",
-      graph: "green",
-    },
-    {
-      id: 2,
-      title: "Today Attendance",
-      value: "48 / 62",
-      icon: <FaUsers />,
-      iconClass: "dc-card-icon attendance",
-      change: "+12.5%",
-      changeType: "up",
-      subtitle: "from yesterday",
-      graph: "blue",
-    },
-    {
-      id: 3,
-      title: "Today Consulted",
-      value: "25",
-      icon: <FaUserMd />,
-      iconClass: "dc-card-icon consulted",
-      change: "+8.2%",
-      changeType: "up",
-      subtitle: "from yesterday",
-      graph: "purple",
-    },
-    {
-      id: 4,
-      title: "Pending Appointments",
-      value: "4",
-      icon: <FaCalendarAlt />,
-      iconClass: "dc-card-icon pending",
-      change: "-7.1%",
-      changeType: "down",
-      subtitle: "from yesterday",
-      graph: "orange",
-    },
-  ];
+  const navigate = useNavigate();
 
+const [openMenu, setOpenMenu] = useState(null);
+useEffect(() => {
+  const closeMenu = () => setOpenMenu(null);
+
+  window.addEventListener("click", closeMenu);
+
+  return () => {
+    window.removeEventListener("click", closeMenu);
+  };
+}, []);
+
+ const summaryCards = [
+  {
+    id: 1,
+    title: "Today Revenue",
+    value: "₹54,320",
+    icon: <FaRupeeSign />,
+    iconClass: "dc-card-icon revenue",
+    change: "+18.6%",
+    changeType: "up",
+    subtitle: "from yesterday",
+    extra1: "Cash: ₹32000",
+    extra2: "Online: ₹22320",
+    graph: "green",
+    menu: [
+      {
+        label: "Recharge History",
+        path: "/recharge-history",
+      },
+     
+    ],
+  },
+  {
+    id: 2,
+    title: "Today Attendance",
+    value: "48 / 62",
+    icon: <FaUsers />,
+    iconClass: "dc-card-icon attendance",
+    change: "+12.5%",
+    changeType: "up",
+    subtitle: "from yesterday",
+    graph: "blue",
+       menu: [
+      {
+        label: "Attendance List",
+        path: "/attendance-list",
+      },  
+    ],
+  },
+  {
+    id: 3,
+    title: "Today Consulted",
+    value: "25",
+    icon: <FaUserMd />,
+    iconClass: "dc-card-icon consulted",
+    change: "+8.2%",
+    changeType: "up",
+    subtitle: "from yesterday",
+    graph: "purple",
+    //    menu: [
+    //   {
+    //     label: "Recharge History",
+    //     path: "/recharge-history",
+    //   },
+     
+    // ],
+  },
+  {
+    id: 4,
+    title: "Pending Appointments",
+    value: "4",
+    icon: <FaCalendarAlt />,
+    iconClass: "dc-card-icon pending",
+    change: "-7.1%",
+    changeType: "down",
+    subtitle: "from yesterday",
+    graph: "orange",
+    menu: [
+      {
+        label: "Patient List",
+        path: "/homepage",
+      },
+    ],
+  },
+];
   return (
     <div className="dashboard-clinic">
 
@@ -91,17 +130,49 @@ export default function DashboardClinic() {
         {summaryCards.map((card) => (
           <div className="dc-summary-card" key={card.id}>
 
-            <div className="dc-card-top">
+      <div className="dc-card-top">
 
-              <div className={card.iconClass}>
-                {card.icon}
-              </div>
+  <div className={card.iconClass}>
+    {card.icon}
+  </div>
 
-              <div className="dc-card-heading">
-                <h4>{card.title}</h4>
-              </div>
+  <div className="dc-card-heading">
+    <h4>{card.title}</h4>
+  </div>
 
-              <FaEllipsisV className="dc-more" />
+  <div
+  className="dc-more-wrapper"
+  onClick={(e) => e.stopPropagation()}
+>
+  <FaEllipsisV
+    className="dc-more"
+    onClick={(e) => {
+      e.stopPropagation();
+      setOpenMenu(openMenu === card.id ? null : card.id);
+    }}
+  />
+
+  {openMenu === card.id && card.menu && (
+    <div className="dc-dropdown">
+
+      {card.menu.map((item, index) => (
+
+        <div
+          key={index}
+          className="dc-dropdown-item"
+          onClick={() => {
+            setOpenMenu(null);
+            navigate(item.path);
+          }}
+        >
+          {item.label}
+        </div>
+
+      ))}
+
+    </div>
+  )}
+</div>
 
             </div>
 

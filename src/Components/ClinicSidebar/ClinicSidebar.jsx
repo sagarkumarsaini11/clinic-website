@@ -18,6 +18,7 @@ import {
   FaChevronDown,
   FaHistory,
   FaSearch,
+  FaCamera,
   FaThLarge,
   FaUserMd,
   FaUsers,
@@ -37,6 +38,9 @@ const ClinicSidebar = () => {
 
   const [user, setUser] = useState(null);
   const[searchText, setSearchText]= useState("");
+   const fileInputRef = useRef(null);
+     const [showCameraPopup, setShowCameraPopup] = useState(false);
+
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -118,6 +122,32 @@ const ClinicSidebar = () => {
     navigate("/");
   };
 
+     //camera function
+const openCamera = () => {
+  setShowCameraPopup((prev) => !prev);
+};
+
+const handleOpenCamera = () => {
+  setShowCameraPopup(false);
+
+  if (fileInputRef.current) {
+    fileInputRef.current.click();
+  }
+};
+const handleCameraCapture = (e) => {
+  const file = e.target.files[0];
+
+  if (!file) return;
+
+  console.log("Captured Image:", file);
+
+  // Close popup after selecting image
+  setShowCameraPopup(false);
+
+  // Optional: clear input so the same image can be selected again
+  e.target.value = "";
+};
+
   //menu close after clicking 
 const handleMenuClick = () => {
   setSidebarOpen(false);
@@ -135,15 +165,52 @@ const handleMenuClick = () => {
         <h3 className="clinic-title">Clinic Panel </h3>
             
                  {/* Center Search Box */}
-                 <div className="navbar-search-clinic">
-                 <FaSearch className="navbar-search-icon-clinic"/>
-                 <input type="text"
-                 placeholder="Search patient, file no, mobile..."
-                 value={searchText} 
-                 onChange={(e)=> setSearchText(e.target.value)}
-                 className="navbar-search-input-clinic"/>
+               <div className="navbar-search-clinic">
 
-                 </div>
+ <div className="camera-wrapper-clinic">
+
+  <button
+    className="search-camera-btn-clinic"
+    onClick={searchText ? undefined : openCamera}
+  >
+    {searchText ? (
+      <FaSearch className="search-left-icon-clinic" />
+    ) : (
+      <FaCamera className="camera-left-icon-clinic" />
+    )}
+  </button>
+
+  {!searchText && showCameraPopup && (
+    <div className="camera-popup-clinic">
+      <button
+        className="camera-open-btn-clinic"
+        onClick={handleOpenCamera}
+      >
+        📷 Open Camera
+      </button>
+    </div>
+  )}
+
+</div>
+
+  <input
+    type="text"
+    placeholder="Search patient, file no, mobile..."
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+    className="navbar-search-input-clinic"
+  />
+
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    capture="environment"
+    style={{ display: "none" }}
+    onChange={handleCameraCapture}
+  />
+
+</div>
        
                  {/* profile */}
         <div className="profile-wrapper" ref={dropdownRef}>
@@ -242,13 +309,13 @@ const handleMenuClick = () => {
 
 
                 {/* Homepage submenu */}
-         <NavLink to="/homepage"
+         {/* <NavLink to="/homepage"
         onClick={handleMenuClick}
         className={({ isActive }) =>isActive
        ? "menu-btn-sidebar1-clinic active"
        : "menu-btn-sidebar1-clinic"
        }>
-       <FaHome /> Homepage</NavLink>
+       <FaHome /> Homepage</NavLink> */}
         
  
 
@@ -403,7 +470,7 @@ const handleMenuClick = () => {
 </NavLink>
 
                     {/* Recharge history */}
-          <NavLink
+          {/* <NavLink
             to="/recharge-history"
             onClick={handleMenuClick}
             className={({ isActive }) =>
@@ -412,7 +479,7 @@ const handleMenuClick = () => {
                 : "menu-btn-sidebar1-clinic"
             }>
           
-            <FaHistory />Recharge History</NavLink>
+            <FaHistory />Recharge History</NavLink> */}
 
                     {/* Download submenu */}
           <NavLink

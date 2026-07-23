@@ -21,7 +21,49 @@ body{
     padding:28px;
     background:linear-gradient(180deg,#eef7fb 0%,#f7fbff 100%);
 }
+/* dropdown in three dots */
+.dc-more-wrapper{
+    position:relative;
+    margin-left:auto;
+}
 
+.dc-more{
+    cursor:pointer;
+    font-size:35px;
+    color:#666;
+    padding:6px;
+    border-radius:6px;
+    transition:.3s;
+}
+
+.dc-more:hover{
+    background:#f2f4f8;
+}
+
+.dc-dropdown{
+    position:absolute;
+    top:38px;
+    right:0;
+    width:200px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 12px 35px rgba(0,0,0,.18);
+    border:1px solid #e8e8e8;
+    z-index:999999;
+    overflow:hidden;
+}
+
+.dc-dropdown-item{
+    padding:14px 18px;
+    cursor:pointer;
+    font-size:14px;
+    transition:.25s;
+}
+
+.dc-dropdown-item:hover{
+    background:#f3f8ff;
+    color:#2563eb;
+}
 /* ===========================================
    Header
 =========================================== */
@@ -179,7 +221,7 @@ body{
     box-shadow:0 12px 30px rgba(0,0,0,.05);
     border:1px solid rgba(20,184,166,.10);
     position:relative;
-    overflow:hidden;
+    overflow:visible;
     transition:.35s;
 }
 
@@ -772,9 +814,13 @@ body{
     }
 }
 
-.dc-summary-card,
 .dc-panel{
     overflow:hidden;
+}
+
+.dc-summary-card{
+    overflow:visible;
+    position:relative;
 }
 
 /* ===========================================

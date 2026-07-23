@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 
 import {
-  FaCamera,
+  // FaCamera,
   FaTimes,
   FaWallet,
   FaFolder,
@@ -22,7 +22,7 @@ import {
   FaFilePrescription,
   FaClipboardList,
   FaCalendarCheck,
-  FaSearch,
+  // FaSearch,
 } from "react-icons/fa";
 
 // ================= BASE URL =================
@@ -37,20 +37,20 @@ const HomePage = () => {
 
   // ================= STATES =================
 
-  const [
-    showAppointments,
-    setShowAppointments,
-  ] = useState(false);
+  // const [
+  //   showAppointments,
+  //   setShowAppointments,
+  // ] = useState(false);
 
   const [
     currentPatient,
     setCurrentPatient,
   ] = useState(null);
 
-  const [
-    searchValue,
-    setSearchValue,
-  ] = useState("");
+  // const [
+  //   searchValue,
+  //   setSearchValue,
+  // ] = useState("");
 
   const [
     showPatientCard,
@@ -535,205 +535,205 @@ appointmentTime:
 
   // ================= SEARCH PATIENT API =================
 
-  const handleSubmit = async () => {
-    try {
-      const fileNumber =
-        searchValue.trim();
+  // const handleSubmit = async () => {
+  //   try {
+  //     const fileNumber =
+  //       searchValue.trim();
 
-      if (!fileNumber) {
-        return;
-      }
+  //     if (!fileNumber) {
+  //       return;
+  //     }
 
-      const token =
-        localStorage.getItem("token");
+  //     const token =
+  //       localStorage.getItem("token");
 
-      if (!token) {
-        alert(
-          "Token not found. Please login again."
-        );
+  //     if (!token) {
+  //       alert(
+  //         "Token not found. Please login again."
+  //       );
 
-        navigate("/login");
+  //       navigate("/login");
 
-        return;
-      }
+  //       return;
+  //     }
 
-      setSearchLoading(true);
+  //     setSearchLoading(true);
 
-      const response = await fetch(
-        `${BASE_URL}/api/clinic/patients/search?file_number=${encodeURIComponent(
-          fileNumber
-        )}`,
-        {
-          method: "GET",
+  //     const response = await fetch(
+  //       `${BASE_URL}/api/clinic/patients/search?file_number=${encodeURIComponent(
+  //         fileNumber
+  //       )}`,
+  //       {
+  //         method: "GET",
 
-          headers: {
-            Authorization:
-              `Bearer ${token}`,
-          },
-        }
-      );
+  //         headers: {
+  //           Authorization:
+  //             `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      const responseText =
-        await response.text();
+  //     const responseText =
+  //       await response.text();
 
-      let data = {};
+  //     let data = {};
 
-      try {
-        data = responseText
-          ? JSON.parse(responseText)
-          : {};
-      } catch (error) {
-        console.error(
-          "SEARCH JSON ERROR:",
-          error
-        );
-      }
+  //     try {
+  //       data = responseText
+  //         ? JSON.parse(responseText)
+  //         : {};
+  //     } catch (error) {
+  //       console.error(
+  //         "SEARCH JSON ERROR:",
+  //         error
+  //       );
+  //     }
 
-      console.log(
-        "SEARCH STATUS:",
-        response.status
-      );
+  //     console.log(
+  //       "SEARCH STATUS:",
+  //       response.status
+  //     );
 
-      console.log(
-        "SEARCH RESPONSE:",
-        data
-      );
+  //     console.log(
+  //       "SEARCH RESPONSE:",
+  //       data
+  //     );
 
-      if (response.status === 401) {
-        localStorage.removeItem(
-          "token"
-        );
+  //     if (response.status === 401) {
+  //       localStorage.removeItem(
+  //         "token"
+  //       );
 
-        localStorage.removeItem(
-          "user"
-        );
+  //       localStorage.removeItem(
+  //         "user"
+  //       );
 
-        alert(
-          "Session expired. Please login again."
-        );
+  //       alert(
+  //         "Session expired. Please login again."
+  //       );
 
-        navigate("/login");
+  //       navigate("/login");
 
-        return;
-      }
+  //       return;
+  //     }
 
-      if (response.status === 403) {
-        alert(
-          data.message ||
-            "You do not have permission to search patients."
-        );
+  //     if (response.status === 403) {
+  //       alert(
+  //         data.message ||
+  //           "You do not have permission to search patients."
+  //       );
 
-        return;
-      }
+  //       return;
+  //     }
 
-      if (response.status === 404) {
-        alert(
-          data.message ||
-            "Patient Not Found"
-        );
+  //     if (response.status === 404) {
+  //       alert(
+  //         data.message ||
+  //           "Patient Not Found"
+  //       );
 
-        return;
-      }
+  //       return;
+  //     }
 
-      if (!response.ok) {
-        alert(
-          data.message ||
-            data.error ||
-            `Patient search failed. Status: ${response.status}`
-        );
+  //     if (!response.ok) {
+  //       alert(
+  //         data.message ||
+  //           data.error ||
+  //           `Patient search failed. Status: ${response.status}`
+  //       );
 
-        return;
-      }
+  //       return;
+  //     }
 
-      let patient = null;
+  //     let patient = null;
 
-      if (
-        data &&
-        !Array.isArray(data) &&
-        (
-          data.id ||
-          data._id ||
-          data.file_number ||
-          data.patient_code
-        )
-      ) {
-        patient = data;
-      } else if (
-        data.data &&
-        !Array.isArray(data.data)
-      ) {
-        patient =
-          data.data.patient ||
-          data.data;
-      } else if (
-        data.patient &&
-        !Array.isArray(data.patient)
-      ) {
-        patient = data.patient;
-      } else if (
-        Array.isArray(data) &&
-        data.length > 0
-      ) {
-        patient = data[0];
-      } else if (
-        Array.isArray(data.data) &&
-        data.data.length > 0
-      ) {
-        patient = data.data[0];
-      } else if (
-        Array.isArray(
-          data.patients
-        ) &&
-        data.patients.length > 0
-      ) {
-        patient =
-          data.patients[0];
-      } else if (
-        Array.isArray(data.result) &&
-        data.result.length > 0
-      ) {
-        patient =
-          data.result[0];
-      }
+  //     if (
+  //       data &&
+  //       !Array.isArray(data) &&
+  //       (
+  //         data.id ||
+  //         data._id ||
+  //         data.file_number ||
+  //         data.patient_code
+  //       )
+  //     ) {
+  //       patient = data;
+  //     } else if (
+  //       data.data &&
+  //       !Array.isArray(data.data)
+  //     ) {
+  //       patient =
+  //         data.data.patient ||
+  //         data.data;
+  //     } else if (
+  //       data.patient &&
+  //       !Array.isArray(data.patient)
+  //     ) {
+  //       patient = data.patient;
+  //     } else if (
+  //       Array.isArray(data) &&
+  //       data.length > 0
+  //     ) {
+  //       patient = data[0];
+  //     } else if (
+  //       Array.isArray(data.data) &&
+  //       data.data.length > 0
+  //     ) {
+  //       patient = data.data[0];
+  //     } else if (
+  //       Array.isArray(
+  //         data.patients
+  //       ) &&
+  //       data.patients.length > 0
+  //     ) {
+  //       patient =
+  //         data.patients[0];
+  //     } else if (
+  //       Array.isArray(data.result) &&
+  //       data.result.length > 0
+  //     ) {
+  //       patient =
+  //         data.result[0];
+  //     }
 
-      if (!patient) {
-        alert("Patient Not Found");
+  //     if (!patient) {
+  //       alert("Patient Not Found");
 
-        return;
-      }
+  //       return;
+  //     }
 
-      openPatient(patient);
-    } catch (error) {
-      console.error(
-        "SEARCH PATIENT ERROR:",
-        error
-      );
+  //     openPatient(patient);
+  //   } catch (error) {
+  //     console.error(
+  //       "SEARCH PATIENT ERROR:",
+  //       error
+  //     );
 
-      alert(
-        "Something went wrong while searching patient!"
-      );
-    } finally {
-      setSearchLoading(false);
-    }
-  };
+  //     alert(
+  //       "Something went wrong while searching patient!"
+  //     );
+  //   } finally {
+  //     setSearchLoading(false);
+  //   }
+  // };
 
   // ================= CAMERA =================
 
-  const handleCameraClick = () => {
-    alert(
-      "Camera Scanner Opened Successfully"
-    );
-  };
+  // const handleCameraClick = () => {
+  //   alert(
+  //     "Camera Scanner Opened Successfully"
+  //   );
+  // };
 
   // ================= ENTER KEY =================
 
-  const handleEnterKey = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
+  // const handleEnterKey = (e) => {
+  //   if (e.key === "Enter") {
+  //     e.preventDefault();
 
-      handleSubmit();
-    }
-  };
+  //     handleSubmit();
+  //   }
+  // };
 
   // ================= MARK ATTENDANCE API =================
 
@@ -965,7 +965,7 @@ appointmentTime:
 
       {/* ================= SEARCH BOX ================= */}
 
-      <div className="search-box">
+      {/* <div className="search-box">
         <input
           type="text"
           placeholder="Enter File No"
@@ -998,202 +998,135 @@ appointmentTime:
             <FaCamera size={20} />
           </button>
         )}
+      </div> */}
+
+    
+
+     {/* ================= PATIENT RECORDS ================= */}
+
+{loading ? (
+  <h3 className="loading-text">
+    Loading Patient Records...
+  </h3>
+) : (
+  <div className="records-section">
+
+    {patientList.length === 0 ? (
+
+      <p>No Patient Added</p>
+
+    ) : (
+
+      <div className="table-container">
+           <h2 className="heading-patient-appointment"> Patient Appointment</h2>
+        <table className="appointment-table">
+         
+
+          <thead>
+
+            <tr>
+
+              <th>S.No</th>
+
+              <th>Name</th>
+
+              <th>Age</th>
+
+              <th>Gender</th>
+
+              <th>Mobile</th>
+
+              <th>Address</th>
+
+              <th>Appointment Type</th>
+
+              <th>Appointment Date</th>
+
+              <th>Appointment Time</th>
+
+              <th>Cash Paid</th>
+
+              <th>UPI / Online</th>
+
+              <th>Total Paid</th>
+
+              <th>Action</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {patientList.map((item, index) => {
+
+              const cashPaid = Number(item.cash || 0);
+
+              const upiPaid = Number(item.upi || 0);
+
+              const totalPaid = cashPaid + upiPaid;
+
+              return (
+
+                <tr key={item._id || index}>
+
+                  <td>{index + 1}</td>
+
+                  <td>{item.name || "-"}</td>
+
+                  <td>{item.age ?? "-"}</td>
+
+                  <td>{item.gender || "-"}</td>
+
+                  <td>{item.mobileNumber || "-"}</td>
+
+                  <td>{item.address || "-"}</td>
+
+                  <td>{item.appointmentType || "-"}</td>
+
+                  <td>
+                    {item.appointmentDate
+                      ? new Date(
+                          item.appointmentDate
+                        ).toLocaleDateString("en-IN")
+                      : "-"}
+                  </td>
+
+                  <td>{item.appointmentTime || "-"}</td>
+
+                  <td>₹{cashPaid}</td>
+
+                  <td>₹{upiPaid}</td>
+
+                  <td>₹{totalPaid}</td>
+
+                  <td>
+
+                    <button
+                      className="enter-btn"
+                      onClick={() => openPatient(item)}
+                    >
+                      Enter
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              );
+
+            })}
+
+          </tbody>
+
+        </table>
+
       </div>
 
-      {/* ================= PATIENT RECORDS ================= */}
+    )}
 
-      {loading ? (
-        <h3 className="loading-text">
-          Loading Patient Records...
-        </h3>
-      ) : (
-        <div className="records-section">
-          <button
-            className="appointment-record-btn"
-            onClick={() =>
-              setShowAppointments(
-                !showAppointments
-              )
-            }
-          >
-            {showAppointments
-              ? "Hide Appointments"
-              : "Show Appointments"}
-          </button>
-
-          {showAppointments && (
-            <>
-              {patientList.length ===
-              0 ? (
-                <p>
-                  No Patient Added
-                </p>
-              ) : (
-                <div className="table-container">
-                  <table className="appointment-table">
-                    <thead>
-                      <tr>
-                        <th>S.No</th>
-
-                        <th>Name</th>
-
-                        <th>Age</th>
-
-                        <th>Gender</th>
-
-                        <th>Mobile</th>
-
-                        <th>Address</th>
-
-                        {/* <th>Problem</th> */}
-
-                        <th>
-                          Appointment Type
-                        </th>
-
-                        <th>
-                          Appointment Date
-                        </th>
-
-                        <th>
-                          Appointment Time
-                        </th>
-
-                        <th>
-                          Cash Paid
-                        </th>
-
-                        <th>
-                          UPI / Online
-                        </th>
-
-                        <th>
-                          Total Paid
-                        </th>
-
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {patientList.map(
-                        (
-                          item,
-                          index
-                        ) => {
-                          const cashPaid =
-                            Number(
-                              item.cash ||
-                                0
-                            );
-
-                          const upiPaid =
-                            Number(
-                              item.upi ||
-                                0
-                            );
-
-                          const totalPaid =
-                            cashPaid +
-                            upiPaid;
-
-                          return (
-                            <tr
-                              key={
-                                item._id ||
-                                index
-                              }
-                            >
-                              <td>
-                                {index + 1}
-                              </td>
-
-                              <td>
-                                {item.name ||
-                                  "-"}
-                              </td>
-
-                              <td>
-                                {item.age ??
-                                  "-"}
-                              </td>
-
-                              <td>
-                                {item.gender ||
-                                  "-"}
-                              </td>
-
-                              <td>
-                                {item.mobileNumber ||
-                                  "-"}
-                              </td>
-
-                              <td>
-                                {item.address ||
-                                  "-"}
-                              </td>
-{/* 
-                              <td>
-                                {item.problem ||
-                                  "-"}
-                              </td> */}
-
-                              <td>
-                                {item.appointmentType ||
-                                  "-"}
-                              </td>
-
-                              <td>
-                                {item.appointmentDate
-                                  ? new Date(
-                                      item.appointmentDate
-                                    ).toLocaleDateString(
-                                      "en-IN"
-                                    )
-                                  : "-"}
-                              </td>
-
-                              <td>
-                                {item.appointmentTime ||
-                                  "-"}
-                              </td>
-
-                              <td>
-                                ₹{cashPaid}
-                              </td>
-
-                              <td>
-                                ₹{upiPaid}
-                              </td>
-
-                              <td>
-                                ₹{totalPaid}
-                              </td>
-
-                              <td>
-                                <button
-                                  className="enter-btn"
-                                  onClick={() =>
-                                    openPatient(
-                                      item
-                                    )
-                                  }
-                                >
-                                  Enter
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        }
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
+  </div>
+)}
 
       {/* ================= PATIENT MODAL ================= */}
 

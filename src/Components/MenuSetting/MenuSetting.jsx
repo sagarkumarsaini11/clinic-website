@@ -67,6 +67,11 @@ const [showEditTemplatePopup, setShowEditTemplatePopup] = useState(false);
 const [editTemplateId, setEditTemplateId] =  useState(null);
 const [editTemplateName, setEditTemplateName] =  useState("");
 
+// ================= DELETE CONFIRM POPUP =================
+
+const [deletePopup, setDeletePopup] = useState(false);
+const [deleteAction, setDeleteAction] = useState(() => () => {});
+
   // ================= ADD MAIN MENU =================
 
   const handleAddMenu = () => {
@@ -304,6 +309,26 @@ const handleUpdateTemplate = () => {
     );
   };
 
+  // ================= OPEN DELETE POPUP =================
+
+const openDeletePopup = (callback) => {
+  setDeleteAction(() => callback);
+  setDeletePopup(true);
+};
+
+// ================= CONFIRM DELETE =================
+
+const handleConfirmDelete = () => {
+  deleteAction();
+  setDeletePopup(false);
+};
+
+// ================= CANCEL DELETE =================
+
+const handleCancelDelete = () => {
+  setDeletePopup(false);
+};
+
   return (
     
     <div className="container-menu-setting">
@@ -386,14 +411,9 @@ const handleUpdateTemplate = () => {
 
                     <FaTrash
                       className="submenu-icon-menu-setting delete-menu-setting"
-                      onClick={() =>
-                        handleDeleteSubMenu(
-                          menu.id,
-                          index
-                        )
-                      }
-                    />
-
+                    onClick={() =>
+                    openDeletePopup(() =>
+                     handleDeleteSubMenu(menu.id, index) )} />
                   </div>
 
                 </li>
@@ -600,7 +620,7 @@ const handleUpdateTemplate = () => {
               setShowTemplatePopup(true)
             }
           >
-            + Add New Template
+            + Template
           </button>
 
         </div>
@@ -618,23 +638,23 @@ const handleUpdateTemplate = () => {
 
               <div className="template-icons-menu-setting">
 
+
+                  <FaEdit
+                     className="edit-btn-menu-setting"
+                     onClick={() =>   handleEditTemplate(template) }  />
+
+
                 <FaPlus
                   className="menu-plus-icon-menu-setting"
                   onClick={() =>
                     handleOpenSubMenuList(template.id)} />
                       
                     
-                    <FaEdit
-                     className="edit-btn-menu-setting"
-                     onClick={() =>   handleEditTemplate(template) }  />
-           
-
                 <FaTrash
                   className="delete-btn-menu-setting"
-                  onClick={() =>
-                    handleDeleteTemplate( template.id) }/>
-                     
-                  
+                onClick={() =>
+              openDeletePopup(() =>
+             handleDeleteTemplate(template.id) )}/>
 
               </div>
 
@@ -656,12 +676,12 @@ const handleUpdateTemplate = () => {
 
                       <FaTrash
                         className="delete-submenu-btn-menu-setting"
-                        onClick={() =>
+                       onClick={() =>
+                         openDeletePopup(() =>
                           handleDeleteSubTemplate(
                             template.id,
-                            index
-                          )
-                        }
+                            index) )}
+
                       />
 
                     </li>
@@ -829,6 +849,41 @@ const handleUpdateTemplate = () => {
         </div>
 
       )}
+
+      
+      {/* ================= DELETE CONFIRM POPUP ================= */}
+
+{deletePopup && (
+  <div className="popup-overlay-menu-setting">
+
+    <div className="delete-popup-menu-setting">
+
+      <h3>Are you sure?</h3>
+
+      <p>Are you sure you want to delete it?</p>
+
+      <div className="delete-popup-btns-menu-setting">
+
+        <button
+          className="cancel-btn-menu-setting"
+          onClick={handleCancelDelete}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="confirm-delete-btn-menu-setting"
+          onClick={handleConfirmDelete}
+        >
+          Confirm
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
 
     </div>
   );

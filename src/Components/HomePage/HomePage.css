@@ -6,7 +6,7 @@
 
 
 /* Search */
-
+/* 
 .search-box{
   background:#fff;
   
@@ -26,9 +26,12 @@
 
   width:100%;
   font-size:18px;
-}
+} */
 
-
+.heading-patient-appointment{font-size: 25px;
+color: #0f4c81;
+text-align: center;
+padding-bottom: 30px;}
 
 
           /* Modal */
