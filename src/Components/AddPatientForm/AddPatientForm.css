@@ -12,7 +12,7 @@ body{
 /* PAGE */
 
 .page-wrapper-addpatient{
-    margin-top: 30px;
+ margin-top: -100px;
   width:100%;
   min-height:100vh;
   background:#f4f6ff;

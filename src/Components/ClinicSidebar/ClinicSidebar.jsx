@@ -41,6 +41,25 @@ const ClinicSidebar = () => {
    const fileInputRef = useRef(null);
      const [showCameraPopup, setShowCameraPopup] = useState(false);
 
+    //  empty screen sidebar is closed
+    useEffect(() => {
+  const handleOutsideClick = (e) => {
+    if (
+      sidebarOpen &&
+      window.innerWidth <= 1400 &&
+      sidebarRef.current &&
+      !sidebarRef.current.contains(e.target)
+    ) {
+      setSidebarOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  };
+}, [sidebarOpen]);
 
   useEffect(() => {
     const token = Cookies.get("token");
